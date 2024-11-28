@@ -46,5 +46,7 @@ public:
 	char obstacleArrayGet(int id) const { return OBSTACLES[id]; }
 
 	char getChar(int x, int y) const { return currentBoard[y][x]; }
+
+	bool isPosInBounds(int x, int y) const { return !((x < 0 || MAX_X < x) || (y < 0 || MAX_Y < y)); }
 };
 

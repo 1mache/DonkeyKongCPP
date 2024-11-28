@@ -8,7 +8,7 @@ void Movement::move()
     int charAtNewPos = gameBoard->getChar(newX, newY);
     int obstacles_size = gameBoard->getObstacleArraySize();
     for (size_t i = 0; i < obstacles_size; i++)
-        if (charAtNewPos == gameBoard->obstacleArrayGet(i))
+        if ((charAtNewPos == gameBoard->obstacleArrayGet(i)) || gameBoard->isPosInBounds(newX, newY) == false)
             return;
 
     position.x = newX;
