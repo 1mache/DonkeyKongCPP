@@ -4,15 +4,18 @@
 
 #include "utils.h"
 #include "Board.h"
-#include "Game.h"
 #include "Player.h"
 
 constexpr int ESC = 27;
 
 int main(int argc, char* argv[]) 
 {
-    Player mario;
-    mario.startPlayer('@', 0, 0);
+    Board gameBoard;
+    gameBoard.reset();
+    gameBoard.print();
+
+    Movement playerMovement = Movement(&gameBoard, '@', { 2,22 });
+    Player mario = Player(playerMovement);
     
     ShowConsoleCursor(false);
 

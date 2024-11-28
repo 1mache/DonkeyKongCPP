@@ -1,4 +1,5 @@
 #include <conio.h>
+#include "MoveState.h"
 #include "Player.h"
 
 void Player::stateByKey(char key)
@@ -11,14 +12,9 @@ void Player::stateByKey(char key)
     }
 }
 
-void Player::startPlayer(char ch, int x, int y)
-{
-    playerMovement.setChar(ch);
-    playerMovement.setPosition(x, y);
-    playerMovement.draw();
-}
-
 void Player::movePlayer()
 {
+    playerMovement.erase();
     playerMovement.move();
+    playerMovement.draw();
 }
