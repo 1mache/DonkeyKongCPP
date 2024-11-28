@@ -2,7 +2,15 @@
 
 void Movement::move()
 {
-    position.x = position.x + direction.x;
-    position.y = position.y + direction.y;
-    // add function in board to check if position is in bounds or if there is an obsatcle
+    int newX = position.x + direction.x;
+    int newY = position.y + direction.y;
+    
+    int charAtNewPos = gameBoard->getChar(newX, newY);
+    int obstacles_size = gameBoard->getObstacleArraySize();
+    for (size_t i = 0; i < obstacles_size; i++)
+        if (charAtNewPos == gameBoard->obstacleArrayGet(i))
+            return;
+
+    position.x = newX;
+    position.y = newY;
 }

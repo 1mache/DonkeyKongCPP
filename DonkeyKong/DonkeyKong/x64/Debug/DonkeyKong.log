@@ -1,4 +1,7 @@
-﻿  Player.cpp
+﻿  Board.cpp
+  Movement.cpp
+C:\Users\Dmytro\Programming\DonkeyKongCPP\DonkeyKong\Movement.cpp(11,57): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Player.cpp
   main.cpp
   Generating Code...
   DonkeyKong.vcxproj -> C:\Users\Dmytro\Programming\DonkeyKongCPP\DonkeyKong\x64\Debug\DonkeyKong.exe

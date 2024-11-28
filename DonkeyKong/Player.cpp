@@ -4,8 +4,8 @@
 
 void Player::stateByKey(char key)
 {
-    for (size_t i = 0; i < numKeys; i++) {
-        if (std::tolower(key) == keys[i]) {
+    for (size_t i = 0; i < NUM_KEYS; i++) {
+        if (std::tolower(key) == KEYS[i]) {
             playerMovement.setState((MoveState)i);
             return;
         }

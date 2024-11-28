@@ -5,9 +5,8 @@
 class Player
 {
     Movement playerMovement;
-    static constexpr char obsatcles[] = { '>', '<', '=' };
-    static constexpr char keys[] = { 'w', 'a', 'x', 'd', 's' };
-    static constexpr size_t numKeys = sizeof(keys) / sizeof(keys[0]);
+    static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
+    static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
 
 public:
     Player(Movement _movement): playerMovement(_movement)

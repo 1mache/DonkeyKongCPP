@@ -4,6 +4,8 @@ class Board {
 	static constexpr int MAX_X = 80;
 	static constexpr int MAX_Y = 25;
 	static constexpr char SCREEN_BORDER = 'Q';
+	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q'};
+	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
 
 	const char* originalBoard[MAX_Y] = {
 		// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -39,8 +41,10 @@ class Board {
 public:
 	void reset();
 	void print() const;
-	char getChar(int x, int y) const {
-		return currentBoard[y][x];
-	}
+
+	int getObstacleArraySize() const { return NUM_OBSTACLES; }
+	char obstacleArrayGet(int id) const { return OBSTACLES[id]; }
+
+	char getChar(int x, int y) const { return currentBoard[y][x]; }
 };
 
