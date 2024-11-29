@@ -7,10 +7,10 @@
 #include "utils.h"
 
 struct Point { int x, y; };
+static constexpr Point directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+
 class Movement
 {
-    static constexpr Point directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-
     char spriteChar;
     
     Point position;
@@ -25,11 +25,21 @@ class Movement
         std::cout << c;
     }
 
+    void gravity()
+    {
+        int newY = position.y + directions[(int)(MoveState::DOWN)].y;
+
+        if (canMoveToNewPos(position.x, newY))
+        {
+            position.y = newY;
+        }
+    }
+
 public:
 
     Movement(Board* _gameBoard, char _spriteChar, Point startPos): gameBoard(_gameBoard), spriteChar(_spriteChar), position(startPos){}
 
-    Point getPosition()
+    Point getPosition() const
     {
         return position;
     }
@@ -40,10 +50,20 @@ public:
         position.y = y;
     }
 
+    Point getDirection() const
+    {
+        return directions[(int)moveState];
+    }
+
     void setState(MoveState state)
     {
         moveState = state;
         direction = directions[(int)state];
+    }
+
+    MoveState getState() const
+    {
+        return moveState;
     }
 
     void setChar(char c)
@@ -61,5 +81,8 @@ public:
         draw(' ');
     }
 
-    void move();
+    void move(int x, int y, bool useGravity);
+
+    bool canMoveToNewPos(int newX, int newY) const { return ((gameBoard->isPosAnObstacle(newX, newY) == false) && gameBoard->isPosInBounds(newX, newY) == true); }
+    bool reachedWall() const { return gameBoard->isPosNearWall(position.x, position.y); }
 };

@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     gameBoard.print();
 
     Movement playerMovement = Movement(&gameBoard, '@', { 2,22 });
-    Player mario = Player(playerMovement);
+    Player mario = Player(playerMovement, 3);
     
     ShowConsoleCursor(false);
 

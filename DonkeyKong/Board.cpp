@@ -15,3 +15,20 @@ void Board::print() const {
 	}
 	std::cout << currentBoard[MAX_Y - 1];
 }
+
+bool Board::isPosAnObstacle(int x, int y) const
+{
+	bool isObstacle = false;
+	int charAtNewPos = getCharInPos(x, y);
+
+	for (size_t i = 0; i < NUM_OBSTACLES; i++)
+	{
+		if (charAtNewPos == obstacleArrayGet(i))
+		{
+			isObstacle = true;
+			break;
+		}
+	}
+
+	return isObstacle;
+}

@@ -1,16 +1,30 @@
 #include "Movement.h"
 
-void Movement::move()
+void Movement::move(int moveX, int moveY, bool useGravity)
 {
-    int newX = position.x + direction.x;
-    int newY = position.y + direction.y;
-    
-    int charAtNewPos = gameBoard->getChar(newX, newY);
-    int obstacles_size = gameBoard->getObstacleArraySize();
-    for (size_t i = 0; i < obstacles_size; i++)
-        if ((charAtNewPos == gameBoard->obstacleArrayGet(i)) || gameBoard->isPosInBounds(newX, newY) == false)
-            return;
+    erase();
 
-    position.x = newX;
-    position.y = newY;
+    /*int newX = position.x + direction.x;
+    int newY = position.y + direction.y;*/
+
+    int newX = position.x + moveX;
+    int newY = position.y + moveY;
+
+    // Move on X and Y axis independently
+    if (canMoveToNewPos(newX, position.y))
+    {
+        setPosition(newX, position.y);
+    }
+
+    if (canMoveToNewPos(position.x, newY))
+    {
+        setPosition(position.x, newY);
+    }
+
+    if (useGravity)
+    {
+        gravity();
+    }
+
+    draw();
 }
