@@ -1,1 +1,10 @@
 .vs
+# Visual Studio build artifacts
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.log
+*.tlog/
+x64/
