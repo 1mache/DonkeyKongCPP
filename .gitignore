@@ -7,4 +7,5 @@
 *.idb
 *.log
 *.tlog/
-x64/
+DonkeyKong/x64/
+DonkeyKong/DonkeyKong/
