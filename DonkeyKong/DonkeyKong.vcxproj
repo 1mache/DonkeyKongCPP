@@ -30,6 +30,7 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

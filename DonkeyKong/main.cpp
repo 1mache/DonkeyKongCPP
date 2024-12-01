@@ -13,9 +13,8 @@ int main(int argc, char* argv[])
     Board gameBoard;
     gameBoard.reset();
     gameBoard.print();
-
-    Movement playerMovement = Movement(&gameBoard, '@', { 2,22 });
-    Player mario = Player(playerMovement, 3);
+    //                        board  sprite  startPos
+    Player mario = Player(&gameBoard, '@', { 2,22 });
     
     ShowConsoleCursor(false);
 

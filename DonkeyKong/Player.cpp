@@ -5,14 +5,13 @@ void Player::stateByKey(char key)
 {
     for (size_t i = 0; i < NUM_KEYS; i++) {
         if (std::tolower(key) == KEYS[i]) {
-            // runs without this line
-            //playerMovement.setState((MoveState)i);
-
+            //set the curent state acordingly to
             curState = (MoveState)i;
             if ((curState != MoveState::DOWN) && (curState != MoveState::UP))
             {
-                jumpDirection = curState;
+                jumpDirection = directions[curState];
             }
+
             return;
         }
     }
@@ -21,21 +20,27 @@ void Player::stateByKey(char key)
 bool Player::checkPlayerOnGround()
 {
     Point playerPos = playerMovement.getPosition();
+    // if you cant move to the postion thats one below the player, theres an obstacle there
     return !playerMovement.canMoveToNewPos(playerPos.x, playerPos.y + 1);
 }
 
 void Player::movePlayer()
 {
     onGround = checkPlayerOnGround();
-    //                        LEFT || STAY || RIGHT
-    int moveX = directions[(int)jumpDirection].x;
+    //     LEFT - (-1) || STAY = 0 || RIGHT = 1
+    int moveX = jumpDirection.x;
+    
     jump();
-    int moveY = directions[(int)jumpDirection].y - midJump;
+
+    int moveY = 0;
+    if(midJump)
+        moveY = -1;
 
     playerMovement.move(moveX, moveY, !midJump);
 }
 
-int Player::jump()
+//returns if were mid jump right now
+void Player::jump()
 {
     // static variable !!!
     static int heightTraveled = 0;
@@ -50,8 +55,6 @@ int Player::jump()
     {
         heightTraveled = 0;
         midJump = false;
-        curState = jumpDirection;
+        curState = (MoveState)jumpDirection.x;
     }
-
-    return midJump;
 }
