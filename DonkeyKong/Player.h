@@ -1,31 +1,35 @@
 #pragma once
 
+#include "Point.h"
 #include "Movement.h"
 
 class Player
 {
-    Movement playerMovement;
+    enum MoveState { UP, LEFT, DOWN, RIGHT, STAY };
+    static constexpr Point directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
-    //            ??
-    MoveState curState = MoveState:: STAY;
-    MoveState jumpDirection = MoveState::STAY;
-
     // Final height should be 2, I made it 3 so you can jump between platforms
     static constexpr int jumpHeight = 3;
 
-    int lifes;
+    //movement component
+    Movement playerMovement;
+    Board* gameBoard = nullptr;
+
+    MoveState curState = MoveState::STAY;
+    Point jumpDirection = directions[STAY];
+
+    int lifes = 3;
     
     //   mid jump not falling
     bool midJump = false;
     bool onGround = true;
 
 public:
-    Player(Movement _movement, int _lifes): playerMovement(_movement), lifes(_lifes){}
+    Player(Board* _gameBoard, char _spriteChar, Point _startPos): playerMovement(Movement(_gameBoard, _spriteChar, _startPos)), gameBoard(_gameBoard) {}
 
     void stateByKey(char key);
     void movePlayer();
-    int jump();
+    void jump();
     bool checkPlayerOnGround();
-    void checkPlayerReachedWall();
 };
