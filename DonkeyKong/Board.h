@@ -42,15 +42,9 @@ public:
 	void reset();
 	void print() const;
 
-	// Do we need these 2?
-	int getObstacleArraySize() const { return NUM_OBSTACLES; }
-	char obstacleArrayGet(int id) const { return OBSTACLES[id]; }
-	//
-
 	char getCharInPos(int x, int y) const { return currentBoard[y][x]; }
 
 	bool isPosInBounds(int x, int y) const { return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); }
 	bool isPosAnObstacle(int x, int y) const;
-	bool isPosNearWall(int x, int y) const { return ((getCharInPos(x - 1, y) == SCREEN_BORDER) || (getCharInPos(x + 1, y) == SCREEN_BORDER)); }
 };
 

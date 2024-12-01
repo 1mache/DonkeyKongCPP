@@ -83,6 +83,5 @@ public:
 
     void move(int x, int y, bool useGravity);
 
-    bool canMoveToNewPos(int newX, int newY) const { return ((gameBoard->isPosAnObstacle(newX, newY) == false) && gameBoard->isPosInBounds(newX, newY) == true); }
-    bool reachedWall() const { return gameBoard->isPosNearWall(position.x, position.y); }
+    bool canMoveToNewPos(int newX, int newY) const { return (!(gameBoard->isPosAnObstacle(newX, newY)) && gameBoard->isPosInBounds(newX, newY)); }
 };

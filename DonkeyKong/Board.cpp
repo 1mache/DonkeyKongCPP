@@ -23,7 +23,7 @@ bool Board::isPosAnObstacle(int x, int y) const
 
 	for (size_t i = 0; i < NUM_OBSTACLES; i++)
 	{
-		if (charAtNewPos == obstacleArrayGet(i))
+		if (charAtNewPos == OBSTACLES[i])
 		{
 			isObstacle = true;
 			break;
