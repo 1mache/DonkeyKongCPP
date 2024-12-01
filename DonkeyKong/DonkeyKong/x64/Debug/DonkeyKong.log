@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 ﻿  Player.cpp
+=======
+﻿  Movement.cpp
+  Player.cpp
+  main.cpp
+  Generating Code...
+>>>>>>> 9ea3b77424e32fef674dcbe0b91fcfc00a9dd279
   DonkeyKong.vcxproj -> C:\Users\Dmytro\Programming\DonkeyKongCPP\DonkeyKong\x64\Debug\DonkeyKong.exe
