@@ -19,9 +19,9 @@ class Movement
 
     Board* gameBoard = nullptr;
 
-    void draw(char c) const
+    void draw(Point drawPosition, char c) const
     {
-        gotoxy(position.x, position.y);
+        gotoxy(drawPosition.x, drawPosition.y);
         std::cout << c;
     }
 
@@ -32,13 +32,16 @@ class Movement
 
         if (canMoveToNewPos(position.x, newY))
         {
+            //increment some freefallCount variable here 
+            //to count how many tiles we fell 
             position.y = newY;
         }
     }
 
 public:
 
-    Movement(Board* _gameBoard, char _spriteChar, Point _startPos): gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos){}
+    Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
+        gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
     Point getPosition() const
     {
@@ -75,14 +78,14 @@ public:
 
     void draw() const
     {
-        draw(spriteChar);
+        draw( position , spriteChar);
     }
 
     void erase()
     {
-        draw(' ');
+        draw(position , ' ');
     }
-
+    
     void move(int x, int y, bool useGravity);
 
     bool canMoveToNewPos(int newX, int newY) const { return (!(gameBoard->isPosAnObstacle(newX, newY)) && gameBoard->isPosInBounds(newX, newY)); }
