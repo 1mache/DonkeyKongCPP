@@ -85,8 +85,8 @@ public:
     {
         draw(position , ' ');
     }
-    
-    void move(int x, int y, bool useGravity);
+                                             //the move function can ignore obstacles, doesnt do it by default 
+    void move(int x, int y, bool useGravity, bool ignoreObstacles = false);
 
     bool canMoveToNewPos(int newX, int newY) const { return (!(gameBoard->isPosAnObstacle(newX, newY)) && gameBoard->isPosInBounds(newX, newY)); }
 };

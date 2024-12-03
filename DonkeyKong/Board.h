@@ -4,6 +4,7 @@ class Board {
 	static constexpr int MAX_X = 80;
 	static constexpr int MAX_Y = 25;
 	static constexpr char SCREEN_BORDER = 'Q';
+	static constexpr char LADDER = 'H';
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q'};
 	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
 
@@ -46,5 +47,6 @@ public:
 
 	bool isPosInBounds(int x, int y) const { return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); }
 	bool isPosAnObstacle(int x, int y) const;
+	bool isLadderAtPos(int x, int y)const { return getCharInPos(x, y) == LADDER; }
 };
 

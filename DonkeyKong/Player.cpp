@@ -11,7 +11,7 @@ void Player::stateByKey(char key)
 
             if ((state != DOWN) && (state != UP))
             {
-                jumpDirection = state;
+                horizontalState = state;
             }
             
             return;
@@ -32,16 +32,16 @@ void Player::movePlayer()
     Point position = playerMovement.getPosition();
 
     //     LEFT - (-1) || STAY = 0 || RIGHT = 1
-    int moveX = directions[jumpDirection].x;
+    int moveX = directions[horizontalState].x;
     int moveY = 0;
     
     if(curState == UP)
     {
-        if (canClimb(position))
+        if (canClimbUp(position))
         {
             if (!midJump)
             {
-                climb();
+                climbUp();
                 return;
             }
         }
@@ -51,9 +51,20 @@ void Player::movePlayer()
 
     if(curState == DOWN)
     {
-        if(!midJump)
+        if(canClimbDown(position))
         {
-            climb();
+            climbDown();
+            return;   
+        }
+    }
+
+    //if were on a ladder in one of the current states
+    if(curState == STAY || curState == RIGHT || curState == LEFT)
+    {
+        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround)
+        {
+            //dont move and dont apply gravity
+            playerMovement.move(0, 0, false);
             return;
         }
     }
@@ -80,15 +91,57 @@ void Player::jump()
     {
         heightTraveled = 0;
         midJump = false;
-        curState = jumpDirection;
+        curState = horizontalState;
     }
 }
 
-void Player::climb()
+void Player::climbUp()
 {
+    static bool midClimb = false;
     int moveX = 0;
     //      -1 if up, 1 if down
-    int moveY = directions[curState].y;
-    //                              no gravity on the ladder  
-    playerMovement.move(moveX, moveY, false);
+    int moveY = -1;
+    if(midClimb)
+    {
+        playerMovement.move(moveX, moveY, false, true);
+        onGround = checkPlayerOnGround();
+
+        if(onGround)
+        {
+            midClimb = false;
+            curState = horizontalState;
+        }
+    }
+    else
+    {
+        playerMovement.move(moveX, moveY, false, true);
+        midClimb = true;
+    }
+
+    
+}
+
+void Player::climbDown()
+{
+    static bool midClimb = false;
+    int moveX = 0;
+    int moveY = 1;
+
+    if (midClimb)
+    {
+        playerMovement.move(moveX, moveY, false, false);
+        //if we reached ground were no longer climbing
+        onGround = checkPlayerOnGround();
+
+        if (onGround)
+        {
+            midClimb = false;
+            curState = horizontalState;
+        }
+    }
+    else
+    {
+        playerMovement.move(moveX, moveY, false, true);
+        midClimb = true;
+    }
 }

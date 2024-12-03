@@ -28,6 +28,6 @@ int main(int argc, char* argv[])
         }
 
         mario.movePlayer();
-        Sleep(50);
+        Sleep(65);
     }
 }

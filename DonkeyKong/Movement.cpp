@@ -1,6 +1,6 @@
 #include "Movement.h"
 
-void Movement::move(int moveX, int moveY, bool useGravity)
+void Movement::move(int moveX, int moveY, bool useGravity, bool ignoreObstacles)
 {
     //buffer holds the char that was at the object's previous position 
     static char buffer = ' ';
@@ -20,12 +20,12 @@ void Movement::move(int moveX, int moveY, bool useGravity)
     int newY = position.y + moveY;
 
     // Move on X and Y axis independently
-    if (canMoveToNewPos(newX, position.y))
+    if (canMoveToNewPos(newX, position.y) || ignoreObstacles)
     {
         position = { newX, position.y };
     }
 
-    if (canMoveToNewPos(position.x, newY))
+    if (canMoveToNewPos(position.x, newY) || ignoreObstacles)
     {
         position = { position.x, newY };
     }
