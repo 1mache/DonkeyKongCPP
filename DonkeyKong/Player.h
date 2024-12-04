@@ -25,7 +25,10 @@ class Player
     
     //   mid jump not falling
     bool midJump = false;
-    bool onGround = true;
+    // height traveled during a jump 
+    int heightTraveled = 0;
+    // tells us if were climbing a ladder right now 
+    bool midClimb = false;
     
     void jump();
 
@@ -40,13 +43,12 @@ class Player
     {
         // while climbing down, we need to be on the ladder that is above ground
         // or on the floor above the ladder 
-        return (gameBoard->isLadderAtPos(position.x, position.y) && !onGround) ||
+        return (gameBoard->isLadderAtPos(position.x, position.y) && !playerMovement.checkOnGround()) ||
             gameBoard->isLadderAtPos(position.x, position.y + 2);
     }
 
     void climbUp();
     void climbDown();
-    bool checkPlayerOnGround();
 
 public:
     Player(Board* _gameBoard, char _spriteChar, Point _startPos): 

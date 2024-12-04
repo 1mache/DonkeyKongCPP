@@ -2,10 +2,6 @@
 
 void Movement::move(int moveX, int moveY, bool useGravity, bool ignoreObstacles)
 {
-    //buffer holds the char that was at the object's previous position 
-    static char buffer = ' ';
-    static Point prevPosition;
-
     erase();
 
     //if buffer isnt empty
@@ -36,8 +32,7 @@ void Movement::move(int moveX, int moveY, bool useGravity, bool ignoreObstacles)
     }
 
     // remember the char mario "stepped on" in the buffer variable
-    char charOnBoard = gameBoard->getCharInPos(position.x, position.y);
-    buffer = charOnBoard;
+    buffer = gameBoard->getCharInPos(position.x, position.y);
     prevPosition = position;
 
 

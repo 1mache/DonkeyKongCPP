@@ -5,7 +5,7 @@ class Board {
 	static constexpr int MAX_Y = 25;
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
-	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q'};
+	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q' };
 	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
 
 	const char* originalBoard[MAX_Y] = {

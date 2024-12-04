@@ -19,16 +19,9 @@ void Player::stateByKey(char key)
     }
 }
 
-bool Player::checkPlayerOnGround()
-{
-    Point playerPos = playerMovement.getPosition();
-    // if you cant move to the postion thats one below the player, theres an obstacle there
-    return !playerMovement.canMoveToNewPos(playerPos.x, playerPos.y + 1);
-}
-
 void Player::movePlayer()
 {
-    onGround = checkPlayerOnGround();
+    bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
     //     LEFT - (-1) || STAY = 0 || RIGHT = 1
@@ -78,11 +71,8 @@ void Player::movePlayer()
 //returns if were mid jump right now
 void Player::jump()
 {
-    // static variable !!!
-    static int heightTraveled = 0;
-
     // if were on the ground and the move state is up OR were mid jump and havent reached jump height
-    if ((onGround) || (midJump && (heightTraveled < jumpHeight)))
+    if (playerMovement.checkOnGround() || (midJump && (heightTraveled < jumpHeight)))
     {
         heightTraveled += 1;
         midJump = true;
@@ -97,16 +87,15 @@ void Player::jump()
 
 void Player::climbUp()
 {
-    static bool midClimb = false;
     int moveX = 0;
     //      -1 if up, 1 if down
     int moveY = -1;
     if(midClimb)
     {
         playerMovement.move(moveX, moveY, false, true);
-        onGround = checkPlayerOnGround();
-
-        if(onGround)
+        
+        //if we reached ground were no longer climbing
+        if(playerMovement.checkOnGround())
         {
             midClimb = false;
             curState = horizontalState;
@@ -123,17 +112,16 @@ void Player::climbUp()
 
 void Player::climbDown()
 {
-    static bool midClimb = false;
     int moveX = 0;
+    //      -1 if up, 1 if down
     int moveY = 1;
 
     if (midClimb)
     {
         playerMovement.move(moveX, moveY, false, false);
+        
         //if we reached ground were no longer climbing
-        onGround = checkPlayerOnGround();
-
-        if (onGround)
+        if (playerMovement.checkOnGround())
         {
             midClimb = false;
             curState = horizontalState;
