@@ -27,16 +27,24 @@ void Player::movePlayer()
     //     LEFT - (-1) || STAY = 0 || RIGHT = 1
     int moveX = directions[horizontalState].x;
     int moveY = 0;
+
+    //if were on a ladder in one of the current states
+    if(curState == STAY || curState == RIGHT || curState == LEFT)
+    {
+        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround && !midJump)
+        {
+            //dont move and dont apply gravity
+            playerMovement.move(0, 0, false);
+            return;
+        }
+    }
     
     if(curState == UP)
     {
-        if (canClimbUp(position))
+        if (canClimbUp(position) && !midJump)
         {
-            if (!midJump)
-            {
-                climbUp();
-                return;
-            }
+            climbUp();
+            return;
         }
         else
             jump();
@@ -51,16 +59,6 @@ void Player::movePlayer()
         }
     }
 
-    //if were on a ladder in one of the current states
-    if(curState == STAY || curState == RIGHT || curState == LEFT)
-    {
-        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround)
-        {
-            //dont move and dont apply gravity
-            playerMovement.move(0, 0, false);
-            return;
-        }
-    }
 
     if(midJump)
         moveY = -1;
