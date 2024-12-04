@@ -2,10 +2,14 @@
 
 void Game::startGame()
 {
+    //Menu here
+    //=================================
+
 	gameBoard.reset();
 	gameBoard.print();
 
     ShowConsoleCursor(false);
+
     update();
     //DEBUG===================================================================
     //int frameCounter = 0;

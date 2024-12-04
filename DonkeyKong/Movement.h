@@ -13,7 +13,8 @@ class Movement
     char spriteChar;
     
     Board* gameBoard = nullptr;
-    //how many chars we fell
+    
+    // counts how many lines we fell, 0 if not in free fall 
     int fallHeight = 0;
 
     void draw(Point drawPosition, char c) const
@@ -29,8 +30,7 @@ class Movement
 
         if (canMoveToNewPos(position.x, newY))
         {
-            //increment some freefallCount variable 
-            //to count how many tiles we fell 
+            // every time gravity is successfully pulling our object update fallHeight
             fallHeight++;
             position.y = newY;
         }

@@ -5,10 +5,11 @@ void Player::stateByKey(char key)
     for (size_t i = 0; i < NUM_KEYS; i++) {
         if (std::tolower(key) == KEYS[i]) {
             MoveState state = (MoveState)i;
+            
             //set the curent state acordingly if were not mid jump 
             if(!midJump)
                 curState = state;
-
+            //update the horizontal state if needed
             if ((state != DOWN) && (state != UP))
             {
                 horizontalState = state;
@@ -31,7 +32,8 @@ void Player::movePlayer()
     //if were on a ladder in one of the current states
     if(curState == STAY || curState == RIGHT || curState == LEFT)
     {
-        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround && !midJump && (playerMovement.getFallHeight() == 0))
+        if (gameBoard->isLadderAtPos(position.x, position.y) 
+            && !onGround && !midJump && (playerMovement.getFallHeight() == 0))
         {
             //dont move and dont apply gravity
             playerMovement.move(0, 0, false);
