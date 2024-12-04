@@ -5,22 +5,16 @@
 #include "Board.h"
 #include "Point.h"
 #include "utils.h"
-//Moved to player class
-//static constexpr Point directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
 
 class Movement
 {
     Point position;
     
-    //buffer holds the char that was at the object's previous position 
-    char buffer = ' ';
-    Point prevPosition;
-
     char spriteChar;
     
     Board* gameBoard = nullptr;
     //how many chars we fell
-    int heightFell = 0;
+    int fallHeight = 0;
 
     void draw(Point drawPosition, char c) const
     {
@@ -35,19 +29,19 @@ class Movement
 
         if (canMoveToNewPos(position.x, newY))
         {
-            //increment some freefallCount variable here 
+            //increment some freefallCount variable 
             //to count how many tiles we fell 
-            heightFell++;
+            fallHeight++;
             position.y = newY;
         }
         else
-            heightFell = 0;
+            fallHeight = 0;
     }
 
 public:
 
     Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
-        gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos), prevPosition(_startPos) {}
+        gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
     Point getPosition() const
     {
@@ -76,4 +70,6 @@ public:
     {
         return !canMoveToNewPos(position.x, position.y + 1);
     }
+
+    int getFallHeight() { return fallHeight; }
 };

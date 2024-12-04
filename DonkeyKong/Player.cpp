@@ -31,7 +31,7 @@ void Player::movePlayer()
     //if were on a ladder in one of the current states
     if(curState == STAY || curState == RIGHT || curState == LEFT)
     {
-        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround && !midJump)
+        if (gameBoard->isLadderAtPos(position.x, position.y) && !onGround && !midJump && (playerMovement.getFallHeight() == 0))
         {
             //dont move and dont apply gravity
             playerMovement.move(0, 0, false);

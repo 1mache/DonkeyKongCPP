@@ -4,17 +4,12 @@ void Movement::move(int moveX, int moveY, bool useGravity, bool ignoreObstacles)
 {
     erase();
 
-    //if buffer isnt empty
-    if(buffer != ' ')
-    {
-        //draw whats in there and empty buffer
-        draw(prevPosition, buffer);
-        buffer = ' ';
-    }
-    
     int newX = position.x + moveX;
     int newY = position.y + moveY;
-
+    
+    //remember previous position before we change it 
+    Point prevPosition = position;
+    
     // Move on X and Y axis independently
     if (canMoveToNewPos(newX, position.y) || ignoreObstacles)
     {
@@ -31,10 +26,11 @@ void Movement::move(int moveX, int moveY, bool useGravity, bool ignoreObstacles)
         gravity();
     }
 
-    // remember the char mario "stepped on" in the buffer variable
-    buffer = gameBoard->getCharInPos(position.x, position.y);
-    prevPosition = position;
-
+    //check if the char the object stepped on previously wasnt an empty space 
+    char charAtPrevPosition = gameBoard->getCharInPos(prevPosition.x, prevPosition.y);
+    if (charAtPrevPosition != ' ')
+        // and draw it where we stepped on it
+        draw(prevPosition ,charAtPrevPosition);
 
     draw();
 }
