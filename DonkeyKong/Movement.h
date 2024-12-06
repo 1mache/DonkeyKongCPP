@@ -19,20 +19,20 @@ class Movement
 
     void draw(Point drawPosition, char c) const
     {
-        gotoxy(drawPosition.x, drawPosition.y);
+        gotoxy(drawPosition.getX(), drawPosition.getY());
         std::cout << c;
     }
 
     void gravity()
     {
-        //down by 1
-        int newY = position.y + 1;
+        //pull down by 1
+        Point newPosition = position.oneBelow();
 
-        if (canMoveToNewPos(position.x, newY))
+        if (!checkOnGround())
         {
-            // every time gravity is successfully pulling our object update fallHeight
+            // every time gravity is successfully pulling our object we update fallHeight
             fallHeight++;
-            position.y = newY;
+            position = newPosition;
         }
         else
             fallHeight = 0;
@@ -58,17 +58,17 @@ public:
         draw(position , ' ');
     }
                                              //the move function can ignore obstacles, doesnt do it by default 
-    void move(int x, int y, bool useGravity, bool ignoreObstacles = false);
+    void move(Point movePosition, bool useGravity, bool ignoreObstacles = false);
 
-    bool canMoveToNewPos(int newX, int newY) const 
+    bool canMoveToNewPos(Point newPos) const 
     { 
-        return (!(gameBoard->isPosAnObstacle(newX, newY)) 
-            && gameBoard->isPosInBounds(newX, newY)); 
+        return (!(gameBoard->isObstacleAtPos(newPos)) 
+            && gameBoard->isPosInBounds(newPos)); 
     }
 
     bool checkOnGround() const
     {
-        return !canMoveToNewPos(position.x, position.y + 1);
+        return !canMoveToNewPos(position.oneBelow());
     }
 
     int getFallHeight() { return fallHeight; }

@@ -11,7 +11,7 @@ void Game::startGame()
     ShowConsoleCursor(false);
 
     update();
-    //DEBUG===================================================================
+    //TEST===================================================================
     //int frameCounter = 0;
     //Movement some = Movement(&gameBoard, '*', { 1, 6 });
 }
@@ -29,7 +29,7 @@ void Game::update()
 
         player.movePlayer();
 
-        //DEBUG=====================================================================
+        //TEST=====================================================================
         //frameCounter++;
         ////move the other object every second frame
         //if(frameCounter % 2 == 0)

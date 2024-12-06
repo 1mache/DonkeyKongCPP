@@ -23,25 +23,26 @@ void Player::stateByKey(char key)
 void Player::movePlayer()
 {
     bool onGround = playerMovement.checkOnGround();
+    int fallHeight = playerMovement.getFallHeight();
     Point position = playerMovement.getPosition();
 
     //     LEFT - (-1) || STAY = 0 || RIGHT = 1
-    int moveX = directions[horizontalState].x;
+    int moveX = DIRECTIONS[horizontalState].getX();
     int moveY = 0;
 
     //if were on a ladder in one of the current states
-    if(curState == STAY || curState == RIGHT || curState == LEFT)
+    if (curState == STAY || curState == RIGHT || curState == LEFT)
     {
-        if (gameBoard->isLadderAtPos(position.x, position.y) 
+        if (gameBoard->isLadderAtPos(position)
             && !onGround && !midJump && (playerMovement.getFallHeight() == 0))
         {
             //dont move and dont apply gravity
-            playerMovement.move(0, 0, false);
+            playerMovement.move(DIRECTIONS[STAY], false);
             return;
         }
     }
-    
-    if(curState == UP)
+
+    if (curState == UP)
     {
         if (canClimbUp(position) && !midJump)
         {
@@ -52,20 +53,26 @@ void Player::movePlayer()
             jump();
     }
 
-    if(curState == DOWN)
+    if (curState == DOWN)
     {
-        if(canClimbDown(position))
+        if (canClimbDown(position))
         {
             climbDown();
-            return;   
+            return;
         }
     }
 
-
-    if(midJump)
+    if (midJump)
         moveY = -1;
-    //                               no gravity if were mid jump
-    playerMovement.move(moveX, moveY, !midJump);
+    
+    //no gravity if were mid jump
+    playerMovement.move( Point(moveX, moveY) , !midJump);
+
+    ////if we fell more than X lines we get hurt
+    // NOTE: BUG in this if statement, it is triggered by repeated jumping=====================
+    //if (playerMovement.checkOnGround() && fallHeight >= MAX_FALL_HEIGHT)
+    //    //death logic ============================================================
+    //    exit(0);
 }
 
 //returns if were mid jump right now
@@ -87,12 +94,9 @@ void Player::jump()
 
 void Player::climbUp()
 {
-    int moveX = 0;
-    //      -1 if up, 1 if down
-    int moveY = -1;
     if(midClimb)
     {
-        playerMovement.move(moveX, moveY, false, true);
+        playerMovement.move(DIRECTIONS[UP] , false, true);
         
         //if we reached ground were no longer climbing
         if(playerMovement.checkOnGround())
@@ -103,22 +107,16 @@ void Player::climbUp()
     }
     else
     {
-        playerMovement.move(moveX, moveY, false, true);
+        playerMovement.move(DIRECTIONS[UP], false, true);
         midClimb = true;
-    }
-
-    
+    }   
 }
 
 void Player::climbDown()
 {
-    int moveX = 0;
-    //      -1 if up, 1 if down
-    int moveY = 1;
-
     if (midClimb)
     {
-        playerMovement.move(moveX, moveY, false, false);
+        playerMovement.move(DIRECTIONS[DOWN], false, false);
         
         //if we reached ground were no longer climbing
         if (playerMovement.checkOnGround())
@@ -129,7 +127,7 @@ void Player::climbDown()
     }
     else
     {
-        playerMovement.move(moveX, moveY, false, true);
+        playerMovement.move(DIRECTIONS[DOWN], false, true);
         midClimb = true;
     }
 }

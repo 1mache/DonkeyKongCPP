@@ -6,12 +6,12 @@
 class Player
 {
     enum MoveState { UP, LEFT, DOWN, RIGHT, STAY };
-    static constexpr Point directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
+    static constexpr Point DIRECTIONS[]  = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
     // Final height should be 2, I made it 3 so you can jump between platforms
-    static constexpr int jumpHeight = 2;
-
+    static constexpr int MAX_FALL_HEIGHT = 5;
+    static const int jumpHeight = 2;
 
     //movement component
     Movement playerMovement;
@@ -36,15 +36,16 @@ class Player
     {
         // while climbing up we need to be on the ladder or one tile above the ladder
         // which looks like were "in the ground"
-        return gameBoard->isLadderAtPos(position.x, position.y) ||
-            gameBoard->isLadderAtPos(position.x, position.y + 1);
+        return gameBoard->isLadderAtPos(position) ||
+            (gameBoard->isLadderAtPos(position.oneBelow()) && gameBoard->isObstacleAtPos(position));
     }
     bool canClimbDown(Point position)
     {
         // while climbing down, we need to be on the ladder that is above ground
         // or on the floor above the ladder 
-        return (gameBoard->isLadderAtPos(position.x, position.y) && !playerMovement.checkOnGround()) ||
-            gameBoard->isLadderAtPos(position.x, position.y + 2);
+        Point twoBelow = position.oneBelow().oneBelow();
+        return (gameBoard->isLadderAtPos(position) && !playerMovement.checkOnGround()) ||
+            gameBoard->isLadderAtPos(twoBelow);
     }
 
     void climbUp();

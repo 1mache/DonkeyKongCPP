@@ -16,10 +16,10 @@ void Board::print() const {
 	std::cout << currentBoard[MAX_Y - 1];
 }
 
-bool Board::isPosAnObstacle(int x, int y) const
+bool Board::isObstacleAtPos(Point position) const
 {
 	bool isObstacle = false;
-	int charAtNewPos = getCharInPos(x, y);
+	int charAtNewPos = getCharAtPos(position);
 
 	for (size_t i = 0; i < NUM_OBSTACLES; i++)
 	{

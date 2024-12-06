@@ -1,4 +1,5 @@
 #pragma once
+#include "Point.h"
 
 class Board {
 	static constexpr int MAX_X = 80;
@@ -43,10 +44,16 @@ public:
 	void reset();
 	void print() const;
 
-	char getCharInPos(int x, int y) const { return currentBoard[y][x]; }
+	char getCharAtPos (Point position) const { return currentBoard[position.getY()][position.getX()]; }
 
-	bool isPosInBounds(int x, int y) const { return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); }
-	bool isPosAnObstacle(int x, int y) const;
-	bool isLadderAtPos(int x, int y)const { return getCharInPos(x, y) == LADDER; }
+	bool isPosInBounds(Point position) const 
+	{
+		int x = position.getX();
+		int y = position.getY();
+
+		return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); 
+	}
+	bool isObstacleAtPos(Point position) const;
+	bool isLadderAtPos(Point position)const { return getCharAtPos(position) == LADDER; }
 };
 
