@@ -60,7 +60,7 @@ public:
                                              //the move function can ignore obstacles, doesnt do it by default 
     void move(Point movePosition, bool useGravity, bool ignoreObstacles = false);
 
-    bool canMoveToNewPos(Point newPos) const 
+    bool canMoveToPos(Point newPos) const 
     { 
         return (!(gameBoard->isObstacleAtPos(newPos)) 
             && gameBoard->isPosInBounds(newPos)); 
@@ -68,7 +68,7 @@ public:
 
     bool checkOnGround() const
     {
-        return !canMoveToNewPos(position.oneBelow());
+        return !canMoveToPos(position.oneBelow());
     }
 
     int getFallHeight() { return fallHeight; }

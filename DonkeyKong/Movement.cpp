@@ -11,13 +11,22 @@ void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
     //remember previous position before we change it 
     Point prevPosition = position;
     
-    // Move on X and Y axis independently
-    if (canMoveToNewPos({ newX , position.getY() }) || ignoreObstacles)
+    // Move on X and Y axis independently:
+    // (the new position on both x and y axis has to be in bounds,
+    // and cannot be an obstacle if the ignoreObstacles flag is off)
+     
+    // new X, same Y
+    Point newXPosition = { newX , position.getY() };
+    if (canMoveToPos(newXPosition) || 
+        (ignoreObstacles && gameBoard->isPosInBounds(newXPosition)))
     {
-        position = { newX , position.getY() };
+        position = newXPosition;
     }
 
-    if (canMoveToNewPos({ position.getX(), newY }) || ignoreObstacles)
+    // same X, new Y
+    Point newYPosition = { position.getX(), newY };
+    if (canMoveToPos(newYPosition) ||
+        (ignoreObstacles && gameBoard->isPosInBounds(newYPosition)))
     {
         position = { position.getX(), newY };
     }

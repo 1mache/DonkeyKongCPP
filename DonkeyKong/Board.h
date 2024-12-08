@@ -50,7 +50,6 @@ public:
 	{
 		int x = position.getX();
 		int y = position.getY();
-
 		return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); 
 	}
 	bool isObstacleAtPos(Point position) const;

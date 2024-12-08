@@ -8,7 +8,9 @@ void Player::stateByKey(char key)
             
             //set the curent state acordingly if were not mid jump 
             if(!midJump)
+            {
                 curState = state;
+            }
             //update the horizontal state if needed
             if ((state != DOWN) && (state != UP))
             {
@@ -63,7 +65,9 @@ void Player::movePlayer()
     }
 
     if (midJump)
+    {
         moveY = -1;
+    }
     
     //no gravity if were mid jump
     playerMovement.move( Point(moveX, moveY) , !midJump);
