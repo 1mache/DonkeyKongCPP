@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "Point.h"
+#include "Menu.h"
 
 class Game
 {

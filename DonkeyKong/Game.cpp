@@ -2,13 +2,15 @@
 
 void Game::startGame()
 {
-    //Menu here
-    //=================================
+    ShowConsoleCursor(false);
+    
+    Menu menu;
+
+    menu.start();
 
 	gameBoard.reset();
 	gameBoard.print();
 
-    ShowConsoleCursor(false);
 
     update();
     //TEST===================================================================

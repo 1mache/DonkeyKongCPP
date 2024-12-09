@@ -1,22 +1,26 @@
 #pragma once
+#include <cstring>
+#include <iostream>
 #include "Point.h"
+#include "Constants.h"
 
 class Board {
-	static constexpr int MAX_X = 80;
-	static constexpr int MAX_Y = 25;
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q' };
 	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
 
-	const char* originalBoard[MAX_Y] = {
+	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
+	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+
+	const char* originalBoard[HEIGHT] = {
 		// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
-		  "Q                      $                                                       Q", // 1
-		  "Q                 =========                                                    Q", // 2
-		  "Q        &        H       H                                                    Q", // 3
-		  "Q===============================                                               Q", // 4
+		  "Q                      $                                           _  _        Q", // 1
+		  "Q     (_)(_)       =========                                      ( \\/ )       Q", // 2
+		  "Q     (_)(_) &     H       H                                       \\  / X 3    Q", // 3
+		  "Q===============================                                    \\/         Q", // 4
 		  "Q                            H                                                 Q", // 5
 		  "Q                            H                                                 Q", // 6
 		  "Q                            H                                                 Q", // 7
@@ -35,11 +39,11 @@ class Board {
 		  "Q                                 =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 20
 		  "Q                                                H                             Q", // 21
 		  "Q                                                H                             Q", // 22
-		  "Q<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 23
-		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
+		  "Q                                                H                             Q", // 23
+		  "Q==============================================================================Q"  // 24
 	};
 
-	char currentBoard[MAX_Y][MAX_X + 1]; // +1 for null terminator
+	char currentBoard[HEIGHT][WIDTH + 1]; // +1 for null terminator
 public:
 	void reset();
 	void print() const;
@@ -50,7 +54,7 @@ public:
 	{
 		int x = position.getX();
 		int y = position.getY();
-		return ((0 < x && x < MAX_X) && (0 < y && y < MAX_Y)); 
+		return ((0 < x && x < WIDTH) && (0 < y && y < HEIGHT)); 
 	}
 	bool isObstacleAtPos(Point position) const;
 	bool isLadderAtPos(Point position)const { return getCharAtPos(position) == LADDER; }

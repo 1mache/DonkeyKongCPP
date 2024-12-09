@@ -11,6 +11,11 @@ public:
 		return Point(x + other.x, y + other.y);
 	}
 
+	bool operator==(const Point& other)
+	{
+		return (x == other.x) && (y == other.y);
+	}
+
 	int getX() const { return x; }
 	int getY() const { return y; }
 
