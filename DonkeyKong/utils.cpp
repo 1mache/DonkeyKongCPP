@@ -17,3 +17,13 @@ void ShowConsoleCursor(bool showFlag) {
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+
+void flushInputBuffer()
+{
+    // "flush" all input that was previously there
+    while (_kbhit())
+    {
+        //store it so ignored return value warning doesnt pop up
+        char ignored = _getch();
+    }
+}
