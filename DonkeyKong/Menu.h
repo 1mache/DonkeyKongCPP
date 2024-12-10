@@ -57,10 +57,10 @@ class Menu
 			"Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=     =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 15
 			"Q                                                                              Q", // 16
 			"Q                                                                              Q", // 17
-			"Q                                 Start Game                                   Q", // 18
-			"Q                                  Controls                                    Q", // 19
+			"Q    X/W   - navigate             Start Game                                   Q", // 18
+			"Q            options               Controls                                    Q", // 19
 			"Q                                                                              Q", // 20
-			"Q                                    EXIT                                      Q", // 21
+			"Q    ENTER - select                  EXIT                                      Q", // 21
 			"Q                                                                              Q", // 22
 			"Q                                                     by: B&D Entertaiment     Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
@@ -72,24 +72,24 @@ class Menu
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 			"Q                                                                              Q", // 1
 			"Q                                                                              Q", // 2
-			"Q        DDDDD     OOOOO    N   N   K   K   EEEEE   Y   Y                      Q", // 3
-			"Q        D    D   O     O   NN  N   K  K    E        Y Y                       Q", // 4
-			"Q        D    D   O     O   N N N   KKK     EEEE      Y                        Q", // 5
-			"Q        D    D   O     O   N  NN   K  K    E         Y                        Q", // 6
-			"Q        DDDDD     OOOOO    N   N   K   K   EEEEE     Y                        Q", // 7
-			"Q                                                                              Q", // 8
-			"Q        K   K   OOOOO    N   N   GGGG                                         Q", // 9
-			"Q        K  K   O     O   NN  N   G                                            Q", // 10
-			"Q        KKK    O     O   N N N   G  GG                                        Q", // 11
-			"Q        K  K   O     O   N  NN   G   G                                        Q", // 12
-			"Q        K   K   OOOOO    N   N   GGGG              by: B&D Entertaiment       Q", // 13
-			"Q                                                                              Q", // 14
+            "Q   CCCCC   OOOOO   N   N  TTTTT  RRRR    OOOOO   L      SSSSS   w*W*W*W*w     Q", // 3
+            "Q  C       O     O  NN  N    T    R   R  O     O  L      S        \\\".\".\"/      Q", // 4
+            "Q  C       O     O  N N N    T    RRRR   O     O  L       SSS      //`\\\\       Q", // 5
+            "Q  C       O     O  N  NN    T    R   R  O     O  L          S    (/a a\\)      Q", // 6
+			"Q   CCCCC   OOOOO   N   N    T    R   R   OOOOO   LLLLL  SSSSS    (\\_-_/)      Q", // 7
+			"Q                                                                .-~'='~-.     Q", // 8
+			"Q                                                               /`~`\"Y\"`~`\\    Q", // 9
+			"Q                                                              / /(  *  )\\ \\   Q", // 10
+			"Q                                                             / /  )   (  \\ \\  Q", // 11
+			"Q       =>>>>>>>>>>>>>>=                                      \\ \\_/\\\\_//\\_/ /  Q", // 12
+			"Q       H              H                                       \\/_) '*' (_\\/   Q", // 13
+			"Q       H      @       H                                         |       |     Q", // 14
 			"Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=     =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 15
 			"Q                                                                              Q", // 16
-			"Q                                  Controls:                                   Q", // 17
-			"Q                                                                              Q", // 18
-			"Q             A - Move Left | D - Move Right | W - Jump/Climb Up               Q", // 19
-			"Q                             X - Climb Down                                   Q", // 20
+			"Q                                                                              Q", // 17
+			"Q             A - Move Left | D - Move Right | W - Jump/Climb Up               Q", // 18
+			"Q                             X - Climb Down                                   Q", // 19
+			"Q                                                                              Q", // 20
 			"Q                                                                              Q", // 21
 			"Q                                   > Back                                     Q", // 22
 			"Q                                                                              Q", // 23
@@ -103,6 +103,7 @@ class Menu
 	int currentScreenId = MAIN_SCREEN_ID; 
 	//what menu option the arrow is pointing to
 	int arrowId = START_ARROW_ID;
+	bool exitFlag = false;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -117,15 +118,11 @@ class Menu
 
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
 
-	void clearScreen() 
-	{
-		//empties the console screen
-		system("cls");
-	}
-
 	void update();
 	
-	void displayMainScreen() 
+	bool selectOption();
+
+	void gotoMainScreen() 
 	{
 		arrowId = START_ARROW_ID;
 		print(mainScreen, LINE_PRINT_DELAY);
@@ -133,13 +130,13 @@ class Menu
 
 	}
 
-	void displayControls()
+	void gotoControlScreen()
 	{
 		print(controlScreen, LINE_PRINT_DELAY);
 		currentScreenId = CONTROL_SCREEN_ID;
 	}
 
 public:
-	void start();
+	bool start();
 
 };

@@ -27,15 +27,8 @@ class Movement
     {
         //pull down by 1
         Point newPosition = position.oneBelow();
-
-        if (!checkOnGround())
-        {
-            // every time gravity is successfully pulling our object we update fallHeight
-            fallHeight++;
-            position = newPosition;
-        }
-        else
-            fallHeight = 0;
+        // every time gravity is successfully pulling our object we update fallHeight
+        position = newPosition;
     }
 
 public:

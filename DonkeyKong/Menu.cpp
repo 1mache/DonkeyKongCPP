@@ -36,44 +36,68 @@ void Menu::update()
 				}
 			}
 
-			//ENTER
+			//user pressed ENTER
 			if(key == KEYS[SELECT])
 			{
-				if(currentScreenId == CONTROL_SCREEN_ID)
+				//==========KEEP THIS VARUIABLE ???====================
+				bool breakLoop = selectOption();
+				if(breakLoop)
 				{
-					clearScreen();
-					displayMainScreen();
-				}
-				else
-				{
-					if (MENU_OPTIONS[arrowId] == CONTROLS_OPTION)
-					{
-						clearScreen();
-						gotoxy(0, 0);
-						displayControls();
-					}
-					else if(MENU_OPTIONS[arrowId] == START_GAME_OPTION)
-					{
-						clearScreen();
-						break;
-					}
+					break;
 				}
 			}
 		}
 
+		//move arrow if were on the main screen 
 		if(currentScreenId == MAIN_SCREEN_ID)
 		{
 			drawChar(ARROW, MENU_OPTIONS[arrowId].screenPosition);
 		}
 			
-		Sleep(65);
+		Sleep(Constants::REFRESH_RATE);
 	}
 }
 
-void Menu::start()
+bool Menu::selectOption()
 {
-	displayMainScreen();
+	bool breakLoop = false;
+
+	//if were on the control screen there is always a single option
+	if (currentScreenId == CONTROL_SCREEN_ID)
+	{
+		clearScreen();
+		gotoMainScreen();
+
+		return breakLoop;
+	}
+
+	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
+	if (MENU_OPTIONS[arrowId] == CONTROLS_OPTION)
+	{
+		clearScreen();
+		gotoControlScreen();
+	}
+	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
+	{
+		clearScreen();
+		breakLoop = true;
+	}
+	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
+	{
+		clearScreen();
+		exitFlag = true;
+		breakLoop = true;
+	}
+
+	return breakLoop;
+}
+
+bool Menu::start()
+{
+	gotoMainScreen();
 	Sleep(LINE_PRINT_DELAY*3);
 	
 	update();
+	
+	return exitFlag;
 }

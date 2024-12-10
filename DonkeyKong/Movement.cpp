@@ -31,9 +31,14 @@ void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
         position = { position.getX(), newY };
     }
 
-    if (useGravity)
+    if (!checkOnGround() && useGravity)
     {
         gravity();
+        fallHeight++;
+    }
+    else
+    {
+        fallHeight = 0;
     }
 
     //check if the char the object stepped on previously wasnt an empty space 

@@ -3,10 +3,15 @@
 void Game::startGame()
 {
     ShowConsoleCursor(false);
-    
-    Menu menu;
+    //================================MENU==========================
+    //Menu menu;
 
-    menu.start();
+    ////menu.start returns 1 if the user chose the exit option in the menu
+    //bool exitFlag = menu.start();
+    //if (exitFlag)
+    //{
+    //    return;
+    //}
 
 	gameBoard.reset();
 	gameBoard.print();
@@ -31,11 +36,17 @@ void Game::update()
 
         player.movePlayer();
 
+        if(player.getLives() == 0)
+        {
+            clearScreen();
+            break;
+        }
         //TEST=====================================================================
         //frameCounter++;
         ////move the other object every second frame
         //if(frameCounter % 2 == 0)
         //  some.move(1, 0, false);
-        Sleep(65);
+
+        Sleep(Constants::REFRESH_RATE);
     }
 }

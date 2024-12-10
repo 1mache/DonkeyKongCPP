@@ -21,7 +21,7 @@ class Player
     //the player keeps the horizontal state if it is not changed
     MoveState horizontalState = STAY;
 
-    int lifes = 3;
+    int lives = 3;
     
     //   mid jump not falling
     bool midJump = false;
@@ -57,4 +57,8 @@ public:
 
     void movePlayer();
     void stateByKey(char key);
+    int getLives()
+    {
+        return lives;
+    }
 };

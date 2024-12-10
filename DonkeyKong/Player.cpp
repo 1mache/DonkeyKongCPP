@@ -72,11 +72,13 @@ void Player::movePlayer()
     //no gravity if were mid jump
     playerMovement.move( Point(moveX, moveY) , !midJump);
 
-    ////if we fell more than X lines we get hurt
+    //if we fell more than X lines we get hurt
     // NOTE: BUG in this if statement, it is triggered by repeated jumping=====================
-    //if (playerMovement.checkOnGround() && fallHeight >= MAX_FALL_HEIGHT)
-    //    //death logic ============================================================
-    //    exit(0);
+    if (playerMovement.checkOnGround() && fallHeight >= MAX_FALL_HEIGHT)
+    {
+        //die
+        lives = 0;
+    }
 }
 
 //returns if were mid jump right now

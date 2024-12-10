@@ -27,3 +27,9 @@ void flushInputBuffer()
         char ignored = _getch();
     }
 }
+
+void clearScreen()
+{
+    //empties the console screen
+    system("cls");
+}
