@@ -54,7 +54,7 @@ void Menu::update()
 			drawChar(ARROW, MENU_OPTIONS[arrowId].screenPosition);
 		}
 			
-		Sleep(Constants::REFRESH_RATE);
+		Sleep(Constants::GAME_REFRESH_RATE);
 	}
 }
 
@@ -67,7 +67,14 @@ bool Menu::selectOption()
 	{
 		clearScreen();
 		gotoMainScreen();
+		// control screen doesnt break the input loop
+		return breakLoop;
+	}
 
+	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
+	{
+		clearScreen();
+		breakLoop = true;
 		return breakLoop;
 	}
 
@@ -92,7 +99,7 @@ bool Menu::selectOption()
 	return breakLoop;
 }
 
-bool Menu::startMainMenu()
+bool Menu::displayMainMenu()
 {
 	gotoMainScreen();
 	Sleep(LINE_PRINT_DELAY*3);

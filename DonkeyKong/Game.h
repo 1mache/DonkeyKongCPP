@@ -12,13 +12,18 @@ class Game
 {
 	static constexpr int ESC = 27;
 	static constexpr char MARIO_SPRITE = '@';
-	static constexpr Point START_POS = {2, 22};
+	static constexpr Point START_POS = {2, 23};
+	static constexpr Point PAUSEMESSAGE_POS = {31, 2};
+	// ChatGPT said that this is the way for static constexpr string
+	static constexpr const char* PAUSE_MESSAGE = "Game Paused: Press ESC to continue";
 
 	Board gameBoard;
 	Player player;
 
+	bool isPaused = false;
+	bool gameOver = false;
+
 	void update();
-	void endGame();
 	void pauseGame();
 	void continueGame();
 

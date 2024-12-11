@@ -7,6 +7,7 @@
 class Board {
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
+	static constexpr char PAULINE = '$';
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q' };
 	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
 
@@ -19,7 +20,7 @@ class Board {
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 		  "Q                      $                                           _  _        Q", // 1
 		  "Q     (_)(_)       =========                                      ( \\/ )       Q", // 2
-		  "Q     (_)(_) &     H       H                                       \\  / X 3    Q", // 3
+		  "Q     (_)(_) &     H       H                                       \\  / - 3    Q", // 3
 		  "Q===============================                                    \\/         Q", // 4
 		  "Q                            H                                                 Q", // 5
 		  "Q                            H                                                 Q", // 6
@@ -57,6 +58,13 @@ public:
 		return ((0 < x && x < WIDTH) && (0 < y && y < HEIGHT)); 
 	}
 	bool isObstacleAtPos(Point position) const;
-	bool isLadderAtPos(Point position)const { return getCharAtPos(position) == LADDER; }
+	bool isLadderAtPos(Point position)const 
+	{ 
+		return getCharAtPos(position) == LADDER; 
+	}
+	bool isPaulineAtPos(Point position) const 
+	{ 
+		return getCharAtPos(position) == PAULINE; 
+	}
 };
 

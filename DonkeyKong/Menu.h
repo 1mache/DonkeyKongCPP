@@ -31,12 +31,12 @@ class Menu
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
 	static constexpr int NUM_OF_OPTIONS = 3;
 	static constexpr MenuOption START_GAME_OPTION = { Point(32, 18), " Start Game" };
-	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), "  Controls" };
-	static constexpr MenuOption EXIT_OPTION = { Point(32, 21), "   EXIT" };
+	static constexpr MenuOption CONTROLS_OPTION = { Point(33, 19), " Controls" };
+	static constexpr MenuOption EXIT_OPTION = { Point(35, 21), " EXIT" };
 
 	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
 
-	const char* mainScreen[HEIGHT] = {
+	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
@@ -66,7 +66,7 @@ class Menu
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
 
-	const char* controlScreen[HEIGHT] = {
+	static constexpr const char* controlScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
@@ -80,7 +80,7 @@ class Menu
 			"Q                                                                .-~'='~-.     Q", // 8
 			"Q                                                               /`~`\"Y\"`~`\\    Q", // 9
 			"Q                                                              / /(  *  )\\ \\   Q", // 10
-			"Q                                                             / /  )   (  \\ \\  Q", // 11
+			"Q                  $                                          / /  )   (  \\ \\  Q", // 11
 			"Q       =>>>>>>>>>>>>>>=                                      \\ \\_/\\\\_//\\_/ /  Q", // 12
 			"Q       H              H                                       \\/_) '*' (_\\/   Q", // 13
 			"Q       H      @       H                                         |       |     Q", // 14
@@ -88,7 +88,7 @@ class Menu
 			"Q                                                                              Q", // 16
 			"Q                                                                              Q", // 17
 			"Q             A - Move Left | D - Move Right | W - Jump/Climb Up               Q", // 18
-			"Q                             X - Climb Down                                   Q", // 19
+			"Q                             X - Climb Down | ESC - Pause                     Q", // 19
 			"Q                                                                              Q", // 20
 			"Q                                                                              Q", // 21
 			"Q                                   > Back                                     Q", // 22
@@ -96,8 +96,71 @@ class Menu
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
 
+	static constexpr const char* gameOverScreen[HEIGHT] = {
+		// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
+		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
+		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
+		  "Q                                                                              Q", // 1
+		  "Q       GGG    AAAAA   M   M   EEEEE       OOO    V     V   EEEEE   RRRR       Q", // 2
+		  "Q      G       A   A   MM MM   E          O   O    V   V    E       R   R      Q", // 3
+		  "Q      G  GG   AAAAA   M M M   EEEE       O   O     V V     EEEE    RRRR       Q", // 4
+		  "Q      G   G   A   A   M   M   E          O   O      V      E       R  R       Q", // 5
+		  "Q       GGG    A   A   M   M   EEEEE       OOO       V      EEEEE   R   R      Q", // 6
+		  "Q                                                                              Q", // 7
+		  "Q                            ,-'~~~\\         __                                Q", // 8
+		  "Q                          ,'        ~____/~~~%%',                             Q", // 9
+		  "Q                         (                    %  Y                            Q", // 10
+		  "Q                        {                      %% I                           Q", // 11
+		  "Q                       {      -                 %  `.                         Q", // 12
+		  "Q                       |       ',                %  )                         Q", // 13
+		  "Q                       |        |   ,..__      __. Y                          Q", // 14
+		  "Q                       |    .,_./  Y ' / ^Y   J   )|                          Q", // 15
+		  "Q                       \\           |' /   |   |   ||                          Q", // 16
+		  "Q                        \\          L_/    . _ (_,.'(                          Q", // 17
+		  "Q                         \\,   ,      ^^\"\"' / |      )                         Q", // 18
+		  "Q                           \\_  \\          /,L]     /                          Q", // 19
+		  "Q                              '-_`-,       ` `   ./`                          Q", // 20
+		  "Q                                 `-(_            )                            Q", // 21
+		  "Q                                     ^^\\..___,.--`                            Q", // 22
+		  "Q                                                                              Q", // 23
+		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
+		  
+	};
+
+	static constexpr const char* winScreen[HEIGHT] = {
+		// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
+		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
+		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
+		  "Q                                                                              Q", // 1
+		  "Q            Y   Y   OOO    U   U       W     W    OOO    N   N    #           Q", // 2
+		  "Q             Y Y   O   O   U   U       W     W   O   O   NN  N    #           Q", // 3
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N N N    #           Q", // 4
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N  NN                Q", // 5
+		  "Q              Y     OOO     UUU          W W      OOO    N   N    0           Q", // 6
+		  "Q                                                                              Q", // 7
+		  "Q                                                                              Q", // 8
+		  "Q                                                                              Q", // 9
+		  "Q                                                                              Q", // 10
+		  "Q                                                                              Q", // 11
+		  "Q                                                                              Q", // 12
+		  "Q                                                                              Q", // 13
+		  "Q                                                                              Q", // 14
+		  "Q                                                                              Q", // 15
+		  "Q                                                                              Q", // 16
+		  "Q                                                                              Q", // 17
+		  "Q                                                                              Q", // 18
+		  "Q                                                                              Q", // 19
+		  "Q                                                                              Q", // 20
+		  "Q                                                                              Q", // 21
+		  "Q                                                                              Q", // 22
+		  "Q                                                                              Q", // 23
+		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" // 24
+	};
+
 	static constexpr int MAIN_SCREEN_ID = 0;
 	static constexpr int CONTROL_SCREEN_ID = 1;
+	static constexpr int WIN_SCREEN_ID = 2;
+	static constexpr int GAMEOVER_SCREEN_ID = 3;
 
 	//which screen are we on
 	int currentScreenId = MAIN_SCREEN_ID;
@@ -138,22 +201,26 @@ class Menu
 
 	void gotoGameOverScreen()
 	{
-
+		print(gameOverScreen, LINE_PRINT_DELAY * 2);
+		currentScreenId = GAMEOVER_SCREEN_ID;
 	}
 
 	void gotoWinScreen()
 	{
-
+		print (winScreen, LINE_PRINT_DELAY * 2);
+		currentScreenId = WIN_SCREEN_ID;
 	}
 
 public:
-	bool startMainMenu();
-	void gameOver() 
+	bool displayMainMenu();
+	void displayGameOver() 
 	{
 		gotoGameOverScreen();
+		update();
 	}
-	void winScreen()
+	void displayWinScreen()
 	{
 		gotoWinScreen();
+		update();
 	}
 };

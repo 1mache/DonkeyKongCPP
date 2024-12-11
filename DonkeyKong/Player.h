@@ -2,6 +2,7 @@
 
 #include "Point.h"
 #include "Movement.h"
+#include "Constants.h"
 
 class Player
 {
@@ -10,6 +11,7 @@ class Player
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
     // Final height should be 2, I made it 3 so you can jump between platforms
+    static constexpr int MAX_LIVES = 3;
     static constexpr int MAX_FALL_HEIGHT = 5;
     static const int jumpHeight = 2;
 
@@ -21,7 +23,7 @@ class Player
     //the player keeps the horizontal state if it is not changed
     MoveState horizontalState = STAY;
 
-    int lives = 3;
+    int lives = MAX_LIVES;
     
     //   mid jump not falling
     bool midJump = false;
@@ -55,10 +57,17 @@ public:
     Player(Board* _gameBoard, char _spriteChar, Point _startPos): 
         playerMovement(Movement(_gameBoard, _spriteChar, _startPos)), gameBoard(_gameBoard){}
 
+    Point getPosition()
+    {
+        return playerMovement.getPosition();
+    }
+    
     void movePlayer();
     void stateByKey(char key);
     int getLives()
     {
         return lives;
     }
+
+    void takeDamage();
 };

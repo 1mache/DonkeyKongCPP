@@ -22,10 +22,22 @@ void Player::stateByKey(char key)
     }
 }
 
+void Player::takeDamage()
+{
+    lives--;
+    //little animation     MAGIC NUMBER
+    for (size_t i = 0; i < 5; i++)
+    {
+        playerMovement.erase();
+        Sleep(Constants::GAME_REFRESH_RATE * 2);
+        playerMovement.draw();
+        Sleep(Constants::GAME_REFRESH_RATE * 2);
+    }
+}
+
 void Player::movePlayer()
 {
     bool onGround = playerMovement.checkOnGround();
-    int fallHeight = playerMovement.getFallHeight();
     Point position = playerMovement.getPosition();
 
     //     LEFT - (-1) || STAY = 0 || RIGHT = 1
@@ -74,10 +86,9 @@ void Player::movePlayer()
 
     //if we fell more than X lines we get hurt
     // NOTE: BUG in this if statement, it is triggered by repeated jumping=====================
-    if (playerMovement.checkOnGround() && fallHeight >= MAX_FALL_HEIGHT)
+    if (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT))
     {
-        //die
-        lives = 0;
+        takeDamage();
     }
 }
 
