@@ -64,7 +64,9 @@ void Player::movePlayer()
             return;
         }
         else
+        {
             jump();
+        }
     }
 
     if (curState == DOWN)

@@ -8,6 +8,7 @@ void Game::startGame()
     while(true)
     {
         Menu menu;
+        menu.displayWinScreen();
 
         //menu.start returns 1 if the user chose the exit option in the menu
         bool exitflag = menu.displayMainMenu();
@@ -25,6 +26,7 @@ void Game::startGame()
         if (gameOver)
         {
             menu.displayGameOver();
+            gameOver = false;
         }
         else
         {
@@ -32,7 +34,7 @@ void Game::startGame()
         }
 
         player = Player(&gameBoard, MARIO_SPRITE, START_POS);
-    }
+    }   
 
     //TEST===================================================================
     //int frameCounter = 0;
