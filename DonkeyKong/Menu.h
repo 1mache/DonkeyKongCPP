@@ -35,7 +35,7 @@ class Menu
 	static constexpr MenuOption EXIT_OPTION = { Point(32, 21), "   EXIT" };
 
 	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
-	
+
 	const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -72,10 +72,10 @@ class Menu
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 			"Q                                                                              Q", // 1
 			"Q                                                                              Q", // 2
-            "Q   CCCCC   OOOOO   N   N  TTTTT  RRRR    OOOOO   L      SSSSS   w*W*W*W*w     Q", // 3
-            "Q  C       O     O  NN  N    T    R   R  O     O  L      S        \\\".\".\"/      Q", // 4
-            "Q  C       O     O  N N N    T    RRRR   O     O  L       SSS      //`\\\\       Q", // 5
-            "Q  C       O     O  N  NN    T    R   R  O     O  L          S    (/a a\\)      Q", // 6
+			"Q   CCCCC   OOOOO   N   N  TTTTT  RRRR    OOOOO   L      SSSSS   w*W*W*W*w     Q", // 3
+			"Q  C       O     O  NN  N    T    R   R  O     O  L      S        \\\".\".\"/      Q", // 4
+			"Q  C       O     O  N N N    T    RRRR   O     O  L       SSS      //`\\\\       Q", // 5
+			"Q  C       O     O  N  NN    T    R   R  O     O  L          S    (/a a\\)      Q", // 6
 			"Q   CCCCC   OOOOO   N   N    T    R   R   OOOOO   LLLLL  SSSSS    (\\_-_/)      Q", // 7
 			"Q                                                                .-~'='~-.     Q", // 8
 			"Q                                                               /`~`\"Y\"`~`\\    Q", // 9
@@ -95,12 +95,12 @@ class Menu
 			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
-	
+
 	static constexpr int MAIN_SCREEN_ID = 0;
 	static constexpr int CONTROL_SCREEN_ID = 1;
-	
+
 	//which screen are we on
-	int currentScreenId = MAIN_SCREEN_ID; 
+	int currentScreenId = MAIN_SCREEN_ID;
 	//what menu option the arrow is pointing to
 	int arrowId = START_ARROW_ID;
 	bool exitFlag = false;
@@ -119,10 +119,10 @@ class Menu
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
 
 	void update();
-	
+
 	bool selectOption();
 
-	void gotoMainScreen() 
+	void gotoMainScreen()
 	{
 		arrowId = START_ARROW_ID;
 		print(mainScreen, LINE_PRINT_DELAY);
@@ -136,7 +136,24 @@ class Menu
 		currentScreenId = CONTROL_SCREEN_ID;
 	}
 
-public:
-	bool start();
+	void gotoGameOverScreen()
+	{
 
+	}
+
+	void gotoWinScreen()
+	{
+
+	}
+
+public:
+	bool startMainMenu();
+	void gameOver() 
+	{
+		gotoGameOverScreen();
+	}
+	void winScreen()
+	{
+		gotoWinScreen();
+	}
 };

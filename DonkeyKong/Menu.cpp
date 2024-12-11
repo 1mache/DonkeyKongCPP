@@ -92,7 +92,7 @@ bool Menu::selectOption()
 	return breakLoop;
 }
 
-bool Menu::start()
+bool Menu::startMainMenu()
 {
 	gotoMainScreen();
 	Sleep(LINE_PRINT_DELAY*3);

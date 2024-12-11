@@ -48,7 +48,7 @@ public:
 	void reset();
 	void print() const;
 
-	char getCharAtPos (Point position) const { return currentBoard[position.getY()][position.getX()]; }
+	char getCharAtPos(Point position) const;
 
 	bool isPosInBounds(Point position) const 
 	{

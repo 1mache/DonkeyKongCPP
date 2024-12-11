@@ -4,14 +4,14 @@ void Game::startGame()
 {
     ShowConsoleCursor(false);
     //================================MENU==========================
-    //Menu menu;
+    Menu menu;
 
-    ////menu.start returns 1 if the user chose the exit option in the menu
-    //bool exitFlag = menu.start();
-    //if (exitFlag)
-    //{
-    //    return;
-    //}
+    //menu.start returns 1 if the user chose the exit option in the menu
+    bool exitflag = menu.startMainMenu();
+    if (exitflag)
+    {
+        return;
+    }
 
 	gameBoard.reset();
 	gameBoard.print();

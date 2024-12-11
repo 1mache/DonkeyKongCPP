@@ -13,6 +13,20 @@ void Board::print() const {
 	std::cout << currentBoard[HEIGHT - 1];
 }
 
+char Board::getCharAtPos(Point position) const
+{
+	if((position.getX() >= 0 && position.getX() < WIDTH)
+		&& (position.getY() >= 0 && position.getY() < HEIGHT))
+	{
+		return currentBoard[position.getY()][position.getX()];
+	}
+	else
+	{
+		//if point out of screen bounds return screen border
+		return SCREEN_BORDER;
+	}
+}
+
 bool Board::isObstacleAtPos(Point position) const
 {
 	bool isObstacle = false;
