@@ -26,9 +26,7 @@ class Movement
     void gravity()
     {
         //pull down by 1
-        Point newPosition = position.oneBelow();
-        // every time gravity is successfully pulling our object we update fallHeight
-        position = newPosition;
+        position = position.oneBelow();
     }
 
 public:

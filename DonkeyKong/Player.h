@@ -34,6 +34,12 @@ class Player
     
     void jump();
 
+    bool isInvalidLadderMove()
+    {
+        //checks if were trying to move sideways or pressed stay on ladder
+        return (curState == STAY || curState == RIGHT || curState == LEFT) && midClimb;
+    }
+
     bool canClimbUp(Point position) 
     {
         // while climbing up we need to be on the ladder or one tile above the ladder

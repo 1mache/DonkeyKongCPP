@@ -40,25 +40,16 @@ void Player::movePlayer()
     bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
-    //     LEFT - (-1) || STAY = 0 || RIGHT = 1
-    int moveX = DIRECTIONS[horizontalState].getX();
-    int moveY = 0;
-
-    //if were on a ladder in one of the current states
-    if (curState == STAY || curState == RIGHT || curState == LEFT)
+    if (isInvalidLadderMove())
     {
-        if (gameBoard->isLadderAtPos(position)
-            && !onGround && !midJump && (playerMovement.getFallHeight() == 0))
-        {
-            //dont move and dont apply gravity
-            playerMovement.move(DIRECTIONS[STAY], false);
-            return;
-        }
+        playerMovement.move(DIRECTIONS[STAY], false);
+        return;
     }
 
     if (curState == UP)
-    {
-        if (canClimbUp(position) && !midJump)
+    {   
+                                    // not mid jump and not mid fall
+        if (canClimbUp(position) && !midJump && playerMovement.getFallHeight() == 0)
         {
             climbUp();
             return;
@@ -66,6 +57,7 @@ void Player::movePlayer()
         else
         {
             jump();
+            return;
         }
     }
 
@@ -77,38 +69,40 @@ void Player::movePlayer()
             return;
         }
     }
-
-    if (midJump)
-    {
-        moveY = -1;
-    }
     
-    //no gravity if were mid jump
-    playerMovement.move( Point(moveX, moveY) , !midJump);
+    // if we got here we
+    playerMovement.move( DIRECTIONS[horizontalState], true);
 
     //if we fell more than X lines we get hurt
-    // NOTE: BUG in this if statement, it is triggered by repeated jumping=====================
     if (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT))
     {
         takeDamage();
     }
 }
 
-//returns if were mid jump right now
 void Player::jump()
 {
+    Point movePosition;
+
     // if were on the ground and the move state is up OR were mid jump and havent reached jump height
     if (playerMovement.checkOnGround() || (midJump && (heightTraveled < jumpHeight)))
     {
+        // horizontal state
         heightTraveled += 1;
         midJump = true;
+                           //up, dowm or stay          add up direction
+        movePosition = DIRECTIONS[horizontalState].oneAbove();
     }
     else
     {
         heightTraveled = 0;
         midJump = false;
         curState = horizontalState;
+
+        movePosition = DIRECTIONS[horizontalState];
     }
+
+    playerMovement.move(movePosition, !midJump);
 }
 
 void Player::climbUp()
@@ -121,6 +115,8 @@ void Player::climbUp()
         if(playerMovement.checkOnGround())
         {
             midClimb = false;
+            //stay after climbing up ==================================================
+            horizontalState = STAY;
             curState = horizontalState;
         }
     }

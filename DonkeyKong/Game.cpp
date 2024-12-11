@@ -8,7 +8,6 @@ void Game::startGame()
     while(true)
     {
         Menu menu;
-        menu.displayWinScreen();
 
         //menu.start returns 1 if the user chose the exit option in the menu
         bool exitflag = menu.displayMainMenu();
@@ -43,6 +42,7 @@ void Game::startGame()
 
 void Game::update()
 {
+    // QUESTION =================================
     while (true)
     {
         if (_kbhit())
@@ -99,7 +99,7 @@ void Game::continueGame()
 {
     isPaused = false;
     //erase pause game message  
-    for (size_t i = 0; i < strlen(PAUSE_MESSAGE); i++)
+    for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
     {
         gotoxy(PAUSEMESSAGE_POS.getX() + i, PAUSEMESSAGE_POS.getY());
         std::cout << ' ';
