@@ -49,3 +49,8 @@ void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
 
     draw();
 }
+
+bool Movement::reachedWall() const
+{
+    return(((!canMoveToPos(position.oneLeft())) || (!canMoveToPos(position.oneRight()))) && checkOnGround());
+}

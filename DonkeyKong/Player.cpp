@@ -88,7 +88,7 @@ void Player::jump()
     if (playerMovement.checkOnGround() || (midJump && (heightTraveled < jumpHeight)))
     {
         // horizontal state
-        heightTraveled += 1;
+        heightTraveled += 1; // **Why also here and in movement?**
         midJump = true;
                            //up, dowm or stay          add up direction
         movePosition = DIRECTIONS[horizontalState].oneAbove();
