@@ -15,8 +15,9 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 void Menu::update()
 {
 	flushInputBuffer();
-	
-	while (true)
+
+	bool exitMenu = false;
+	while (!exitMenu)
 	{
 		if (_kbhit())
 		{
@@ -40,8 +41,8 @@ void Menu::update()
 			if(key == KEYS[SELECT])
 			{
 				//==========KEEP THIS VARUIABLE ???====================
-				bool breakLoop = selectOption();
-				if(breakLoop)
+				exitMenu = selectOption();
+				if(exitMenu) 
 				{
 					break;
 				}
@@ -60,7 +61,7 @@ void Menu::update()
 
 bool Menu::selectOption()
 {
-	bool breakLoop = false;
+	bool exitMenu = false;
 
 	//if were on the control screen there is always a single option
 	if (currentScreenId == CONTROL_SCREEN_ID)
@@ -68,14 +69,14 @@ bool Menu::selectOption()
 		clearScreen();
 		gotoMainScreen();
 		// control screen doesnt break the input loop
-		return breakLoop;
+		return exitMenu;
 	}
 
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
 		clearScreen();
-		breakLoop = true;
-		return breakLoop;
+		exitMenu = true;
+		return exitMenu;
 	}
 
 	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
@@ -87,16 +88,16 @@ bool Menu::selectOption()
 	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
 	{
 		clearScreen();
-		breakLoop = true;
+		exitMenu = true;
 	}
 	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
 	{
 		clearScreen();
 		exitFlag = true;
-		breakLoop = true;
+		exitMenu = true;
 	}
 
-	return breakLoop;
+	return exitMenu;
 }
 
 bool Menu::displayMainMenu()

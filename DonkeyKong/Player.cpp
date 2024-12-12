@@ -116,8 +116,7 @@ void Player::climbUp()
         {
             midClimb = false;
             //stay after climbing up ==================================================
-            horizontalState = STAY;
-            curState = horizontalState;
+            curState = horizontalState = STAY;
         }
     }
     else
@@ -137,7 +136,7 @@ void Player::climbDown()
         if (playerMovement.checkOnGround())
         {
             midClimb = false;
-            curState = horizontalState;
+            curState = horizontalState = STAY;
         }
     }
     else

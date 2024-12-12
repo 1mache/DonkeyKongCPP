@@ -3,7 +3,7 @@
 void Game::startGame()
 {
     ShowConsoleCursor(false);
-    //================================MENU==========================
+    //=========================MENU==========================
     // this loop returns us to the main menu after a win/ gameOver
     while(true)
     {
@@ -19,7 +19,6 @@ void Game::startGame()
         gameBoard.reset();
         gameBoard.print();
 
-
         update();
 
         if (gameOver)
@@ -31,8 +30,6 @@ void Game::startGame()
         {
             menu.displayWinScreen();
         }
-
-        player = Player(&gameBoard, MARIO_SPRITE, START_POS);
     }   
 
     //TEST===================================================================
@@ -43,7 +40,7 @@ void Game::startGame()
 void Game::update()
 {
     // QUESTION =================================
-    while (true)
+    while (!gameOver)
     {
         if (_kbhit())
         {
