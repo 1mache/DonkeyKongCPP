@@ -32,7 +32,11 @@ void Game::startGame()
             menu.displayWinScreen();
         }
 
-        player = Player(&gameBoard, MARIO_SPRITE, START_POS);
+        player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
+
+        //
+        dk = DonkeyKong(&gameBoard, DONKEY_KONG_SPRITE, DONKEY_KONG_POS);
+
     }   
 
     //TEST===================================================================
@@ -62,6 +66,18 @@ void Game::update()
         if(!isPaused)
         {
             player.movePlayer();
+
+            dk.barrelsManager();
+
+            // if we want delay, we need to the split the barrelsManager to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
+            
+            //if (delayCounter <= 0)
+            //{
+            //    // Spawn function here
+
+            //    delayCounter = barrelsDelayAmount;
+            //}
+            //delayCounter--;
 
             //game over check
             if (player.getLives() == 0)
