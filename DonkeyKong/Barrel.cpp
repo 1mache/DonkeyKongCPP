@@ -3,6 +3,7 @@
 void Barrel::setBarrelDirection()
 {
     char charBelow = gameBoard->getCharAtPos(barrelMovement.getPosition().oneBelow());
+
     if (charBelow == LEFT_FLOOR)
     {
         barrelDir = RollDirection::LEFT;
@@ -15,11 +16,15 @@ void Barrel::setBarrelDirection()
 
 void Barrel::moveBarrel()
 {
+    gameBoard->resetCharAtPos(barrelMovement.getPosition());
+    
     setBarrelDirection();
-
     barrelMovement.move(DIRECTIONS[barrelDir], true);
+
+    gameBoard->updateBoardWithChar(barrelMovement.getPosition(), spriteChar);
 }
 
+// ===========================CHANGE??===========================
 bool Barrel::checkExploded()
 {
     if ((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) || (barrelMovement.reachedWall()))
@@ -31,13 +36,3 @@ bool Barrel::checkExploded()
 
     return false;
 }
-
-bool Barrel::checkHitMario()
-{
-    // add real code for check
-    return true;
-}
-
-
-
-

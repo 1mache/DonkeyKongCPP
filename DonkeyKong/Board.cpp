@@ -15,16 +15,35 @@ void Board::print() const {
 
 char Board::getCharAtPos(Point position) const
 {
-	if((position.getX() >= 0 && position.getX() < WIDTH)
-		&& (position.getY() >= 0 && position.getY() < HEIGHT))
+	int x = position.getX();
+	int y = position.getY();
+
+	if((x >= 0 && x < WIDTH)
+		&& (y >= 0 && y < HEIGHT))
 	{
-		return currentBoard[position.getY()][position.getX()];
+		return currentBoard[y][x];
 	}
 	else
 	{
 		//if point out of screen bounds return screen border
 		return SCREEN_BORDER;
 	}
+}
+
+void Board::updateBoardWithChar(Point position, char newChar)
+{
+	int x = position.getX();
+	int y = position.getY();
+
+	currentBoard[y][x] = newChar;
+}
+
+void Board::resetCharAtPos(Point position)
+{
+	int x = position.getX();
+	int y = position.getY();
+
+	currentBoard[y][x] = originalBoard[y][x];
 }
 
 bool Board::isObstacleAtPos(Point position) const

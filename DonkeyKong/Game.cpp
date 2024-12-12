@@ -64,9 +64,9 @@ void Game::update()
         
         if(!isPaused)
         {
-            player.movePlayer();
-
             dk.barrelsManager();
+
+            player.movePlayer();
 
             // if we want delay, we need to the split the barrelsManager to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
             

@@ -16,19 +16,17 @@ class Barrel
 
     //movement component
     Movement barrelMovement;
+    char spriteChar;
     Board* gameBoard = nullptr;
-
-    bool barrelEnabled = true;
-
+    
     RollDirection barrelDir = RollDirection::RIGHT;
 
     void setBarrelDirection();
 
 public:
     Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, RollDirection _startDir) :
-        barrelDir(_startDir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), gameBoard(_gameBoard) {}
+        barrelDir(_startDir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
     
     void moveBarrel();
     bool checkExploded();
-    bool checkHitMario();
 };

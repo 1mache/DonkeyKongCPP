@@ -51,6 +51,9 @@ public:
 
 	char getCharAtPos(Point position) const;
 
+	void updateBoardWithChar(Point position, char newChar);
+	void resetCharAtPos(Point position);
+
 	bool isPosInBounds(Point position) const 
 	{
 		int x = position.getX();

@@ -9,10 +9,12 @@
 
 class DonkeyKong
 {
+    static constexpr char DK_CHAR = '&';
+    // =============================== MOVE TO BARREL CLASS? ============================
+    static constexpr char BARREL_CHAR = 'O';
+    static constexpr int SPAWN_DELAY = 20;
+    
     Point dkPosition;
-    static constexpr char dkChar = '&';
-    static constexpr char barrelChar = 'O';
-    static constexpr int spawnDelay = 20;
     int frameCounter = 0;
     // Duplicate code - the same as in Barrel
     /*enum RollDirection { LEFT, RIGHT };
@@ -21,6 +23,7 @@ class DonkeyKong
     //
 
     Board* gameBoard = nullptr;
+    // ========= DO WE NEED TO FREE ? ==========
     std::vector<Barrel> barrelsVector;
 
 public:

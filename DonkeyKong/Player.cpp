@@ -40,6 +40,7 @@ void Player::movePlayer()
     bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
+    // STAY IS VALID !!!!!!!!!!!!!!!!!
     if (isInvalidLadderMove())
     {
         playerMovement.move(DIRECTIONS[STAY], false);
@@ -78,6 +79,12 @@ void Player::movePlayer()
     {
         takeDamage();
     }
+    //                                     MAGIC CHAR +=================================================
+    if(gameBoard->getCharAtPos(position) == 'O')
+    {
+        takeDamage();
+    }
+
 }
 
 void Player::jump()
@@ -88,7 +95,7 @@ void Player::jump()
     if (playerMovement.checkOnGround() || (midJump && (heightTraveled < jumpHeight)))
     {
         // horizontal state
-        heightTraveled += 1; // **Why also here and in movement?**
+        heightTraveled += 1;
         midJump = true;
                            //up, dowm or stay          add up direction
         movePosition = DIRECTIONS[horizontalState].oneAbove();
