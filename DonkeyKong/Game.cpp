@@ -8,7 +8,7 @@ bool Game::start()
     flushInputBuffer();
     update();
 
-    return gameOver;
+    return (lives == 0);
 }
 
 void Game::resetLevel()
@@ -93,7 +93,6 @@ bool Game::handleStrike()
 
     if (lives == 0)
     {
-        gameOver = true;
         return false;
     }
     else
