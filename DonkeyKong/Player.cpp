@@ -24,9 +24,9 @@ void Player::stateByKey(char key)
 
 void Player::takeDamage()
 {
-    lives--;
-    //little animation     MAGIC NUMBER
-    for (size_t i = 0; i < 5; i++)
+    //dead = true;
+    //little animation 
+    for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {
         playerMovement.erase();
         Sleep(Constants::GAME_REFRESH_RATE * 2);
@@ -40,8 +40,7 @@ void Player::movePlayer()
     bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
-    // STAY IS VALID !!!!!!!!!!!!!!!!!
-    if (isInvalidLadderMove())
+    if (horizontalMovesOnLadder())
     {
         playerMovement.move(DIRECTIONS[STAY], false);
         return;
@@ -71,7 +70,7 @@ void Player::movePlayer()
         }
     }
     
-    // if we got here we
+    // if we got here we just move the player horizontaly
     playerMovement.move( DIRECTIONS[horizontalState], true);
 
     //if we fell more than X lines we get hurt
@@ -79,12 +78,6 @@ void Player::movePlayer()
     {
         takeDamage();
     }
-    //                                     MAGIC CHAR +=================================================
-    if(gameBoard->getCharAtPos(position) == 'O')
-    {
-        takeDamage();
-    }
-
 }
 
 void Player::jump()
@@ -92,7 +85,7 @@ void Player::jump()
     Point movePosition;
 
     // if were on the ground and the move state is up OR were mid jump and havent reached jump height
-    if (playerMovement.checkOnGround() || (midJump && (heightTraveled < jumpHeight)))
+    if (playerMovement.checkOnGround() || (midJump && (heightTraveled < JUMP_HEIGHT)))
     {
         // horizontal state
         heightTraveled += 1;

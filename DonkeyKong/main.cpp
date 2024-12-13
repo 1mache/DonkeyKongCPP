@@ -1,11 +1,7 @@
-#include "utils.h"
-#include "Board.h"
-#include "Player.h"
-#include "Game.h"
+#include "GameManager.h"
 
 int main(int argc, char* argv[]) 
 {
-    Game game;
-
-    game.startGame();
+	GameManager gameManager;
+	gameManager.launchGame();
 }

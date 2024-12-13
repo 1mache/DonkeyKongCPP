@@ -1,51 +1,32 @@
 #include "Game.h"
 
-void Game::startGame()
+bool Game::start()
 {
-    ShowConsoleCursor(false);
-    //=========================MENU==========================
-    // this loop returns us to the main menu after a win/ gameOver
-    while(true)
-    {
-        Menu menu;
+    gameBoard.reset();
+    gameBoard.print();
 
-        //menu.start returns 1 if the user chose the exit option in the menu
-        bool exitflag = menu.displayMainMenu();
-        if (exitflag)
-        {
-            break;
-        }
+    flushInputBuffer();
+    update();
 
-        gameBoard.reset();
-        gameBoard.print();
+    return gameOver;
+}
 
-        update();
+void Game::resetLevel()
+{
+    clearScreen();
 
-        if (gameOver)
-        {
-            menu.displayGameOver();
-            gameOver = false;
-        }
-        else
-        {
-            menu.displayWinScreen();
-        }
+    gameBoard.reset();
+    gameBoard.print();
+    flushInputBuffer();
 
-        player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
-
-        //
-        dk = DonkeyKong(&gameBoard, DONKEY_KONG_SPRITE, DONKEY_KONG_POS);
-
-    }   
-
-    //TEST===================================================================
-    //int frameCounter = 0;
-    //Movement some = Movement(&gameBoard, '*', { 1, 6 });
+    player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
+    dk = DonkeyKong(&gameBoard, DONKEY_KONG_SPRITE, DONKEY_KONG_POS);
 }
 
 void Game::update()
 {
     // QUESTION =================================
+    // KEEP THE VARIABLE OR JUST WHILE TRUE
     while (!gameOver)
     {
         if (_kbhit())
@@ -64,9 +45,32 @@ void Game::update()
         
         if(!isPaused)
         {
-            dk.barrelsManager();
-
             player.movePlayer();
+            
+            if (gameBoard.getCharAtPos(player.getPosition()) == 'O')
+            {
+                player.takeDamage();
+            }
+
+            if (player.isDead())
+            {
+                lives--;
+                //*updtate health UI*()
+
+                if(lives == 0)
+                {
+                    gameOver = true;
+                    break;
+                }
+                else
+                {
+                    resetLevel();
+                    continue;
+                }
+                
+            }
+
+            dk.barrelsManager();
 
             // if we want delay, we need to the split the barrelsManager to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
             
@@ -78,26 +82,13 @@ void Game::update()
             //}
             //delayCounter--;
 
-            //game over check
-            if (player.getLives() == 0)
-            {
-                clearScreen();
-                gameOver = true;
-                break;
-            }
 
             //win check
             if(gameBoard.isPaulineAtPos(player.getPosition()))
             {
-                clearScreen();
                 break;
             }
         }
-        //TEST=====================================================================
-        //frameCounter++;
-        ////move the other object every second frame
-        //if(frameCounter % 2 == 0)
-        //  some.move(1, 0, false);
 
         Sleep(Constants::GAME_REFRESH_RATE);
     }
@@ -113,10 +104,12 @@ void Game::pauseGame()
 void Game::continueGame()
 {
     isPaused = false;
-    //erase pause game message  
+    //erase pause game message and restore what has been on the board 
+    Point restorePos = PAUSEMESSAGE_POS;
     for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
     {
-        gotoxy(PAUSEMESSAGE_POS.getX() + i, PAUSEMESSAGE_POS.getY());
-        std::cout << ' ';
+        gotoxy(restorePos.getX(), restorePos.getY());
+        std::cout << gameBoard.getCharAtPos(restorePos);
+        restorePos = restorePos.oneRight();
     }
 }

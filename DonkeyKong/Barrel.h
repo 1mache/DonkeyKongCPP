@@ -4,7 +4,7 @@
 #include "Movement.h"
 #include "Constants.h"
 
-// don't know if it's ok that they are outside the class, but DonkeyKong also uses them
+// FIND A WAY TO MOVE INSIDE THE CLASS
 enum RollDirection { LEFT, RIGHT };
 static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
@@ -19,14 +19,28 @@ class Barrel
     char spriteChar;
     Board* gameBoard = nullptr;
     
-    RollDirection barrelDir = RollDirection::RIGHT;
+    RollDirection rollDirection = RollDirection::RIGHT;
 
     void setBarrelDirection();
 
 public:
-    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, RollDirection _startDir) :
-        barrelDir(_startDir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
+    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, RollDirection _dir) :
+        rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
     
     void moveBarrel();
+
+    bool reachedWall() const;
+    
+    // NAME??
     bool checkExploded();
+
+    void rollLeft()
+    {
+        rollDirection = RollDirection::LEFT;
+    }
+
+    void rollRight()
+    {
+        rollDirection = RollDirection::RIGHT;
+    }
 };

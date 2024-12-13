@@ -10,10 +10,10 @@ class Player
     static constexpr Point DIRECTIONS[]  = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
-    // Final height should be 2, I made it 3 so you can jump between platforms
-    static constexpr int MAX_LIVES = 3;
+    
     static constexpr int MAX_FALL_HEIGHT = 5;
-    static const int jumpHeight = 2;
+    static constexpr int JUMP_HEIGHT = 2;
+    static constexpr int DEATH_ANIMATION_FRAMES = 5;
 
     //movement component
     Movement playerMovement;
@@ -23,9 +23,9 @@ class Player
     //the player keeps the horizontal state if it is not changed
     MoveState horizontalState = STAY;
 
-    int lives = MAX_LIVES;
+    bool dead = false;
     
-    //   mid jump not falling
+    //  mid jump not falling
     bool midJump = false;
     // height traveled during a jump 
     int heightTraveled = 0;
@@ -34,7 +34,7 @@ class Player
     
     void jump();
 
-    bool isInvalidLadderMove()
+    bool horizontalMovesOnLadder()
     {
         //checks if were trying to move sideways or pressed stay on ladder
         return (curState == STAY || curState == RIGHT || curState == LEFT) && midClimb;
@@ -70,9 +70,10 @@ public:
     
     void movePlayer();
     void stateByKey(char key);
-    int getLives()
+
+    bool isDead()
     {
-        return lives;
+        return dead;
     }
 
     void takeDamage();

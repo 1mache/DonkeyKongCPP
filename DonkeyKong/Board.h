@@ -1,6 +1,7 @@
 #pragma once
 #include <cstring>
 #include <iostream>
+#include <windows.h>
 #include "Point.h"
 #include "Constants.h"
 

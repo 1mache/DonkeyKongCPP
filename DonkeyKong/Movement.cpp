@@ -49,9 +49,3 @@ void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
 
     draw();
 }
-
-// move to barrel class
-bool Movement::reachedWall() const
-{
-    return(((!canMoveToPos(position.oneLeft())) || (!canMoveToPos(position.oneRight()))) && checkOnGround());
-}

@@ -63,6 +63,4 @@ public:
     }
 
     int getFallHeight() { return fallHeight; }
-
-    bool reachedWall() const;
 };

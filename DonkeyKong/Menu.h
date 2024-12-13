@@ -203,7 +203,7 @@ class Menu
 
 	void gotoWinScreen()
 	{
-		print (winScreen, LINE_PRINT_DELAY * 2);
+		print(winScreen, LINE_PRINT_DELAY * 2);
 		currentScreenId = WIN_SCREEN_ID;
 	}
 
