@@ -18,7 +18,6 @@ class Game
 	static constexpr Point MARIO_START_POS = { 2, 23 };
 	static constexpr Point DONKEY_KONG_POS = { 13, 3 };
 	static constexpr Point PAUSEMESSAGE_POS = { 31, 2 };
-	// ChatGPT said that this is the way for static constexpr string
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused: Press ESC to continue";
 	static constexpr int MAX_LIVES = 3;
 
@@ -33,6 +32,7 @@ class Game
 	bool isPaused = false;
 
 	void update();
+	bool handleStrike();
 	void pauseGame();
 	void continueGame();
 

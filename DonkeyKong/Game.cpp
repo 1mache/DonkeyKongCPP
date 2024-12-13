@@ -25,9 +25,7 @@ void Game::resetLevel()
 
 void Game::update()
 {
-    // QUESTION =================================
-    // KEEP THE VARIABLE OR JUST WHILE TRUE
-    while (!gameOver)
+    while (true)
     {
         if (_kbhit())
         {
@@ -48,38 +46,33 @@ void Game::update()
             player.movePlayer();
 
             //check for barrel collisions and fall damage
-            if (gameBoard.getCharAtPos(player.getPosition()) == BARREL_SPRITE
+            if (player.checkCollision()
                 || player.checkFallDamage())
             {
-                player.takeDamage();
-                lives--;
-                //*updtate health UI*()
-
-                if (lives == 0)
+                if(handleStrike())
                 {
-                    gameOver = true;
-                    break;
+                    continue; // level was reset, continue the game loop
                 }
                 else
                 {
-                    resetLevel();
-                    continue;
+                    break; // going to menu
                 }
             }
 
             barrelManager.manageBarrels();
 
-
-            // if we want delay, we need to the split the manageBarrels to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
-            
-            //if (delayCounter <= 0)
-            //{
-            //    // Spawn function here
-
-            //    delayCounter = barrelsDelayAmount;
-            //}
-            //delayCounter--;
-
+            //check again for barrel collisions - after barrels moved
+            if (player.checkCollision())
+            {
+                if (handleStrike())
+                {
+                    continue; // level was reset, continue the game loop
+                }
+                else
+                {
+                    break; // going to menu
+                }
+            }
 
             //win check
             if(gameBoard.isPaulineAtPos(player.getPosition()))
@@ -89,6 +82,24 @@ void Game::update()
         }
 
         Sleep(Constants::GAME_REFRESH_RATE);
+    }
+}
+
+bool Game::handleStrike()
+{
+    player.takeDamage();
+    lives--;
+    //*updtate health UI*()
+
+    if (lives == 0)
+    {
+        gameOver = true;
+        return false;
+    }
+    else
+    {
+        resetLevel();
+        return true;
     }
 }
 

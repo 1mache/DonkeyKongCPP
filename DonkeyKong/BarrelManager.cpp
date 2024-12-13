@@ -2,7 +2,7 @@
 
 void BarrelManager::spawnBarrel()
 {   //                          barrel constructor 
-    barrelsVector.emplace_back(gameBoard, BARREL_CHAR, dkPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
+    barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, dkPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
 }
 
 void BarrelManager::destroyBarrel(int index)
@@ -13,14 +13,17 @@ void BarrelManager::destroyBarrel(int index)
 
 void BarrelManager::moveAllBarrels()
 {
-    for (size_t i = 0; i < barrelsVector.size(); i++)
+    if(frameCounter % 2 == 0)
     {
-        if (barrelsVector[i].needsToExplode())
+        for (size_t i = 0; i < barrelsVector.size(); i++)
         {
-            destroyBarrel(i);
-        }
+            if (barrelsVector[i].needsToExplode())
+            {
+                destroyBarrel(i);
+            }
 
-        barrelsVector[i].moveBarrel();
+            barrelsVector[i].moveBarrel();
+        }
     }
 }
 

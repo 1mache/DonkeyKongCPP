@@ -9,9 +9,7 @@
 
 class BarrelManager
 {
-    // =============================== MOVE TO BARREL CLASS? ============================
-    static constexpr char BARREL_CHAR = 'O';
-    static constexpr int SPAWN_DELAY = 20;
+    static constexpr int SPAWN_DELAY = 30;
 
     Point dkPosition;
     int frameCounter = 0;
@@ -22,7 +20,6 @@ class BarrelManager
     //
 
     Board* gameBoard = nullptr;
-    // ========= DO WE NEED TO FREE ? ==========
     std::vector<Barrel> barrelsVector;
 
 public:

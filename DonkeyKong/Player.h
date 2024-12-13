@@ -76,5 +76,11 @@ public:
         return (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT));
     }
 
+    bool checkCollision() const
+    {
+        Point position = playerMovement.getPosition();
+        return gameBoard->getCharAtPos(position) == Board::BARREL;
+    }
+
     void takeDamage();
 };

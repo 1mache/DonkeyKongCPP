@@ -47,6 +47,8 @@ class Board {
 
 	char currentBoard[HEIGHT][WIDTH + 1]; // +1 for null terminator
 public:
+	static constexpr char BARREL = 'O';
+
 	void reset();
 	void print() const;
 
