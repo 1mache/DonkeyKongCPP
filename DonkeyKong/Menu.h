@@ -166,7 +166,7 @@ class Menu
 
 	void drawChar(char ch, Point position) const
 	{
-		gotoxy(position.getX(), position.getY());
+		gotoScreenPos(position);
 		std::cout << ch;
 	}
 

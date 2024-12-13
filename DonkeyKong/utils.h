@@ -1,10 +1,11 @@
 #pragma once
 
-#include <windows.h>
-#include <iostream>
+#include "Point.h"
 #include <conio.h>
+#include <iostream>
+#include <windows.h>
 
-void gotoxy(int x, int y);
+void gotoScreenPos(Point screenPosition);
 void ShowConsoleCursor(bool showFlag);
 void flushInputBuffer();
 void clearScreen();

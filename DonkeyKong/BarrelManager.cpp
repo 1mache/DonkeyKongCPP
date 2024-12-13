@@ -13,6 +13,7 @@ void BarrelManager::destroyBarrel(int index)
 
 void BarrelManager::moveAllBarrels()
 {
+    //move barrels every other frame so that they are slower than mario 
     if(frameCounter % 2 == 0)
     {
         for (size_t i = 0; i < barrelsVector.size(); i++)

@@ -1,12 +1,11 @@
-#include <iostream>
-
 #include "utils.h"
 
-void gotoxy(int x, int y) {
+void gotoScreenPos(Point screenPosition)
+{
     std::cout.flush();
     COORD coord; // Create a COORD structure 
-    coord.X = x; // Set the X coordinate 
-    coord.Y = y; // Set the Y coordinate 
+    coord.X = screenPosition.getX(); // Set the X coordinate 
+    coord.Y = screenPosition.getY(); // Set the Y coordinate 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // Move the cursor 
 }
 

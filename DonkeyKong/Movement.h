@@ -19,7 +19,7 @@ class Movement
 
     void draw(Point drawPosition, char c) const
     {
-        gotoxy(drawPosition.getX(), drawPosition.getY());
+        gotoScreenPos(drawPosition);
         std::cout << c;
     }
 

@@ -4,6 +4,7 @@ bool Game::start()
 {
     gameBoard.reset();
     gameBoard.print();
+    updateLivesCounter();
 
     flushInputBuffer();
     update();
@@ -17,6 +18,8 @@ void Game::resetLevel()
 
     gameBoard.reset();
     gameBoard.print();
+    updateLivesCounter();
+
     flushInputBuffer();
 
     player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
@@ -89,7 +92,6 @@ bool Game::handleStrike()
 {
     player.takeDamage();
     lives--;
-    //*updtate health UI*()
 
     if (lives == 0)
     {
@@ -105,7 +107,7 @@ bool Game::handleStrike()
 void Game::pauseGame()
 {
     isPaused = true;
-    gotoxy(PAUSEMESSAGE_POS.getX(), PAUSEMESSAGE_POS.getY());
+    gotoScreenPos(PAUSEMESSAGE_POS);
     std::cout << PAUSE_MESSAGE;
 }
 
@@ -116,7 +118,7 @@ void Game::continueGame()
     Point restorePos = PAUSEMESSAGE_POS;
     for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
     {
-        gotoxy(restorePos.getX(), restorePos.getY());
+        gotoScreenPos(restorePos);
         std::cout << gameBoard.getCharAtPos(restorePos);
         restorePos = restorePos.oneRight();
     }
