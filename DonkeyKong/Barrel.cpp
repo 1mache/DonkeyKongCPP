@@ -31,17 +31,9 @@ bool Barrel::reachedWall() const
         && barrelMovement.checkOnGround());
 }
 
-// ===========================CHANGE NAME ??===========================
-bool Barrel::checkExploded()
+void Barrel::explode()
 {
-    // explode barrel if it reached the wall or fell more than x chars
-    if (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround()) 
-        || reachedWall())
-    {
-        barrelMovement.erase();
-
-        return true;
-    }
-
-    return false;
+    barrelMovement.erase();
+    gameBoard->resetCharAtPos(barrelMovement.getPosition());
+    //add animation here
 }

@@ -21,6 +21,7 @@ class Barrel
     
     RollDirection rollDirection = RollDirection::RIGHT;
 
+    bool reachedWall() const;
     void setBarrelDirection();
 
 public:
@@ -29,10 +30,13 @@ public:
     
     void moveBarrel();
 
-    bool reachedWall() const;
+    bool needsToExplode()
+    {
+        return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
+            || reachedWall());
+    }
     
-    // NAME??
-    bool checkExploded();
+    void explode();
 
     void rollLeft()
     {

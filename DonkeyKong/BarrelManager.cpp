@@ -1,20 +1,21 @@
-#include "DonkeyKong.h"
+#include "BarrelManager.h"
 
-void DonkeyKong::spawnBarrel()
+void BarrelManager::spawnBarrel()
 {   //                          barrel constructor 
     barrelsVector.emplace_back(gameBoard, BARREL_CHAR, dkPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
 }
 
-void DonkeyKong::destroyBarrel(int index)
+void BarrelManager::destroyBarrel(int index)
 {
+    barrelsVector[index].explode();
     barrelsVector.erase(barrelsVector.begin() + index);
 }
 
-void DonkeyKong::moveAllBarrels()
+void BarrelManager::moveAllBarrels()
 {
     for (size_t i = 0; i < barrelsVector.size(); i++)
     {
-        if (barrelsVector[i].checkExploded())
+        if (barrelsVector[i].needsToExplode())
         {
             destroyBarrel(i);
         }
@@ -23,7 +24,7 @@ void DonkeyKong::moveAllBarrels()
     }
 }
 
-void DonkeyKong::barrelsManager()
+void BarrelManager::manageBarrels()
 {
     if (frameCounter <= 0)
     {
@@ -32,10 +33,6 @@ void DonkeyKong::barrelsManager()
     }
 
     moveAllBarrels();
-    
+
     frameCounter--;
 }
-
-
-
-

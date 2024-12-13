@@ -23,7 +23,6 @@ class Player
     //the player keeps the horizontal state if it is not changed
     MoveState horizontalState = STAY;
 
-    bool dead = false;
     
     //  mid jump not falling
     bool midJump = false;
@@ -71,9 +70,10 @@ public:
     void movePlayer();
     void stateByKey(char key);
 
-    bool isDead()
+    bool checkFallDamage() 
     {
-        return dead;
+        //return true if we just fell more than X tiles
+        return (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT));
     }
 
     void takeDamage();

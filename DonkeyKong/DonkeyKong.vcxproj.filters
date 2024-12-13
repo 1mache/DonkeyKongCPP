@@ -39,7 +39,10 @@
     <ClCompile Include="Barrel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DonkeyKong.cpp">
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarrelManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +74,10 @@
     <ClInclude Include="Barrel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DonkeyKong.h">
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarrelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

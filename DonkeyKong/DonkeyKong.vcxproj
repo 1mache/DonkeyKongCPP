@@ -20,8 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Barrel.cpp" />
+    <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="DonkeyKong.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -32,9 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barrel.h" />
+    <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="DonkeyKong.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Menu.h" />

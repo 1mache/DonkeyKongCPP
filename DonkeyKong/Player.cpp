@@ -24,7 +24,6 @@ void Player::stateByKey(char key)
 
 void Player::takeDamage()
 {
-    //dead = true;
     //little animation 
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {
@@ -72,12 +71,6 @@ void Player::movePlayer()
     
     // if we got here we just move the player horizontaly
     playerMovement.move( DIRECTIONS[horizontalState], true);
-
-    //if we fell more than X lines we get hurt
-    if (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT))
-    {
-        takeDamage();
-    }
 }
 
 void Player::jump()

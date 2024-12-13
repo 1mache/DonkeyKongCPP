@@ -20,7 +20,7 @@ void Game::resetLevel()
     flushInputBuffer();
 
     player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
-    dk = DonkeyKong(&gameBoard, DONKEY_KONG_SPRITE, DONKEY_KONG_POS);
+    barrelManager = BarrelManager(&gameBoard, DONKEY_KONG_POS);
 }
 
 void Game::update()
@@ -43,21 +43,19 @@ void Game::update()
             }
         }
         
-        if(!isPaused)
+        if (!isPaused)
         {
             player.movePlayer();
-            
-            if (gameBoard.getCharAtPos(player.getPosition()) == 'O')
+
+            //check for barrel collisions and fall damage
+            if (gameBoard.getCharAtPos(player.getPosition()) == BARREL_SPRITE
+                || player.checkFallDamage())
             {
                 player.takeDamage();
-            }
-
-            if (player.isDead())
-            {
                 lives--;
                 //*updtate health UI*()
 
-                if(lives == 0)
+                if (lives == 0)
                 {
                     gameOver = true;
                     break;
@@ -67,12 +65,12 @@ void Game::update()
                     resetLevel();
                     continue;
                 }
-                
             }
 
-            dk.barrelsManager();
+            barrelManager.manageBarrels();
 
-            // if we want delay, we need to the split the barrelsManager to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
+
+            // if we want delay, we need to the split the manageBarrels to 2 functions with loops. One that spawns every delay, and one that checks hits every frame
             
             //if (delayCounter <= 0)
             //{

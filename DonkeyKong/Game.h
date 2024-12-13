@@ -8,13 +8,13 @@
 #include "Point.h"
 #include "Menu.h"
 #include "Barrel.h"
-#include "DonkeyKong.h"
+#include "BarrelManager.h"
 
 class Game
 {
 	static constexpr int ESC = 27;
 	static constexpr char MARIO_SPRITE = '@';
-	static constexpr char DONKEY_KONG_SPRITE = '&';
+	static constexpr char BARREL_SPRITE = 'O';
 	static constexpr Point MARIO_START_POS = { 2, 23 };
 	static constexpr Point DONKEY_KONG_POS = { 13, 3 };
 	static constexpr Point PAUSEMESSAGE_POS = { 31, 2 };
@@ -25,7 +25,7 @@ class Game
 	Board gameBoard;
 	Player player;
 
-	DonkeyKong dk;
+	BarrelManager barrelManager;
 
 	int lives = MAX_LIVES;
 	bool gameOver = false;
@@ -38,7 +38,7 @@ class Game
 
 public:  // Why is the constructor needed if the same is written in the startGame Function?
 	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
-		dk(DonkeyKong(&gameBoard, DONKEY_KONG_SPRITE, DONKEY_KONG_POS)) {}
+		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)) {}
 	
 	bool start();
 	void resetLevel();
