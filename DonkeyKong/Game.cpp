@@ -49,8 +49,7 @@ void Game::update()
             player.movePlayer();
 
             //check for barrel collisions and fall damage
-            if (player.checkCollision()
-                || player.checkFallDamage())
+            if (player.checkCollision() || player.checkFallDamage())
             {
                 if(handleStrike())
                 {
@@ -80,7 +79,7 @@ void Game::update()
             //win check
             if(gameBoard.isPaulineAtPos(player.getPosition()))
             {
-                break;
+                break; // player reach pauline, exit loop 
             }
         }
 

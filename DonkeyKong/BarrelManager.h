@@ -22,6 +22,7 @@ class BarrelManager
     Board* gameBoard = nullptr;
     std::vector<Barrel> barrelsVector;
 
+    int randomizeBarrelSpawnTime();
 public:
     BarrelManager(Board* _gameBoard, Point _dkPos) : dkPosition(_dkPos), gameBoard(_gameBoard) {}
 

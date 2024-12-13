@@ -1,5 +1,12 @@
 #include "BarrelManager.h"
 
+int BarrelManager::randomizeBarrelSpawnTime()
+{
+    srand(time(NULL));
+
+    return rand() % 20 + SPAWN_DELAY;
+}
+
 void BarrelManager::spawnBarrel()
 {   //                          barrel constructor 
     barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, dkPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
@@ -33,7 +40,7 @@ void BarrelManager::manageBarrels()
     if (frameCounter <= 0)
     {
         spawnBarrel();
-        frameCounter = SPAWN_DELAY;
+        frameCounter = randomizeBarrelSpawnTime();
     }
 
     moveAllBarrels();
