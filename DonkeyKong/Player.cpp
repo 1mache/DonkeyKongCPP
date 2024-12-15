@@ -39,9 +39,13 @@ void Player::movePlayer()
     bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
+    bool gravity = true;
+
     if (horizontalMovesOnLadder())
     {
-        playerMovement.move(DIRECTIONS[STAY], false);
+        // stop the player and dont apply gravity
+        gravity = false;
+        playerMovement.move(DIRECTIONS[STAY], gravity);
         return;
     }
 
@@ -70,7 +74,7 @@ void Player::movePlayer()
     }
     
     // if we got here we just move the player horizontaly
-    playerMovement.move( DIRECTIONS[horizontalState], true);
+    playerMovement.move( DIRECTIONS[horizontalState], gravity);
 }
 
 void Player::jump()
@@ -82,6 +86,7 @@ void Player::jump()
     {
         // horizontal state
         heightTraveled += 1;
+        //ADD CHECK IF WE ACTUALLY MOVED!!=========================== maybe midjump = playerMvement.move()
         midJump = true;
                            //up, dowm or stay          add up direction
         movePosition = DIRECTIONS[horizontalState].oneAbove();

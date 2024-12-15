@@ -119,7 +119,7 @@ class Menu
 		  "Q                        \\          L_/    . _ (_,.'(                          Q", // 17
 		  "Q                         \\,   ,      ^^\"\"' / |      )                         Q", // 18
 		  "Q                           \\_  \\          /,L]     /                          Q", // 19
-		  "Q                              '-_`-,       ` `   ./`                          Q", // 20
+		  "Q      Press ENTER             '-_`-,       ` `   ./`        to try again.     Q", // 20
 		  "Q                                 `-(_            )                            Q", // 21
 		  "Q                                     ^^\\..___,.--`                            Q", // 22
 		  "Q                                                                              Q", // 23
@@ -132,13 +132,13 @@ class Menu
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 		  "Q                                                                              Q", // 1
-		  "Q                                                                              Q", // 2
-		  "Q            Y   Y   OOO    U   U       W     W    OOO    N   N    #           Q", // 3
-		  "Q             Y Y   O   O   U   U       W     W   O   O   NN  N    #           Q", // 4
-		  "Q              Y    O   O   U   U       W  W  W   O   O   N N N    #           Q", // 5
-		  "Q              Y    O   O   U   U       W  W  W   O   O   N  NN                Q", // 6
-		  "Q              Y     OOO     UUU          W W      OOO    N   N    0           Q", // 7
-		  "Q                                                                              Q", // 8
+		  "Q            Y   Y   OOO    U   U       W     W    OOO    N   N    #           Q", // 2
+		  "Q             Y Y   O   O   U   U       W     W   O   O   NN  N    #           Q", // 3
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N N N    #           Q", // 4
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N  NN                Q", // 5
+		  "Q              Y     OOO     UUU          W W      OOO    N   N    0           Q", // 6
+		  "Q                                                                              Q", // 7
+		  "Q                          Press ENTER to play again.                          Q", // 8
 		  "Q                                                                              Q", // 9
 		  "Q                                                     w*W*W*W*w                Q", // 10
 		  "Q                                      _  _            \\\".\".\"/                 Q", // 11
@@ -152,7 +152,7 @@ class Menu
 		  "Q       .'   `.-===-\\   /-===-.`   '.              \\ \\_/\\\\_//\\_/ /             Q", // 19
 		  "Q      /    .-\"\"\"\"\" - . - \"\"\"\"\"-.    \\              \\/_) '*' (_\\/              Q", // 20
 		  "Q     /'             =:=             '\\               |       |                Q", // 21
-		  "Q   .'  ' .:    o   -=:=-   o    :. '  `.             |       |           ,    Q", // 22
+		  "Q   .'  ' .:        -=:=-        :. '  `.             |       |                Q", // 22
 		  "Q   (.'   /'. '-.....-'-.....-' .'\\   '.)             |       |                Q", // 23
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
