@@ -2,12 +2,17 @@
 
 void BarrelManager::spawnBarrel()
 {   //                          barrel constructor 
-    barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, dkPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
+    barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, spawnPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
 }
 
 void BarrelManager::destroyBarrel(int index)
 {
     barrelsVector[index].explode();
+
+    // Change to better option than sleep
+    Sleep(50);
+    barrelsVector[index].eraseExplosion();
+
     barrelsVector.erase(barrelsVector.begin() + index);
 }
 
@@ -32,11 +37,20 @@ void BarrelManager::manageBarrels()
 {
     if (frameCounter <= 0)
     {
+        if (spawnToRight)
+        {
+            curBarrelDir = RollDirection::RIGHT;
+        }
+        else
+        {
+            curBarrelDir = RollDirection::LEFT;
+        }
         spawnBarrel();
-        frameCounter = SPAWN_DELAY;
+        frameCounter = getRandomDelay();
+
+        spawnToRight = !spawnToRight;
     }
 
     moveAllBarrels();
-
     frameCounter--;
 }
