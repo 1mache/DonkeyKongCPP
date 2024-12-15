@@ -132,25 +132,29 @@ class Menu
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 		  "Q                                                                              Q", // 1
-		  "Q            Y   Y   OOO    U   U       W     W    OOO    N   N    #           Q", // 2
-		  "Q             Y Y   O   O   U   U       W     W   O   O   NN  N    #           Q", // 3
-		  "Q              Y    O   O   U   U       W  W  W   O   O   N N N    #           Q", // 4
-		  "Q              Y    O   O   U   U       W  W  W   O   O   N  NN                Q", // 5
-		  "Q              Y     OOO     UUU          W W      OOO    N   N    0           Q", // 6
-		  "Q                                                                              Q", // 7
-		  "Q                                                     w*W*W*W*w                Q", // 3
-		  "Q                                      _  _            \\\".\".\"/                 Q", // 4
-		  "Q                 _________           ( \\/ )            //`\\\\                  Q", // 5
-		  "Q                (____M____)           \\  /            (/a a\\)                 Q", // 6
-		  "Q                 \\_______/             \\/             (\\_-_/)                 Q", // 7
-		  "Q                 #|a`_`a|#                           .-~'='~-.                Q", // 8
-		  "Q                  \\ %%% /                           /`~`\"Y\"`~`\\               Q", // 9
-		  "Q                  |\\___/|                          / /(  *  )\\ \\              Q", // 10
-		  "Q         ___ ____/:     :\\____ ___                / /  )   (  \\ \\             Q", // 11
-		  "Q       .'   `.-===-\\   /-===-.`   '.              \\ \\_/\\\\_//\\_/ /             Q", // 12
-		  "Q      /    .-\"\"\"\"\" - . - \"\"\"\"\"-.    \\              \\/_) '*' (_\\/              Q", // 13
-		  "Q     /'             =:=             '\\               |       |                Q", // 14
-		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ" // 24
+		  "Q                                                                              Q", // 2
+		  "Q            Y   Y   OOO    U   U       W     W    OOO    N   N    #           Q", // 3
+		  "Q             Y Y   O   O   U   U       W     W   O   O   NN  N    #           Q", // 4
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N N N    #           Q", // 5
+		  "Q              Y    O   O   U   U       W  W  W   O   O   N  NN                Q", // 6
+		  "Q              Y     OOO     UUU          W W      OOO    N   N    0           Q", // 7
+		  "Q                                                                              Q", // 8
+		  "Q                                                                              Q", // 9
+		  "Q                                                     w*W*W*W*w                Q", // 10
+		  "Q                                      _  _            \\\".\".\"/                 Q", // 11
+		  "Q                 _________           ( \\/ )            //`\\\\                  Q", // 12
+		  "Q                (____M____)           \\  /            (/a a\\)                 Q", // 13
+		  "Q                 \\_______/             \\/             (\\_-_/)                 Q", // 14
+		  "Q                 #|a`_`a|#                           .-~'='~-.                Q", // 15
+		  "Q                  \\ %%% /                           /`~`\"Y\"`~`\\               Q", // 16
+		  "Q                  |\\___/|                          / /(  *  )\\ \\              Q", // 17
+		  "Q         ___ ____/:     :\\____ ___                / /  )   (  \\ \\             Q", // 18
+		  "Q       .'   `.-===-\\   /-===-.`   '.              \\ \\_/\\\\_//\\_/ /             Q", // 19
+		  "Q      /    .-\"\"\"\"\" - . - \"\"\"\"\"-.    \\              \\/_) '*' (_\\/              Q", // 20
+		  "Q     /'             =:=             '\\               |       |                Q", // 21
+		  "Q   .'  ' .:    o   -=:=-   o    :. '  `.             |       |           ,    Q", // 22
+		  "Q   (.'   /'. '-.....-'-.....-' .'\\   '.)             |       |                Q", // 23
+		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
 
 	static constexpr int MAIN_SCREEN_ID = 0;
