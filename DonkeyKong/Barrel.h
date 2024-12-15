@@ -13,6 +13,8 @@ class Barrel
     static constexpr char LEFT_FLOOR = '<';
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
+    static constexpr int EXPLOSION_RADIUS = 2;
+    static constexpr char EXPLOSION_CHAR = '*';
 
     //movement component
     Movement barrelMovement;
@@ -37,6 +39,8 @@ public:
     }
     
     void explode();
+    void drawExplosion();
+    void eraseExplosion();
 
     void rollLeft()
     {

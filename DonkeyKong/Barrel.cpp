@@ -35,5 +35,46 @@ void Barrel::explode()
 {
     barrelMovement.erase();
     gameBoard->resetCharAtPos(barrelMovement.getPosition());
-    //add animation here
+
+    drawExplosion();
+    // Add animation here
+}
+
+void Barrel::drawExplosion()
+{
+    Point position = barrelMovement.getPosition();
+    int yPos = position.getY();
+    int xPos = position.getX();
+    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
+    {
+        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
+        {
+            Point curCharPos(x, y);
+
+            if (gameBoard->isPosInBounds(curCharPos))
+            {
+                gotoScreenPos(curCharPos);
+                std::cout << EXPLOSION_CHAR;
+            }
+        }
+    }
+}
+
+void Barrel::eraseExplosion()
+{
+    Point position = barrelMovement.getPosition();
+    int yPos = position.getY();
+    int xPos = position.getX();
+    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
+    {
+        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
+        {
+            Point curCharPos(x, y);
+
+            if (gameBoard->isPosInBounds(curCharPos))
+            {
+                gameBoard->resetCharAtPos(curCharPos);
+            }
+        }
+    }
 }

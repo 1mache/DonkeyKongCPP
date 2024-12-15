@@ -15,7 +15,8 @@ class Game
 	static constexpr int ESC = 27;
 	static constexpr char MARIO_SPRITE = '@';
 	static constexpr Point MARIO_START_POS = { 2, 23 };
-	static constexpr Point DONKEY_KONG_POS = { 13, 3 };
+	/*static constexpr Point DONKEY_KONG_POS = { 13, 3 };*/
+	static constexpr Point DONKEY_KONG_POS = { 39, 3 };
 	static constexpr Point PAUSEMESSAGE_POS = { 31, 2 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 
