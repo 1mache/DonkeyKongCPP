@@ -26,6 +26,8 @@ class Barrel
     bool reachedWall() const;
     void setBarrelDirection();
 
+                           // 1 <= phase <= EXPLOSION_RADIUS
+    void drawExplosionPhase(int phase);
     void drawExplosion();
     void eraseExplosion();
 

@@ -40,25 +40,67 @@ void Barrel::explode()
     eraseExplosion();
 }
 
-void Barrel::drawExplosion()
+//void Barrel::drawExplosion()
+//{
+//    Point position = barrelMovement.getPosition();
+//    int yPos = position.getY();
+//    int xPos = position.getX();
+//    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
+//    {
+//        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
+//        {
+//            Point curCharPos(x, y);
+//
+//            if (gameBoard->isPosInBounds(curCharPos))
+//            {
+//                gotoScreenPos(curCharPos);
+//                std::cout << EXPLOSION_CHAR;
+//                //Sleep(Constants::GAME_REFRESH_RATE / 10);
+//                Sleep(1);
+//            }
+//        }
+//    }
+//}
+
+
+
+void Barrel::drawExplosionPhase(int phase)
 {
     Point position = barrelMovement.getPosition();
     int yPos = position.getY();
     int xPos = position.getX();
-    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
-    {
-        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
-        {
-            Point curCharPos(x, y);
+    
+    Point cornerTL = position + Point(-phase, -phase);
+    Point cornerTR = position + Point(phase, -phase);
+    Point cornerBL = position + Point(-phase, phase);
+    Point cornerBR = position + Point(phase, phase);
 
-            if (gameBoard->isPosInBounds(curCharPos))
+    Point curCharPos;
+    for (int y = cornerTL.getY(); y <= cornerBL.getY(); y++)
+    {
+        for (int x = cornerTL.getX(); x <= cornerTR.getX(); x++)
+        {
+            curCharPos = { x,y };
+
+            if(gameBoard->isPosInBounds(position))
             {
-                gotoScreenPos(curCharPos);
-                std::cout << EXPLOSION_CHAR;
-                //Sleep(Constants::GAME_REFRESH_RATE / 10);
-                Sleep(1);
+                if ((y == cornerTL.getY() || y == cornerBL.getY()) ||
+                    (x == cornerTL.getX() || x == cornerTR.getX()))
+                {
+                    gotoScreenPos(curCharPos);
+                    std::cout << EXPLOSION_CHAR;
+                }
             }
         }
+    }
+}
+
+void Barrel::drawExplosion()
+{
+    for(int phase = 1; phase <= EXPLOSION_RADIUS; phase++)
+    {
+        drawExplosionPhase(phase);
+        Sleep(Constants::GAME_REFRESH_RATE);
     }
 }
 
@@ -78,7 +120,7 @@ void Barrel::eraseExplosion()
                 gotoScreenPos(curCharPos);
                 std::cout << gameBoard->getCharAtPos(curCharPos);
                 //Sleep(Constants::GAME_REFRESH_RATE / 10);
-                Sleep(1);
+                //Sleep(1);
             }
         }
     }

@@ -23,8 +23,11 @@ void BarrelManager::moveAllBarrels()
             {
                 destroyBarrel(i);
             }
-
-            barrelsVector[i].moveBarrel();
+            
+            if(!barrelsVector.empty())
+            {
+                barrelsVector[i].moveBarrel();
+            }
         }
     }
 }
