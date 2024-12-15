@@ -37,7 +37,7 @@ void Barrel::explode()
     gameBoard->resetCharAtPos(barrelMovement.getPosition());
 
     drawExplosion();
-    // Add animation here
+    eraseExplosion();
 }
 
 void Barrel::drawExplosion()
@@ -55,6 +55,8 @@ void Barrel::drawExplosion()
             {
                 gotoScreenPos(curCharPos);
                 std::cout << EXPLOSION_CHAR;
+                //Sleep(Constants::GAME_REFRESH_RATE / 10);
+                Sleep(1);
             }
         }
     }
@@ -73,7 +75,10 @@ void Barrel::eraseExplosion()
 
             if (gameBoard->isPosInBounds(curCharPos))
             {
-                gameBoard->resetCharAtPos(curCharPos);
+                gotoScreenPos(curCharPos);
+                std::cout << gameBoard->getCharAtPos(curCharPos);
+                //Sleep(Constants::GAME_REFRESH_RATE / 10);
+                Sleep(1);
             }
         }
     }

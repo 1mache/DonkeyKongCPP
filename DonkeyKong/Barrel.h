@@ -26,6 +26,9 @@ class Barrel
     bool reachedWall() const;
     void setBarrelDirection();
 
+    void drawExplosion();
+    void eraseExplosion();
+
 public:
     Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, RollDirection _dir) :
         rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
@@ -39,8 +42,6 @@ public:
     }
     
     void explode();
-    void drawExplosion();
-    void eraseExplosion();
 
     void rollLeft()
     {

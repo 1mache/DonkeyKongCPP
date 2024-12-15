@@ -9,10 +9,6 @@ void BarrelManager::destroyBarrel(int index)
 {
     barrelsVector[index].explode();
 
-    // Change to better option than sleep
-    Sleep(50);
-    barrelsVector[index].eraseExplosion();
-
     barrelsVector.erase(barrelsVector.begin() + index);
 }
 

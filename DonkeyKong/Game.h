@@ -17,10 +17,10 @@ class Game
 	static constexpr Point MARIO_START_POS = { 2, 23 };
 	/*static constexpr Point DONKEY_KONG_POS = { 13, 3 };*/
 	static constexpr Point DONKEY_KONG_POS = { 39, 3 };
-	static constexpr Point PAUSEMESSAGE_POS = { 31, 2 };
+	static constexpr Point PAUSEMESSAGE_POS = { 2, 2 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 
-	static constexpr const char* PAUSE_MESSAGE = "Game Paused: Press ESC to continue";
+	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
 	static constexpr int MAX_LIVES = 3;
 
 	Board gameBoard;
