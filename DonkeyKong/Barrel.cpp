@@ -66,19 +66,17 @@ void Barrel::drawExplosionPhase()
     int xPos = position.getX();
     
     Point cornerTL = position + Point(-explosionPhase, -explosionPhase);
-    Point cornerTR = position + Point(explosionPhase, -explosionPhase);
-    Point cornerBL = position + Point(-explosionPhase, explosionPhase);
     Point cornerBR = position + Point(explosionPhase, explosionPhase);
 
     Point curCharPos;
-    for (int y = cornerTL.getY(); y <= cornerBL.getY(); y++)
+    for (int y = cornerTL.getY(); y <= cornerBR.getY(); y++)
     {
-        for (int x = cornerTL.getX(); x <= cornerTR.getX(); x++)
+        for (int x = cornerTL.getX(); x <= cornerBR.getX(); x++)
         {
             curCharPos = { x,y };
 
-            if ((y == cornerTL.getY() || y == cornerBL.getY()) ||
-                (x == cornerTL.getX() || x == cornerTR.getX()))
+            if ((y == cornerTL.getY() || y == cornerBR.getY()) ||
+                (x == cornerTL.getX() || x == cornerBR.getX()))
             {
                 //only print the explosion at certain position if it is in bounds and there isnt an obstacle(looks better)
                 if(gameBoard->isPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
