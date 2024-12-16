@@ -6,11 +6,11 @@ void Barrel::setBarrelDirection()
 
     if (charBelow == LEFT_FLOOR)
     {
-        rollDirection = RollDirection::LEFT;
+        rollDirection = DIRECTIONS[RollDirection::LEFT];
     }
     else if (charBelow == RIGHT_FLOOR)
     {
-        rollDirection = RollDirection::RIGHT;
+        rollDirection = DIRECTIONS[RollDirection::RIGHT];
     }
 }
 
@@ -19,7 +19,7 @@ void Barrel::moveBarrel()
     gameBoard->resetCharAtPos(barrelMovement.getPosition());
     
     setBarrelDirection();
-    barrelMovement.move(DIRECTIONS[rollDirection], true);
+    barrelMovement.move(rollDirection, true);
 
     gameBoard->updateBoardWithChar(barrelMovement.getPosition(), spriteChar);
 }
@@ -82,10 +82,11 @@ void Barrel::drawExplosionPhase(int phase)
         {
             curCharPos = { x,y };
 
-            if(gameBoard->isPosInBounds(position))
+
+            if ((y == cornerTL.getY() || y == cornerBL.getY()) ||
+                (x == cornerTL.getX() || x == cornerTR.getX()))
             {
-                if ((y == cornerTL.getY() || y == cornerBL.getY()) ||
-                    (x == cornerTL.getX() || x == cornerTR.getX()))
+                if(gameBoard->isPosInBounds(curCharPos))
                 {
                     gotoScreenPos(curCharPos);
                     std::cout << EXPLOSION_CHAR;
@@ -97,7 +98,7 @@ void Barrel::drawExplosionPhase(int phase)
 
 void Barrel::drawExplosion()
 {
-    for(int phase = 1; phase <= EXPLOSION_RADIUS; phase++)
+    for(int phase = 0; phase <= EXPLOSION_RADIUS; phase++)
     {
         drawExplosionPhase(phase);
         Sleep(Constants::GAME_REFRESH_RATE);

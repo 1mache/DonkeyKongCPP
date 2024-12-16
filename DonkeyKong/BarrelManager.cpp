@@ -1,8 +1,10 @@
 #include "BarrelManager.h"
 
 void BarrelManager::spawnBarrel()
-{   //                          barrel constructor 
-    barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, spawnPosition + DIRECTIONS[curBarrelDir], curBarrelDir);
+{   
+
+    //                          barrel constructor 
+    barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, spawnerPosition + DIRECTIONS[curBarrelDir], DIRECTIONS[curBarrelDir]);
 }
 
 void BarrelManager::destroyBarrel(int index)
@@ -15,7 +17,7 @@ void BarrelManager::destroyBarrel(int index)
 void BarrelManager::moveAllBarrels()
 {
     //move barrels every other frame so that they are slower than mario 
-    if(frameCounter % 2 == 0)
+    /*if(frameCounter % 2 == 0)*/
     {
         for (size_t i = 0; i < barrelsVector.size(); i++)
         {
@@ -38,11 +40,11 @@ void BarrelManager::manageBarrels()
     {
         if (spawnToRight)
         {
-            curBarrelDir = RollDirection::RIGHT;
+            curBarrelDir = SpawnDirection::RIGHT;
         }
         else
         {
-            curBarrelDir = RollDirection::LEFT;
+            curBarrelDir = SpawnDirection::LEFT;
         }
         spawnBarrel();
         frameCounter = getRandomDelay();

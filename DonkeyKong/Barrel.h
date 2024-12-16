@@ -5,11 +5,12 @@
 #include "Constants.h"
 
 // FIND A WAY TO MOVE INSIDE THE CLASS
-enum RollDirection { LEFT, RIGHT };
-static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
 class Barrel
 {
+    enum RollDirection { LEFT, RIGHT };
+    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
+
     static constexpr char LEFT_FLOOR = '<';
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
@@ -21,7 +22,7 @@ class Barrel
     char spriteChar;
     Board* gameBoard = nullptr;
     
-    RollDirection rollDirection = RollDirection::RIGHT;
+    Point rollDirection;
 
     bool reachedWall() const;
     void setBarrelDirection();
@@ -32,7 +33,7 @@ class Barrel
     void eraseExplosion();
 
 public:
-    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, RollDirection _dir) :
+    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
         rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
     
     void moveBarrel();
@@ -44,14 +45,4 @@ public:
     }
     
     void explode();
-
-    void rollLeft()
-    {
-        rollDirection = RollDirection::LEFT;
-    }
-
-    void rollRight()
-    {
-        rollDirection = RollDirection::RIGHT;
-    }
 };

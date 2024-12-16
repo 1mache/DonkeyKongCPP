@@ -13,14 +13,14 @@ class BarrelManager
     static constexpr int MIN_SPAWN_DELAY = 20;
     static constexpr int MAX_SPAWN_DELAY = 60;
 
-    Point spawnPosition;
+    Point spawnerPosition;
     int frameCounter = 0;
     bool spawnToRight = true;
-    // Duplicate code - the same as in Barrel
-    /*enum RollDirection { LEFT, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };*/
-    RollDirection curBarrelDir = RollDirection::RIGHT;
-    //
+    
+    enum SpawnDirection {LEFT, RIGHT};
+    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
+
+    SpawnDirection curBarrelDir = SpawnDirection::RIGHT;
 
     Board* gameBoard = nullptr;
     std::vector<Barrel> barrelsVector;
@@ -32,7 +32,7 @@ class BarrelManager
     int getRandomDelay() { return ((rand() % (MAX_SPAWN_DELAY + 1 - MIN_SPAWN_DELAY)) + MIN_SPAWN_DELAY); };
 
 public:
-    BarrelManager(Board* _gameBoard, Point _spawnPos) : spawnPosition(_spawnPos), gameBoard(_gameBoard) {}
+    BarrelManager(Board* _gameBoard, Point _spawnerPos) : spawnerPosition(_spawnerPos), gameBoard(_gameBoard) {}
 
     void manageBarrels();
 };

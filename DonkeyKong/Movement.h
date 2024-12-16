@@ -19,8 +19,11 @@ class Movement
 
     void draw(Point drawPosition, char c) const
     {
-        gotoScreenPos(drawPosition);
-        std::cout << c;
+        if(gameBoard->isPosInBounds(drawPosition))
+        {
+            gotoScreenPos(drawPosition);
+            std::cout << c;
+        }
     }
 
     void gravity()
