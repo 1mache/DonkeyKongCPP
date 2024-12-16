@@ -12,28 +12,51 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 	std::cout << screen[HEIGHT - 1];
 }
 
+// print the menu options with sleep between characters (animation)
+void Menu::printMainOptions()
+{
+	for(const MenuOption& option: MENU_OPTIONS)
+	{
+		gotoScreenPos(option.screenPosition);
+		int textLen = strlen(option.text);
+		for (int i = 0; i < textLen; i++)
+		{
+			std::cout << option.text[i];
+			Sleep(LINE_PRINT_DELAY);
+		}
+	}
+}
+
 void Menu::update()
 {
 	flushInputBuffer();
 
 	bool exitMenu = false;
-	while (!exitMenu)
+	
+	while (true)
 	{
 		if (_kbhit())
 		{
 			char key = _getch();
+			
 			if(currentScreenId == MAIN_SCREEN_ID)
 			{
+				//check if its arrow contol key
 				if(std::tolower(key) == KEYS[UP])
 				{
 					//erase arrow from prev position 
 					eraseChar(MENU_OPTIONS[arrowId].screenPosition);
 					arrowId = (arrowId - 1 + NUM_OF_OPTIONS) % NUM_OF_OPTIONS;
 				}
-				if(std::tolower(key) == KEYS[DOWN])
+				else if(std::tolower(key) == KEYS[DOWN])
 				{
 					eraseChar(MENU_OPTIONS[arrowId].screenPosition);
 					arrowId = (arrowId + 1) % NUM_OF_OPTIONS;
+				}
+				else
+				{
+					// if its not arrow control try to select option with this key
+					exitMenu = selectOption(key);
 				}
 			}
 
@@ -42,10 +65,11 @@ void Menu::update()
 			{
 				//==========KEEP THIS VARUIABLE ???====================
 				exitMenu = selectOption();
-				if(exitMenu) 
-				{
-					break;
-				}
+			}
+
+			if(exitMenu) 
+			{
+				break;
 			}
 		}
 
@@ -59,7 +83,8 @@ void Menu::update()
 	}
 }
 
-bool Menu::selectOption()
+// we can select options with a number or by using the arrow, by default we use the arrow
+bool Menu::selectOption(char hotkey)
 {
 	bool exitMenu = false;
 
@@ -75,22 +100,24 @@ bool Menu::selectOption()
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
 		clearScreen();
+		// game over and win screen do break the input loop
 		exitMenu = true;
 		return exitMenu;
 	}
 
-	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
-	if (MENU_OPTIONS[arrowId] == CONTROLS_OPTION)
+	//if were on the main screen there is a bunch of options and the arrow or the hotkey tells us what we selected
+	// the if statements below also check if we intended to use the arrow or the hotkeys 
+	if (hotkey == CONTROLS_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == CONTROLS_OPTION))
 	{
 		clearScreen();
 		gotoControlScreen();
 	}
-	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
+	else if (hotkey == START_GAME_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == START_GAME_OPTION))
 	{
 		clearScreen();
 		exitMenu = true;
 	}
-	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
+	else if (hotkey == EXIT_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == EXIT_OPTION))
 	{
 		clearScreen();
 		exitFlag = true;
@@ -98,6 +125,14 @@ bool Menu::selectOption()
 	}
 
 	return exitMenu;
+}
+
+void Menu::gotoMainScreen()
+{
+	arrowId = START_ARROW_ID;
+	print(mainScreen, LINE_PRINT_DELAY);
+	printMainOptions();
+	currentScreenId = MAIN_SCREEN_ID;
 }
 
 bool Menu::displayMainMenu()

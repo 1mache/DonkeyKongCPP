@@ -14,10 +14,11 @@ class Menu
 	{
 		Point screenPosition;
 		const char* text;
+		char hotkey;
 
 		bool operator==(const MenuOption& other) const
 		{
-			return screenPosition == other.screenPosition;
+			return hotkey == other.hotkey;
 		}
 	};
 
@@ -30,9 +31,9 @@ class Menu
 	enum INPUTS { UP, DOWN, SELECT };
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
 	static constexpr int NUM_OF_OPTIONS = 3;
-	static constexpr MenuOption START_GAME_OPTION = { Point(32, 18), " Start Game" };
-	static constexpr MenuOption CONTROLS_OPTION = { Point(33, 19), " Controls" };
-	static constexpr MenuOption EXIT_OPTION = { Point(35, 21), " EXIT" };
+	static constexpr MenuOption START_GAME_OPTION = { Point(32, 18), " [1]Start Game", '1'};
+	static constexpr MenuOption CONTROLS_OPTION = { Point(33, 19), " [8]Controls", '8' };
+	static constexpr MenuOption EXIT_OPTION = { Point(35, 21), " [9]EXIT", '9'};
 
 	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
 
@@ -57,12 +58,12 @@ class Menu
 			"Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=     =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 15
 			"Q                                                                              Q", // 16
 			"Q                                                                              Q", // 17
-			"Q    X/W   - navigate             Start Game                                   Q", // 18
-			"Q            options               Controls                                    Q", // 19
+			"Q    X/W   - navigate                                                          Q", // 18
+			"Q            options                                                           Q", // 19
 			"Q                                                                              Q", // 20
-			"Q    ENTER - select                  EXIT                                      Q", // 21
+			"Q    ENTER - select                                                            Q", // 21
 			"Q                                                                              Q", // 22
-			"Q                                                     by: B&D Entertaiment     Q", // 23
+			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
 
@@ -180,18 +181,12 @@ class Menu
 	}
 
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
+	void printMainOptions();
 
 	void update();
+	bool selectOption(char hotkey = 0);
 
-	bool selectOption();
-
-	void gotoMainScreen()
-	{
-		arrowId = START_ARROW_ID;
-		print(mainScreen, LINE_PRINT_DELAY);
-		currentScreenId = MAIN_SCREEN_ID;
-
-	}
+	void gotoMainScreen();
 
 	void gotoControlScreen()
 	{

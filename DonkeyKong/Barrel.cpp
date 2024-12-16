@@ -65,6 +65,7 @@ void Barrel::drawExplosionPhase()
     int yPos = position.getY();
     int xPos = position.getX();
     
+    //topLeft and bottomRight corners of the explosion "rings"
     Point cornerTL = position + Point(-explosionPhase, -explosionPhase);
     Point cornerBR = position + Point(explosionPhase, explosionPhase);
 
