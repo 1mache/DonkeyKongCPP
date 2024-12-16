@@ -71,6 +71,11 @@ void Player::movePlayer()
             climbDown();
             return;
         }
+        else 
+        {
+            // if we counldnt climb at this position reset the state
+            curState = horizontalState;
+        }
     }
     
     // if we got here we just move the player horizontaly
@@ -81,12 +86,13 @@ void Player::jump()
 {
     Point movePosition;
 
-    // if were on the ground and the move state is up OR were mid jump and havent reached jump height
-    if (playerMovement.checkOnGround() || (midJump && (heightTraveled < JUMP_HEIGHT)))
+    Point above = playerMovement.getPosition().oneAbove();
+    // if were on the ground and there isnt floor above us OR were mid jump and havent reached jump height
+    if ((playerMovement.checkOnGround() && !gameBoard->isObstacleAtPos(above))
+        || (midJump && (heightTraveled < JUMP_HEIGHT)))
     {
         // horizontal state
         heightTraveled += 1;
-        //ADD CHECK IF WE ACTUALLY MOVED!!=========================== maybe midjump = playerMvement.move()
         midJump = true;
                            //up, dowm or stay          add up direction
         movePosition = DIRECTIONS[horizontalState].oneAbove();
@@ -113,7 +119,7 @@ void Player::climbUp()
         if(playerMovement.checkOnGround())
         {
             midClimb = false;
-            //stay after climbing up ==================================================
+            //stay after climbing up, feels more intuitive 
             curState = horizontalState = STAY;
         }
     }
