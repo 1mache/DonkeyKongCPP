@@ -15,7 +15,7 @@ class Barrel
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
     static constexpr int EXPLOSION_RADIUS = 2;
-    static constexpr char EXPLOSION_CHAR = '*';
+    static constexpr char EXPLOSION_CHAR = Board::EXPLOSION;
 
     //movement component
     Movement barrelMovement;
@@ -24,25 +24,31 @@ class Barrel
     
     Point rollDirection;
 
+    // 1 <= phase <= EXPLOSION_RADIUS + 1
+    int explosionPhase = 0;
+
     bool reachedWall() const;
     void setBarrelDirection();
-
-                           // 1 <= phase <= EXPLOSION_RADIUS
-    void drawExplosionPhase(int phase);
-    void drawExplosion();
-    void eraseExplosion();
-
-public:
-    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
-        rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
-    
-    void moveBarrel();
 
     bool needsToExplode()
     {
         return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
             || reachedWall());
     }
-    
     void explode();
+    void drawExplosionPhase();
+    void eraseExplosion();
+    void moveBarrel();
+
+public:
+    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
+        rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
+    
+    void update();
+
+
+    bool exploded()
+    {
+        return explosionPhase == EXPLOSION_RADIUS + 1;
+    }
 };

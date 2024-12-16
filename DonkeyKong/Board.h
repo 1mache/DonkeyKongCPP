@@ -6,11 +6,17 @@
 #include "Constants.h"
 
 class Board {
+public:
+	static constexpr char BARREL = 'O';
+	static constexpr char EXPLOSION = '*';
+
+private:
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
 	static constexpr char PAULINE = '$';
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q' };
-	static constexpr size_t NUM_OBSTACLES = sizeof(OBSTACLES) / sizeof(OBSTACLES[0]);
+	// ghosts will also be here in Exercise 2 
+	static constexpr char HAZARDS[] = { BARREL, EXPLOSION };
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
@@ -106,7 +112,6 @@ class Board {
 
 	char currentBoard[HEIGHT][WIDTH + 1]; // +1 for null terminator
 public:
-	static constexpr char BARREL = 'O';
 
 	void reset();
 	void print() const;
@@ -124,6 +129,8 @@ public:
 	}
 	bool isObstacleAtPos(Point position) const;
 	
+	bool isHazardAtPos(Point position) const;
+
 	bool isLadderAtPos(Point position)const 
 	{ 
 		return getCharAtPos(position) == LADDER; 

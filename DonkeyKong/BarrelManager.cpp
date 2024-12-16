@@ -9,8 +9,6 @@ void BarrelManager::spawnBarrel()
 
 void BarrelManager::destroyBarrel(int index)
 {
-    barrelsVector[index].explode();
-
     barrelsVector.erase(barrelsVector.begin() + index);
 }
 
@@ -21,14 +19,15 @@ void BarrelManager::moveAllBarrels()
     {
         for (size_t i = 0; i < barrelsVector.size(); i++)
         {
-            if (barrelsVector[i].needsToExplode())
+            if (barrelsVector[i].exploded())
             {
+                barrelsVector[i].update();
                 destroyBarrel(i);
             }
             
             if(!barrelsVector.empty())
             {
-                barrelsVector[i].moveBarrel();
+                barrelsVector[i].update();
             }
         }
     }

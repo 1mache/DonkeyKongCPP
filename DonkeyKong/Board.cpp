@@ -51,17 +51,28 @@ void Board::resetCharAtPos(Point position)
 
 bool Board::isObstacleAtPos(Point position) const
 {
-	bool isObstacle = false;
-	int charAtNewPos = getCharAtPos(position);
-
-	for (size_t i = 0; i < NUM_OBSTACLES; i++)
+	char charAtPos = getCharAtPos(position);
+	for (char obstacleChar : OBSTACLES)
 	{
-		if (charAtNewPos == OBSTACLES[i])
+		if (obstacleChar == charAtPos)
 		{
-			isObstacle = true;
-			break;
+			return true;
 		}
 	}
 
-	return isObstacle;
+	return false;
+}
+
+bool Board::isHazardAtPos(Point position) const
+{
+	char charAtPos = getCharAtPos(position);
+	for (char hazardChar : HAZARDS)
+	{
+		if(hazardChar == charAtPos)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

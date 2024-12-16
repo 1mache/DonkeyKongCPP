@@ -24,6 +24,26 @@ void Barrel::moveBarrel()
     gameBoard->updateBoardWithChar(barrelMovement.getPosition(), spriteChar);
 }
 
+void Barrel::update()
+{
+    if (exploded())
+    {
+        eraseExplosion();
+    }
+    else if(explosionPhase > 0)
+    {
+        drawExplosionPhase();
+    }
+    else if(needsToExplode())
+    {
+        explode();
+    }
+    else
+    {
+        moveBarrel();
+    }
+}
+
 bool Barrel::reachedWall() const
 {
     Point position = barrelMovement.getPosition();
@@ -36,44 +56,19 @@ void Barrel::explode()
     barrelMovement.erase();
     gameBoard->resetCharAtPos(barrelMovement.getPosition());
 
-    drawExplosion();
-    eraseExplosion();
+    drawExplosionPhase();
 }
 
-//void Barrel::drawExplosion()
-//{
-//    Point position = barrelMovement.getPosition();
-//    int yPos = position.getY();
-//    int xPos = position.getX();
-//    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
-//    {
-//        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
-//        {
-//            Point curCharPos(x, y);
-//
-//            if (gameBoard->isPosInBounds(curCharPos))
-//            {
-//                gotoScreenPos(curCharPos);
-//                std::cout << EXPLOSION_CHAR;
-//                //Sleep(Constants::GAME_REFRESH_RATE / 10);
-//                Sleep(1);
-//            }
-//        }
-//    }
-//}
-
-
-
-void Barrel::drawExplosionPhase(int phase)
+void Barrel::drawExplosionPhase()
 {
     Point position = barrelMovement.getPosition();
     int yPos = position.getY();
     int xPos = position.getX();
     
-    Point cornerTL = position + Point(-phase, -phase);
-    Point cornerTR = position + Point(phase, -phase);
-    Point cornerBL = position + Point(-phase, phase);
-    Point cornerBR = position + Point(phase, phase);
+    Point cornerTL = position + Point(-explosionPhase, -explosionPhase);
+    Point cornerTR = position + Point(explosionPhase, -explosionPhase);
+    Point cornerBL = position + Point(-explosionPhase, explosionPhase);
+    Point cornerBR = position + Point(explosionPhase, explosionPhase);
 
     Point curCharPos;
     for (int y = cornerTL.getY(); y <= cornerBL.getY(); y++)
@@ -82,27 +77,21 @@ void Barrel::drawExplosionPhase(int phase)
         {
             curCharPos = { x,y };
 
-
             if ((y == cornerTL.getY() || y == cornerBL.getY()) ||
                 (x == cornerTL.getX() || x == cornerTR.getX()))
             {
-                if(gameBoard->isPosInBounds(curCharPos))
+                //only print the explosion at certain position if it is in bounds and there isnt an obstacle(looks better)
+                if(gameBoard->isPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
                 {
                     gotoScreenPos(curCharPos);
+                    gameBoard->updateBoardWithChar(curCharPos ,EXPLOSION_CHAR);
                     std::cout << EXPLOSION_CHAR;
                 }
             }
         }
     }
-}
 
-void Barrel::drawExplosion()
-{
-    for(int phase = 0; phase <= EXPLOSION_RADIUS; phase++)
-    {
-        drawExplosionPhase(phase);
-        Sleep(Constants::GAME_REFRESH_RATE);
-    }
+    explosionPhase++;
 }
 
 void Barrel::eraseExplosion()
@@ -119,9 +108,8 @@ void Barrel::eraseExplosion()
             if (gameBoard->isPosInBounds(curCharPos))
             {
                 gotoScreenPos(curCharPos);
+                gameBoard->resetCharAtPos(curCharPos);
                 std::cout << gameBoard->getCharAtPos(curCharPos);
-                //Sleep(Constants::GAME_REFRESH_RATE / 10);
-                //Sleep(1);
             }
         }
     }

@@ -79,7 +79,7 @@ public:
     bool checkCollision() const
     {
         Point position = playerMovement.getPosition();
-        return gameBoard->getCharAtPos(position) == Board::BARREL;
+        return gameBoard->isHazardAtPos(position);
     }
 
     void takeDamage();
