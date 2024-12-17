@@ -39,20 +39,29 @@ class Player
         return (curState == STAY || curState == RIGHT || curState == LEFT) && midClimb;
     }
 
+    bool isFalling()
+    {
+        return playerMovement.getFallHeight() != 0;
+    }
+
     bool canClimbUp(Point position) 
     {
         // while climbing up we need to be on the ladder or one tile above the ladder
         // which looks like were "in the ground"
-        return gameBoard->isLadderAtPos(position) ||
+        bool positionAllowsClimbing = gameBoard->isLadderAtPos(position) ||
             (gameBoard->isLadderAtPos(position.oneBelow()) && gameBoard->isObstacleAtPos(position));
+        
+        return positionAllowsClimbing && !midJump && !isFalling();
     }
     bool canClimbDown(Point position)
     {
         // while climbing down, we need to be on the ladder that is above ground
         // or on the floor above the ladder 
         Point twoBelow = position.oneBelow().oneBelow();
-        return (gameBoard->isLadderAtPos(position) && !playerMovement.checkOnGround()) ||
+        bool positionAllowsClimbing = (gameBoard->isLadderAtPos(position) && !playerMovement.checkOnGround()) ||
             gameBoard->isLadderAtPos(twoBelow);
+
+        return positionAllowsClimbing && !midJump && !isFalling();
     }
 
     void climbUp();

@@ -51,8 +51,7 @@ void Player::movePlayer()
 
     if (curState == UP)
     {   
-                                    // not mid jump and not mid fall
-        if (canClimbUp(position) && !midJump && playerMovement.getFallHeight() == 0)
+        if (canClimbUp(position))
         {
             climbUp();
             return;

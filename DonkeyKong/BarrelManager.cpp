@@ -1,4 +1,4 @@
-#include "BarrelManager.h"s
+#include "BarrelManager.h"
 
 void BarrelManager::moveAllBarrels()
 {
