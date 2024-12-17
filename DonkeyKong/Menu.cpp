@@ -10,6 +10,10 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 		}
 	}
 	std::cout << screen[HEIGHT - 1];
+	
+	// during this animation we dont register input but it is still 
+	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
+	flushInputBuffer();
 }
 
 // print the menu options with sleep between characters (animation)
@@ -25,12 +29,14 @@ void Menu::printMainOptions()
 			Sleep(LINE_PRINT_DELAY);
 		}
 	}
+
+	// during this animation we dont register input but it is still 
+	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
+	flushInputBuffer();
 }
 
 void Menu::update()
 {
-	flushInputBuffer();
-
 	bool exitMenu = false;
 	
 	while (true)
@@ -63,7 +69,6 @@ void Menu::update()
 			//user pressed ENTER
 			if(key == KEYS[SELECT])
 			{
-				//==========KEEP THIS VARUIABLE ???====================
 				exitMenu = selectOption();
 			}
 

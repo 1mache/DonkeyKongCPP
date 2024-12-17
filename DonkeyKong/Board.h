@@ -14,12 +14,13 @@ private:
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
 	static constexpr char PAULINE = '$';
-	static constexpr char OBSTACLES[] = { '>', '<', '=', 'Q' };
+	static constexpr char OBSTACLES[] = { '>', '<', '=', 'W', SCREEN_BORDER};
 	// ghosts will also be here in Exercise 2 
 	static constexpr char HAZARDS[] = { BARREL, EXPLOSION };
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+	static constexpr int PRINT_DELAY = Constants::GAME_REFRESH_RATE / 3;
 
 	//const char* originalBoard[HEIGHT] = {
 	//	// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -70,13 +71,13 @@ private:
 		  "Q                                      H                              =========Q", // 14
 		  "Q                                      H                                  H    Q", // 15
 		  "Q     ==<<==<<==<<==<<==<<==<<==<<==<<<=>>>==>>==>>==>>==>>==>>==>>==     H    Q", // 16
-		  "Q                             Q                                     Q     H    Q", // 17
-		  "Q>>>>>>>>>>>>>>>>>>>>>>>>>>   Q    QQQQQQQQQQQQQQQQQQQQQQQQQQQQQ    Q     H    Q", // 18
-		  "Q                             Q       Q Secret Barrel Stash Q       Q     H    Q", // 19
-		  "Q     <<<<<<<<<<<<<<<<<<<<<<<<QQQQ    Q _`~_~`_`~_~`_`~_~`_ Q    QQQQ     H    Q", // 20
-		  "Q                                     Q(_)(_)(_)(_)(_)(_)(_)Q             H    Q", // 21
-		  "Q                                  QQQQ(_)(_)(_)(_)(_)(_)(_)QQQQ          H    Q", // 22
-		  "Q                                     Q(_)(_)(_)(_)(_)(_)(_)              H    Q", // 23
+		  "Q                             W                                     W     H    Q", // 17
+		  "Q>>>>>>>>>>>>>>>>>>>>>>>>>>   W    =============================    W     H    Q", // 18
+		  "Q                             W       W Secret Barrel Stash W       W     H    Q", // 19
+		  "Q     <<<<<<<<<<<<<<<<<<<<<<<<====    W _`~_~`_`~_~`_`~_~`_ W    ====     H    Q", // 20
+		  "Q        H                            W(_)(_)(_)(_)(_)(_)(_)W             H    Q", // 21
+		  "Q        H                         ===W(_)(_)(_)(_)(_)(_)(_)W===          H    Q", // 22
+		  "Q        H                            W(_)(_)(_)(_)(_)(_)(_)              H    Q", // 23
 		  "Q==============================================================================Q"  // 24
 	};
 

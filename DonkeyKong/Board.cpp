@@ -9,9 +9,8 @@ void Board::reset() {
 void Board::print() const {
 	for (int i = 0; i < HEIGHT-1; i++) {
 		std::cout << currentBoard[i] << '\n';
-
-		//animation
-		Sleep(Constants::GAME_REFRESH_RATE/2);
+		//animation frame dalay
+		Sleep(PRINT_DELAY);
 	}
 	std::cout << currentBoard[HEIGHT - 1];
 }

@@ -20,6 +20,7 @@ void Game::resetLevel()
     gameBoard.print();
     updateLivesCounter();
 
+    // for explanation of this function see: Menu.print()
     flushInputBuffer();
 
     player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
