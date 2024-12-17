@@ -31,9 +31,9 @@ class Menu
 	enum INPUTS { UP, DOWN, SELECT };
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
 	static constexpr int NUM_OF_OPTIONS = 3;
-	static constexpr MenuOption START_GAME_OPTION = { Point(32, 18), " [1]Start Game", '1'};
-	static constexpr MenuOption CONTROLS_OPTION = { Point(33, 19), " [8]Controls", '8' };
-	static constexpr MenuOption EXIT_OPTION = { Point(35, 21), " [9]EXIT", '9'};
+	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), " [1] Start Game", '1'};
+	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), " [8] Controls", '8' };
+	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), " [9] EXIT", '9'};
 
 	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
 
@@ -184,7 +184,9 @@ class Menu
 	void printMainOptions();
 
 	void update();
-	bool selectOption(char hotkey = 0);
+	bool selectOption();
+	//overloading for selecting options with numbers
+	bool selectOption(char hotkey);
 
 	void gotoMainScreen();
 

@@ -83,8 +83,7 @@ void Menu::update()
 	}
 }
 
-// we can select options with a number or by using the arrow, by default we use the arrow
-bool Menu::selectOption(char hotkey)
+bool Menu::selectOption()
 {
 	bool exitMenu = false;
 
@@ -105,23 +104,49 @@ bool Menu::selectOption(char hotkey)
 		return exitMenu;
 	}
 
-	//if were on the main screen there is a bunch of options and the arrow or the hotkey tells us what we selected
-	// the if statements below also check if we intended to use the arrow or the hotkeys 
-	if (hotkey == CONTROLS_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == CONTROLS_OPTION))
+	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
+	if (MENU_OPTIONS[arrowId] == CONTROLS_OPTION)
 	{
 		clearScreen();
 		gotoControlScreen();
 	}
-	else if (hotkey == START_GAME_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == START_GAME_OPTION))
+	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
 	{
 		clearScreen();
 		exitMenu = true;
 	}
-	else if (hotkey == EXIT_OPTION.hotkey || (hotkey == 0 && MENU_OPTIONS[arrowId] == EXIT_OPTION))
+	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
 	{
 		clearScreen();
 		exitFlag = true;
 		exitMenu = true;
+	}
+
+	return exitMenu;
+}
+
+bool Menu::selectOption(char hotkey)
+{
+	bool exitMenu = false;
+	// this function only works on the main screen
+	if(currentScreenId == MAIN_SCREEN_ID)
+	{
+		if (hotkey == CONTROLS_OPTION.hotkey)
+		{
+			clearScreen();
+			gotoControlScreen();
+		}
+		else if (hotkey == START_GAME_OPTION.hotkey)
+		{
+			clearScreen();
+			exitMenu = true;
+		}
+		else if (hotkey == EXIT_OPTION.hotkey)
+		{
+			clearScreen();
+			exitFlag = true;
+			exitMenu = true;
+		}
 	}
 
 	return exitMenu;
