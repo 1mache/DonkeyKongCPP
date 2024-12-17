@@ -19,7 +19,6 @@ void ShowConsoleCursor(bool showFlag) {
 
 void flushInputBuffer()
 {
-    // "flush" all input that was previously there
     while (_kbhit())
     {
         //store it so ignored return value warning doesnt pop up
@@ -29,6 +28,5 @@ void flushInputBuffer()
 
 void clearScreen()
 {
-    //empties the console screen
     system("cls");
 }

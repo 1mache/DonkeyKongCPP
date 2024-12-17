@@ -20,7 +20,7 @@ private:
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
-	static constexpr int PRINT_DELAY = Constants::GAME_REFRESH_RATE / 3;
+	static constexpr int PRINT_DELAY = 20;
 
 	//const char* originalBoard[HEIGHT] = {
 	//	// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
