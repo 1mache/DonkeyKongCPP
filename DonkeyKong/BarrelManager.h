@@ -28,7 +28,7 @@ class BarrelManager
     void spawnBarrel()
     {
         // barrel constructor, creates barrel in the vector 
-        barrelsVector.emplace_back(gameBoard, gameBoard->BARREL, spawnerPosition + DIRECTIONS[curBarrelDir], DIRECTIONS[curBarrelDir]);
+        barrelsVector.emplace_back(gameBoard, spawnerPosition + DIRECTIONS[curBarrelDir], DIRECTIONS[curBarrelDir]);
     }
 
     void deleteBarrel(int index)

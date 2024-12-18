@@ -13,11 +13,9 @@ class Barrel
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
     static constexpr int EXPLOSION_RADIUS = 2;
-    static constexpr char EXPLOSION_CHAR = Board::EXPLOSION;
-
+    
     //movement component
     Movement barrelMovement;
-    char spriteChar;
     Board* gameBoard = nullptr;
     
     // are we rolling left or right
@@ -50,8 +48,8 @@ class Barrel
     void eraseExplosion();
 
 public:
-    Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
-        currentRollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
+    Barrel(Board* _gameBoard, Point _startPos, Point _dir) :
+        currentRollDirection(_dir), barrelMovement(Movement(_gameBoard, Board::BARREL, _startPos)), gameBoard(_gameBoard) {}
     
     // updates barrel based on what its doing right now, whether its
     // moving or exploding
