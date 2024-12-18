@@ -16,9 +16,8 @@ class BarrelManager
     // our spawner is donkey kong
     Point spawnerPosition;
     int frameCounter = 0;
-    // which way to spawn 
-    bool spawnToRight = true;
 
+    // which way to push the next created barrel
     Barrel::RollDirection curBarrelDir = Barrel::RollDirection::RIGHT;
 
     Board* gameBoard = nullptr;

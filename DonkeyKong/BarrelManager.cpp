@@ -21,19 +21,10 @@ void BarrelManager::manageBarrels()
 {
     if (frameCounter <= 0)
     {
-        if (spawnToRight)
-        {
-            curBarrelDir = Barrel::RollDirection::RIGHT;
-        }
-        else
-        {
-            curBarrelDir = Barrel::RollDirection::LEFT;
-        }
-
+        // roll direction has 2 values (index 0 or 1), and 1-direction gives the opposite value 
+        curBarrelDir = Barrel::RollDirection(1 - curBarrelDir);
         spawnBarrel();
         frameCounter = getRandomDelay();
-
-        spawnToRight = !spawnToRight;
     }
 
     moveAllBarrels();
