@@ -31,20 +31,28 @@ class Game
 
 	bool isPaused = false;
 
+	// game loop
 	void update();
+
+	// what happens when mario gets hurt
 	bool handleStrike();
+
+	// update the lives counter on screen
 	void updateLivesCounter() const
 	{
 		gotoScreenPos(LIVES_COUNTER_POS);
 		std::cout << lives;
 	}
+
 	void pauseGame();
+
 	void continueGame();
 
-public:  // Why is the constructor needed if the same is written in the startGame Function?
+public:
 	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
 		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)) {}
 	
 	bool start();
+
 	void resetLevel();
 };

@@ -9,9 +9,11 @@ void Game::update()
             char key = _getch();
             if (key == ESC)
             {
+                // when ESC is pressed alter between paused and not paused
                 if (!isPaused) pauseGame();
                 else continueGame();
             }
+            // alter state by input if not paused 
             if(!isPaused)
             {
                 player.stateByKey(key);
@@ -80,6 +82,7 @@ bool Game::handleStrike()
 void Game::pauseGame()
 {
     isPaused = true;
+    // print pause message
     gotoScreenPos(PAUSEMESSAGE_POS);
     std::cout << PAUSE_MESSAGE;
 }
@@ -103,9 +106,11 @@ bool Game::start()
     gameBoard.print();
     updateLivesCounter();
 
+    //need to clear input buffer after animation 
     flushInputBuffer();
     update();
 
+    // returns true if game is over
     return (lives == 0);
 }
 
@@ -117,9 +122,10 @@ void Game::resetLevel()
     gameBoard.print();
     updateLivesCounter();
 
-    // for explanation of this function see: Menu.print()
+    //need to clear input buffer after animation  
     flushInputBuffer();
 
+    // reset player and barrel manager
     player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
     barrelManager = BarrelManager(&gameBoard, DONKEY_KONG_POS);
 }
