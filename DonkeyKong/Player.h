@@ -20,22 +20,25 @@ class Player
     Board* gameBoard = nullptr;
 
     MoveState curState = STAY;
-    //the player keeps the horizontal state if it is not changed
+    //the player keeps the recent horizontal state regardless of the current state
     MoveState horizontalState = STAY;
 
-    
     //  mid jump not falling
     bool midJump = false;
+    
     // height traveled during a jump 
     int heightTraveled = 0;
+    
     // tells us if were climbing a ladder right now 
     bool midClimb = false;
     
+    // the function is responsible for the first stage of the jump (until max jump height is reached) 
+    // then mario just falls. (handled in movemnet by gravity function)  
     void jump();
 
+    //checks if were trying to move sideways or pressed stay on ladder
     bool horizontalMovesOnLadder()
     {
-        //checks if were trying to move sideways or pressed stay on ladder
         return (curState == STAY || curState == RIGHT || curState == LEFT) && midClimb;
     }
 
@@ -53,6 +56,7 @@ class Player
         
         return positionAllowsClimbing && !midJump && !isFalling();
     }
+
     bool canClimbDown(Point position)
     {
         // while climbing down, we need to be on the ladder that is above ground
@@ -65,6 +69,7 @@ class Player
     }
 
     void climbUp();
+
     void climbDown();
 
 public:
@@ -77,19 +82,23 @@ public:
     }
     
     void movePlayer();
+
+    // change state by valid keyboard input (in KEYS[])
     void stateByKey(char key);
 
-    bool checkFallDamage() 
+    bool checkFallDamage() const
     {
-        //return true if we just fell more than X tiles
+        //return true if we just fell more than MAX_FALL_HEIGHT tiles
         return (playerMovement.checkOnGround() && (playerMovement.getFallHeight() >= MAX_FALL_HEIGHT));
     }
 
+    // checks collision with hazard objects 
     bool checkCollision() const
     {
         Point position = playerMovement.getPosition();
         return gameBoard->isHazardAtPos(position);
     }
 
+    // actions when loses life
     void takeDamage();
 };

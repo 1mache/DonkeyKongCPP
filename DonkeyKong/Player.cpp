@@ -6,7 +6,7 @@ void Player::stateByKey(char key)
         if (std::tolower(key) == KEYS[i]) {
             MoveState state = (MoveState)i;
             
-            //set the curent state acordingly if were not mid jump 
+            //set the current state acordingly if were not mid jump 
             if(!midJump)
             {
                 curState = state;
@@ -37,6 +37,7 @@ void Player::movePlayer()
         return;
     }
 
+    // if the state is up we can either climb or jump 
     if (curState == UP)
     {   
         if (canClimbUp(position))
@@ -50,7 +51,7 @@ void Player::movePlayer()
             return;
         }
     }
-
+     
     if (curState == DOWN)
     {
         if (canClimbDown(position))
@@ -71,38 +72,44 @@ void Player::movePlayer()
 
 void Player::jump()
 {
-    Point movePosition;
+    Point movePosition = DIRECTIONS[horizontalState];
 
+    // position above player
     Point above = playerMovement.getPosition().oneAbove();
-    // if were on the ground and there isnt floor above us OR were mid jump and havent reached jump height
+
+    // if we're on the ground and there isnt floor above us OR we're mid jump and havent reached jump height
     if ((playerMovement.checkOnGround() && !gameBoard->isObstacleAtPos(above))
         || (midJump && (heightTraveled < JUMP_HEIGHT)))
     {
-        // horizontal state
+        // increment height traveled
         heightTraveled += 1;
         midJump = true;
-                           //up, dowm or stay          add up direction
+
+        //add up direction
         movePosition = DIRECTIONS[horizontalState].oneAbove();
     }
-    else
+    else // we "landed"
     {
+        // reset height traveled
         heightTraveled = 0;
+        // reset midjump
         midJump = false;
+        // set the state to horizontal state so the player continues horizontal movement =
         curState = horizontalState;
-
-        movePosition = DIRECTIONS[horizontalState];
     }
 
+    // move accordingly 
     playerMovement.move(movePosition, !midJump);
 }
 
 void Player::climbUp()
 {
+    // midClimb tells us whether to continue climb or not
     if(midClimb)
-    {
+    {                             //dont use gravity on ladder and allow passing through floor
         playerMovement.move(DIRECTIONS[UP] , false, true);
         
-        //if we reached ground were no longer climbing
+        //if we reached ground we`re no longer climbing
         if(playerMovement.checkOnGround())
         {
             midClimb = false;
@@ -112,6 +119,7 @@ void Player::climbUp()
     }
     else
     {
+        //start climbing
         playerMovement.move(DIRECTIONS[UP], false, true);
         midClimb = true;
     }   
@@ -119,11 +127,13 @@ void Player::climbUp()
 
 void Player::climbDown()
 {
+    // midClimb tells us whether to continue climb or not
     if (midClimb)
-    {
+    { 
+                                                    
         playerMovement.move(DIRECTIONS[DOWN], false, false);
         
-        //if we reached ground were no longer climbing
+        //if we reached ground we're no longer climbing
         if (playerMovement.checkOnGround())
         {
             midClimb = false;
@@ -132,6 +142,7 @@ void Player::climbDown()
     }
     else
     {
+        // start climbing
         playerMovement.move(DIRECTIONS[DOWN], false, true);
         midClimb = true;
     }
