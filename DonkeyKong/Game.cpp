@@ -99,7 +99,7 @@ void Game::continueGame()
 
 bool Game::start()
 {
-    gameBoard.reset();
+    gameBoard.resetBoard();
     gameBoard.print();
     updateLivesCounter();
 
@@ -113,7 +113,7 @@ void Game::resetLevel()
 {
     clearScreen();
 
-    gameBoard.reset();
+    gameBoard.resetBoard();
     gameBoard.print();
     updateLivesCounter();
 

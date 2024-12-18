@@ -1,6 +1,6 @@
 #include "Board.h"
 
-void Board::reset() {
+void Board::resetBoard() {
 	for (int i = 0; i < HEIGHT; i++) {
 		memcpy(currentBoard[i], originalBoard[i], WIDTH + 1);
 	}
@@ -44,12 +44,13 @@ void Board::resetCharAtPos(Point position)
 {
 	int x = position.getX();
 	int y = position.getY();
-
+	// take the char that was at the original board and put it at current
 	currentBoard[y][x] = originalBoard[y][x];
 }
 
 bool Board::isObstacleAtPos(Point position) const
 {
+	// for each obstacle check if its in the position
 	char charAtPos = getCharAtPos(position);
 	for (char obstacleChar : OBSTACLES)
 	{
@@ -64,6 +65,7 @@ bool Board::isObstacleAtPos(Point position) const
 
 bool Board::isHazardAtPos(Point position) const
 {
+	// for each hazard check if its in the position
 	char charAtPos = getCharAtPos(position);
 	for (char hazardChar : HAZARDS)
 	{
