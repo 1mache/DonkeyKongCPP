@@ -6,7 +6,11 @@
 
 class Barrel
 {
+public:
+    enum RollDirection { LEFT, RIGHT };
+    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
+private:
     static constexpr char LEFT_FLOOR = '<';
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
@@ -17,7 +21,7 @@ class Barrel
     Board* gameBoard = nullptr;
     
     // are we rolling left or right
-    Point currentRollDirection;
+    RollDirection currentRollDirection;
 
     // 0 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
@@ -46,10 +50,8 @@ class Barrel
     void eraseExplosion();
 
 public:
-    enum RollDirection { LEFT, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
-    Barrel(Board* _gameBoard, Point _startPos, Point _dir) :
+    Barrel(Board* _gameBoard, Point _startPos, RollDirection _dir) :
         currentRollDirection(_dir), barrelMovement(Movement(_gameBoard, Board::BARREL, _startPos)), gameBoard(_gameBoard) {}
     
     // updates barrel based on what its doing right now, whether its

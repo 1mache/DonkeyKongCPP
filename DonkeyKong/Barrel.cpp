@@ -7,11 +7,11 @@ void Barrel::setBarrelDirection()
     //set direction based on floor
     if (charBelow == LEFT_FLOOR)
     {
-        currentRollDirection = DIRECTIONS[RollDirection::LEFT];
+        currentRollDirection = RollDirection::LEFT;
     }
     else if (charBelow == RIGHT_FLOOR)
     {
-        currentRollDirection = DIRECTIONS[RollDirection::RIGHT];
+        currentRollDirection = RollDirection::RIGHT;
     }
 }
 
@@ -21,7 +21,7 @@ void Barrel::moveBarrel()
     gameBoard->resetCharAtPos(barrelMovement.getPosition());
     
     setBarrelDirection();
-    barrelMovement.move(currentRollDirection, true);
+    barrelMovement.move(DIRECTIONS[currentRollDirection], true);
     // place barrel on board in its new position
     gameBoard->updateBoardWithChar(barrelMovement.getPosition(), Board::BARREL);
 }

@@ -13,8 +13,10 @@ class BarrelManager
     static constexpr int MIN_SPAWN_DELAY = 20;
     static constexpr int MAX_SPAWN_DELAY = 60;
 
+    // our spawner is donkey kong
     Point spawnerPosition;
     int frameCounter = 0;
+    // which way to spawn 
     bool spawnToRight = true;
 
     Barrel::RollDirection curBarrelDir = Barrel::RollDirection::RIGHT;
@@ -25,7 +27,7 @@ class BarrelManager
     void spawnBarrel()
     {
         // barrel constructor, creates barrel in the vector 
-        barrelsVector.emplace_back(gameBoard, spawnerPosition + Barrel::DIRECTIONS[curBarrelDir], Barrel::DIRECTIONS[curBarrelDir]);
+        barrelsVector.emplace_back(gameBoard, spawnerPosition + Barrel::DIRECTIONS[curBarrelDir], curBarrelDir);
     }
 
     void deleteBarrel(int index)
@@ -37,7 +39,7 @@ class BarrelManager
     void moveAllBarrels();
 
     int getRandomDelay() 
-    { 
+    {
         return ((rand() % (MAX_SPAWN_DELAY + 1 - MIN_SPAWN_DELAY)) + MIN_SPAWN_DELAY); 
     }
 
