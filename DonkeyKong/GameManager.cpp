@@ -12,7 +12,7 @@ void GameManager::launchGame()
 		bool exitflag = menu.displayMainMenu();
 		if (exitflag)
 		{
-			break;
+			break; // player chose exit in menu, exit game
 		}
 
 		Game game;

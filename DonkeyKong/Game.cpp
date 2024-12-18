@@ -1,32 +1,5 @@
 #include "Game.h"
 
-bool Game::start()
-{
-    gameBoard.reset();
-    gameBoard.print();
-    updateLivesCounter();
-
-    flushInputBuffer();
-    update();
-
-    return (lives == 0);
-}
-
-void Game::resetLevel()
-{
-    clearScreen();
-
-    gameBoard.reset();
-    gameBoard.print();
-    updateLivesCounter();
-
-    // for explanation of this function see: Menu.print()
-    flushInputBuffer();
-
-    player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
-    barrelManager = BarrelManager(&gameBoard, DONKEY_KONG_POS);
-}
-
 void Game::update()
 {
     while (true)
@@ -122,4 +95,31 @@ void Game::continueGame()
         std::cout << gameBoard.getCharAtPos(restorePos);
         restorePos = restorePos.oneRight();
     }
+}
+
+bool Game::start()
+{
+    gameBoard.reset();
+    gameBoard.print();
+    updateLivesCounter();
+
+    flushInputBuffer();
+    update();
+
+    return (lives == 0);
+}
+
+void Game::resetLevel()
+{
+    clearScreen();
+
+    gameBoard.reset();
+    gameBoard.print();
+    updateLivesCounter();
+
+    // for explanation of this function see: Menu.print()
+    flushInputBuffer();
+
+    player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
+    barrelManager = BarrelManager(&gameBoard, DONKEY_KONG_POS);
 }

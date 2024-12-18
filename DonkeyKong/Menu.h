@@ -63,7 +63,7 @@ class Menu
 			"Q                                                                              Q", // 20
 			"Q    ENTER - select                                                            Q", // 21
 			"Q                                                                              Q", // 22
-			"Q                                                                              Q", // 23
+			"Q                                         by Ben Liberman and Dima Kreicherek  Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
 
@@ -180,7 +180,9 @@ class Menu
 		drawChar(' ', position);
 	}
 
+	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
+	// print the menu options with sleep between characters (animation)
 	void printMainOptions();
 
 	void update();

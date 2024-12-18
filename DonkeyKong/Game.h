@@ -47,6 +47,4 @@ public:  // Why is the constructor needed if the same is written in the startGam
 	
 	bool start();
 	void resetLevel();
-
 };
-

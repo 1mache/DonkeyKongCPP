@@ -22,18 +22,6 @@ void Player::stateByKey(char key)
     }
 }
 
-void Player::takeDamage()
-{
-    //little animation 
-    for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
-    {
-        playerMovement.erase();
-        Sleep(Constants::GAME_REFRESH_RATE * 2);
-        playerMovement.draw();
-        Sleep(Constants::GAME_REFRESH_RATE * 2);
-    }
-}
-
 void Player::movePlayer()
 {
     bool onGround = playerMovement.checkOnGround();
@@ -146,5 +134,17 @@ void Player::climbDown()
     {
         playerMovement.move(DIRECTIONS[DOWN], false, true);
         midClimb = true;
+    }
+}
+
+void Player::takeDamage()
+{
+    //little animation 
+    for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
+    {
+        playerMovement.erase();
+        Sleep(Constants::GAME_REFRESH_RATE * 2);
+        playerMovement.draw();
+        Sleep(Constants::GAME_REFRESH_RATE * 2);
     }
 }

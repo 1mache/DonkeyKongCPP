@@ -16,7 +16,6 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 	flushInputBuffer();
 }
 
-// print the menu options with sleep between characters (animation)
 void Menu::printMainOptions()
 {
 	for(const MenuOption& option: MENU_OPTIONS)
@@ -37,7 +36,7 @@ void Menu::printMainOptions()
 
 void Menu::update()
 {
-	bool exitMenu = false;
+	bool closeMenu = false;
 	
 	while (true)
 	{
@@ -62,17 +61,17 @@ void Menu::update()
 				else
 				{
 					// if its not arrow control try to select option with this key
-					exitMenu = selectOption(key);
+					closeMenu = selectOption(key);
 				}
 			}
 
 			//user pressed ENTER
 			if(key == KEYS[SELECT])
 			{
-				exitMenu = selectOption();
+				closeMenu = selectOption();
 			}
 
-			if(exitMenu) 
+			if(closeMenu) 
 			{
 				break;
 			}
@@ -90,7 +89,7 @@ void Menu::update()
 
 bool Menu::selectOption()
 {
-	bool exitMenu = false;
+	bool closeMenu = false;
 
 	//if were on the control screen there is always a single option
 	if (currentScreenId == CONTROL_SCREEN_ID)
@@ -98,15 +97,15 @@ bool Menu::selectOption()
 		clearScreen();
 		gotoMainScreen();
 		// control screen doesnt break the input loop
-		return exitMenu;
+		return closeMenu;
 	}
 
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
 		clearScreen();
 		// game over and win screen do break the input loop
-		exitMenu = true;
-		return exitMenu;
+		closeMenu = true;
+		return closeMenu;
 	}
 
 	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
@@ -118,21 +117,21 @@ bool Menu::selectOption()
 	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
 	{
 		clearScreen();
-		exitMenu = true;
+		closeMenu = true;
 	}
 	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
 	{
 		clearScreen();
 		exitFlag = true;
-		exitMenu = true;
+		closeMenu = true;
 	}
 
-	return exitMenu;
+	return closeMenu;
 }
 
 bool Menu::selectOption(char hotkey)
 {
-	bool exitMenu = false;
+	bool closeMenu = false;
 	// this function only works on the main screen
 	if(currentScreenId == MAIN_SCREEN_ID)
 	{
@@ -144,17 +143,17 @@ bool Menu::selectOption(char hotkey)
 		else if (hotkey == START_GAME_OPTION.hotkey)
 		{
 			clearScreen();
-			exitMenu = true;
+			closeMenu = true;
 		}
 		else if (hotkey == EXIT_OPTION.hotkey)
 		{
 			clearScreen();
 			exitFlag = true;
-			exitMenu = true;
+			closeMenu = true;
 		}
 	}
 
-	return exitMenu;
+	return closeMenu;
 }
 
 void Menu::gotoMainScreen()

@@ -24,33 +24,6 @@ void Barrel::moveBarrel()
     gameBoard->updateBoardWithChar(barrelMovement.getPosition(), spriteChar);
 }
 
-void Barrel::update()
-{
-    if (exploded())
-    {
-        eraseExplosion();
-    }
-    else if(explosionPhase > 0)
-    {
-        drawExplosionPhase();
-    }
-    else if(needsToExplode())
-    {
-        explode();
-    }
-    else
-    {
-        moveBarrel();
-    }
-}
-
-bool Barrel::reachedWall() const
-{
-    Point position = barrelMovement.getPosition();
-    return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight()))) 
-        && barrelMovement.checkOnGround());
-}
-
 void Barrel::explode()
 {
     barrelMovement.erase();
@@ -96,11 +69,15 @@ void Barrel::drawExplosionPhase()
 void Barrel::eraseExplosion()
 {
     Point position = barrelMovement.getPosition();
-    int yPos = position.getY();
-    int xPos = position.getX();
-    for (int y = yPos - EXPLOSION_RADIUS; y <= yPos + EXPLOSION_RADIUS; y++)
+    // top left and bottom right corners
+    Point cornerTL = position + Point(-EXPLOSION_RADIUS, -EXPLOSION_RADIUS);
+    Point cornerBR = position + Point(EXPLOSION_RADIUS, EXPLOSION_RADIUS);
+
+    Point curCharPos;
+
+    for (int y = cornerTL.getY(); y <= cornerBR.getY(); y++)
     {
-        for (int x = xPos - EXPLOSION_RADIUS; x <= xPos + EXPLOSION_RADIUS; x++)
+        for (int x = cornerTL.getX(); x <= cornerBR.getX(); x++)
         {
             Point curCharPos(x, y);
 
@@ -111,5 +88,25 @@ void Barrel::eraseExplosion()
                 std::cout << gameBoard->getCharAtPos(curCharPos);
             }
         }
+    }
+}
+
+void Barrel::update()
+{
+    if (exploded())
+    {
+        eraseExplosion();
+    }
+    else if (explosionPhase > 0)
+    {
+        drawExplosionPhase();
+    }
+    else if (needsToExplode())
+    {
+        explode();
+    }
+    else
+    {
+        moveBarrel();
     }
 }

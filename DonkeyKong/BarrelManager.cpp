@@ -29,6 +29,7 @@ void BarrelManager::manageBarrels()
         {
             curBarrelDir = SpawnDirection::LEFT;
         }
+
         spawnBarrel();
         frameCounter = getRandomDelay();
 

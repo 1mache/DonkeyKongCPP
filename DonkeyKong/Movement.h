@@ -65,5 +65,8 @@ public:
         return !canMoveToPos(position.oneBelow());
     }
 
-    int getFallHeight() { return fallHeight; }
+    int getFallHeight() 
+    { 
+        return fallHeight; 
+    }
 };

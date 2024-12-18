@@ -4,8 +4,6 @@
 #include "Movement.h"
 #include "Constants.h"
 
-// FIND A WAY TO MOVE INSIDE THE CLASS
-
 class Barrel
 {
     enum RollDirection { LEFT, RIGHT };
@@ -27,7 +25,13 @@ class Barrel
     // 1 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
 
-    bool reachedWall() const;
+    bool reachedWall() const
+    {
+        Point position = barrelMovement.getPosition();
+        return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight())))
+            && barrelMovement.checkOnGround());
+    }
+
     void setBarrelDirection();
 
     bool needsToExplode()
@@ -35,17 +39,17 @@ class Barrel
         return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
             || reachedWall());
     }
+
+    void moveBarrel();
     void explode();
     void drawExplosionPhase();
     void eraseExplosion();
-    void moveBarrel();
 
 public:
     Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
         rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
     
     void update();
-
 
     bool exploded()
     {
