@@ -20,7 +20,8 @@ class Barrel
     char spriteChar;
     Board* gameBoard = nullptr;
     
-    Point rollDirection;
+    // are we rolling left or right
+    Point currentRollDirection;
 
     // 1 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
@@ -31,28 +32,35 @@ class Barrel
         return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight())))
             && barrelMovement.checkOnGround());
     }
-
-    void setBarrelDirection();
-
+    
+    // decides current roll direction based on floor below us '<' or '>'
+    void setBarrelDirection();  
+    
     bool needsToExplode()
     {
+        // barrel needs to explode if it fell more than x tiles or if it reached wall
         return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
             || reachedWall());
     }
 
     void moveBarrel();
+    // starts the explosion cycle
     void explode();
     void drawExplosionPhase();
     void eraseExplosion();
 
 public:
     Barrel(Board* _gameBoard, char _spriteChar, Point _startPos, Point _dir) :
-        rollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
+        currentRollDirection(_dir), barrelMovement(Movement(_gameBoard, _spriteChar, _startPos)), spriteChar(_spriteChar), gameBoard(_gameBoard) {}
     
+    // updates barrel based on what its doing right now, whether its
+    // moving or exploding
     void update();
 
     bool exploded()
     {
+        //when we see the explosion in its full size on the screen explosionPhase
+        // will actually be greater than radius by one, see: drawExplosionPhase() 
         return explosionPhase == EXPLOSION_RADIUS + 1;
     }
 };
