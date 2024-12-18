@@ -23,11 +23,11 @@ void BarrelManager::manageBarrels()
     {
         if (spawnToRight)
         {
-            curBarrelDir = SpawnDirection::RIGHT;
+            curBarrelDir = Barrel::RollDirection::RIGHT;
         }
         else
         {
-            curBarrelDir = SpawnDirection::LEFT;
+            curBarrelDir = Barrel::RollDirection::LEFT;
         }
 
         spawnBarrel();

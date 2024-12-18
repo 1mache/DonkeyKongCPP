@@ -17,10 +17,7 @@ class BarrelManager
     int frameCounter = 0;
     bool spawnToRight = true;
 
-    enum SpawnDirection { LEFT, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
-
-    SpawnDirection curBarrelDir = SpawnDirection::RIGHT;
+    Barrel::RollDirection curBarrelDir = Barrel::RollDirection::RIGHT;
 
     Board* gameBoard = nullptr;
     std::vector<Barrel> barrelsVector;
@@ -28,7 +25,7 @@ class BarrelManager
     void spawnBarrel()
     {
         // barrel constructor, creates barrel in the vector 
-        barrelsVector.emplace_back(gameBoard, spawnerPosition + DIRECTIONS[curBarrelDir], DIRECTIONS[curBarrelDir]);
+        barrelsVector.emplace_back(gameBoard, spawnerPosition + Barrel::DIRECTIONS[curBarrelDir], Barrel::DIRECTIONS[curBarrelDir]);
     }
 
     void deleteBarrel(int index)
