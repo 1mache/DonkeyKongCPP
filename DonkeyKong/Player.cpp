@@ -24,7 +24,6 @@ void Player::stateByKey(char key)
 
 void Player::movePlayer()
 {
-    bool onGround = playerMovement.checkOnGround();
     Point position = playerMovement.getPosition();
 
     bool gravity = true;

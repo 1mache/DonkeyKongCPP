@@ -40,8 +40,6 @@ void Barrel::explode()
 void Barrel::drawExplosionPhase()
 {
     Point position = barrelMovement.getPosition();
-    int yPos = position.getY();
-    int xPos = position.getX();
     
     //topLeft and bottomRight corners of the explosion "rings"
     Point cornerTL = position + Point(-explosionPhase, -explosionPhase);
@@ -87,7 +85,7 @@ void Barrel::eraseExplosion()
     {
         for (int x = cornerTL.getX(); x <= cornerBR.getX(); x++)
         {
-            Point curCharPos(x, y);
+            curCharPos = { x, y };
 
             if (gameBoard->isPosInBounds(curCharPos))
             {
