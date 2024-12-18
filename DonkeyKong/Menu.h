@@ -92,7 +92,7 @@ class Menu
 			"Q                             X - Climb Down | ESC - Pause                     Q", // 19
 			"Q                                                                              Q", // 20
 			"Q                                                                              Q", // 21
-			"Q                                   > Back                                     Q", // 22
+			"Q                                ENTER - Back                                  Q", // 22
 			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
@@ -158,6 +158,7 @@ class Menu
 		  "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"  // 24
 	};
 
+	//each screen has an ID 
 	static constexpr int MAIN_SCREEN_ID = 0;
 	static constexpr int CONTROL_SCREEN_ID = 1;
 	static constexpr int WIN_SCREEN_ID = 2;
@@ -165,8 +166,11 @@ class Menu
 
 	//which screen are we on
 	int currentScreenId = MAIN_SCREEN_ID;
+
 	//what menu option the arrow is pointing to
 	int arrowId = START_ARROW_ID;
+
+	// tells us if we selected the exit option
 	bool exitFlag = false;
 
 	void drawChar(char ch, Point position) const
@@ -182,11 +186,16 @@ class Menu
 
 	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
-	// print the menu options with sleep between characters (animation)
-	void printMainOptions();
 
+	// print the menu options with sleep between characters (animation)
+	void printMainOptions() const;
+	
+	// updates menu based on input 
 	void update();
+
+	// selecting options with ENTER
 	bool selectOption();
+	
 	//overloading for selecting options with numbers
 	bool selectOption(char hotkey);
 
@@ -211,12 +220,15 @@ class Menu
 	}
 
 public:
+	// returns true if we selected EXIT in menu 
 	bool displayMainMenu();
+
 	void displayGameOver() 
 	{
 		gotoGameOverScreen();
 		update();
 	}
+
 	void displayWinScreen()
 	{
 		gotoWinScreen();

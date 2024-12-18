@@ -16,7 +16,7 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 	flushInputBuffer();
 }
 
-void Menu::printMainOptions()
+void Menu::printMainOptions() const
 {
 	for(const MenuOption& option: MENU_OPTIONS)
 	{
@@ -36,6 +36,7 @@ void Menu::printMainOptions()
 
 void Menu::update()
 {
+	// breaks out of the menu loop
 	bool closeMenu = false;
 	
 	while (true)
@@ -73,7 +74,7 @@ void Menu::update()
 
 			if(closeMenu) 
 			{
-				break;
+				break; //user selected one of the option that closes the menu
 			}
 		}
 
@@ -167,7 +168,7 @@ void Menu::gotoMainScreen()
 bool Menu::displayMainMenu()
 {
 	gotoMainScreen();
-	Sleep(LINE_PRINT_DELAY*3);
+	Sleep(LINE_PRINT_DELAY);
 	
 	update();
 	
