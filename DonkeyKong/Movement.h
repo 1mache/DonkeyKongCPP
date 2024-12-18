@@ -56,9 +56,10 @@ public:
         draw(position , ' ');
     }
 
-    // moves the object and draws it in the new position 
+    // moves the object and draws it in the new position,
+    // you can choose whether to apply gravity or not,
     // the function can ignore obstacles, doesnt do it by default 
-    void move(Point movePosition, bool useGravity, bool ignoreObstacles = false);
+    void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
 
     bool canMoveToPos(Point newPos) const 
     {

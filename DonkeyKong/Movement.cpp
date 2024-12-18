@@ -1,11 +1,12 @@
 #include "Movement.h"
 
-void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
+void Movement::move(Point moveDirection, bool useGravity, bool ignoreObstacles)
 {
     erase();
 
-    int newX = position.getX() + movePosition.getX();
-    int newY = position.getY() + movePosition.getY();
+    //add direction to current position in each axis
+    int newX = position.getX() + moveDirection.getX();
+    int newY = position.getY() + moveDirection.getY();
 
 
     //remember previous position before we change it 
