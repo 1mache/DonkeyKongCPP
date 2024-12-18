@@ -71,7 +71,7 @@ public:
     {
         // in board we have certain objects that mario cant pass through
         // check if one of those is below us
-        return !gameBoard->isObstacleAtPos(position.oneBelow());
+        return gameBoard->isObstacleAtPos(position.oneBelow());
     }
 
     int getFallHeight() 
