@@ -2,12 +2,16 @@ Submitters:
 Ben Liberman: 322465600
 Dmytro Kreicherek: 338062755
 
-Features and bonuses:
-
+Features:
 -   Mario can move freely during fall and change horizontal directions midjump
     We chose free fall option 3 from here: https://mama.mta.ac.il/mod/forum/discuss.php?d=2206
-    that Amir accepted - Mario continues his horizontal movement during a fall
- 
+    that Amir accepted - Mario can change his horizontal movement during a fall.
+
+-   If Mario tries to move horizontally ('A', 'D') while on a ladder we chose to stop him, 
+    same behaviour as when he presses 'S'. Also after Mario climbs up and down he doesnt 
+    continue his horizontal movement, in our experience in provided better control over his movement.
+
+Bonuses:
 -   There is a wall character 'W' that Mario cannot pass through, and screen border 'Q'.
     Board holds an array of obstacles, objects that Mario can't pass through so adding a new one
     is easy. Same with things that hurt Mario (hazards).
