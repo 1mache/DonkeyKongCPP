@@ -2,7 +2,7 @@
 
 class Constants
 {
-	//constants that are global and are used by 
+	//constants that a bunch of classes need
 public:
 	static constexpr int SCREEN_WIDTH = 80;
 	static constexpr int SCREEN_HEIGHT = 25;

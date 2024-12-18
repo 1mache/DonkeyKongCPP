@@ -6,10 +6,11 @@
 #include "Point.h"
 #include "utils.h"
 
+// movement component of all the moving objects on screen
 class Movement
 {
     Point position;
-    
+    // char that represents the object on screen
     char spriteChar;
     
     Board* gameBoard = nullptr;
@@ -25,11 +26,14 @@ class Movement
             std::cout << c;
         }
     }
-
+    
+    //pulls the object down one tile
     void gravity()
     {
-        //pull down by 1
-        position = position.oneBelow();
+        if(!checkOnGround())
+        {
+            position = position.oneBelow();
+        }
     }
 
 public:
@@ -51,18 +55,23 @@ public:
     {
         draw(position , ' ');
     }
-                                             //the move function can ignore obstacles, doesnt do it by default 
+
+    // moves the object and draws it in the new position 
+    // the function can ignore obstacles, doesnt do it by default 
     void move(Point movePosition, bool useGravity, bool ignoreObstacles = false);
 
     bool canMoveToPos(Point newPos) const 
-    { 
+    {
+        //returns true if the position is in bounds and there is no obstacle 
         return (!(gameBoard->isObstacleAtPos(newPos)) 
             && gameBoard->isPosInBounds(newPos)); 
     }
 
     bool checkOnGround() const
     {
-        return !canMoveToPos(position.oneBelow());
+        // in board we have certain objects that mario cant pass through
+        // check if one of those is below us
+        return !gameBoard->isObstacleAtPos(position.oneBelow());
     }
 
     int getFallHeight() 

@@ -2,6 +2,7 @@
 
 void GameManager::launchGame()
 {
+	// hide cursor
 	ShowConsoleCursor(false);
 
 	while (true)

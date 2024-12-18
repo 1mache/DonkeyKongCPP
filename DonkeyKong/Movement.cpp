@@ -30,7 +30,8 @@ void Movement::move(Point movePosition, bool useGravity, bool ignoreObstacles)
     {
         position = { position.getX(), newY };
     }
-
+    
+    // update fallHeight based on if gravity pulls us
     if (!checkOnGround() && useGravity)
     {
         gravity();

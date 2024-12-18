@@ -1,5 +1,6 @@
 #pragma once
 
+//class that represents an ordered pair of x,y
 class Point {
 	int x, y;
 
@@ -23,6 +24,7 @@ public:
 	//return position that is 1 above/below this position
 	Point oneAbove() const { return Point(x, y - 1); }
 	Point oneBelow () const { return Point(x, y + 1); }
+	// same with left/right
 	Point oneRight() const { return Point(x + 1, y); }
 	Point oneLeft() const { return Point(x - 1, y); }
 };
