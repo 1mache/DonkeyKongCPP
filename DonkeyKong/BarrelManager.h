@@ -34,16 +34,20 @@ class BarrelManager
         //deletes the barrel from the barrel vector
         barrelsVector.erase(barrelsVector.begin() + index);
     }
+    
+    void updateAllBarrels();
 
-    void moveAllBarrels();
-
-    int getRandomDelay() 
+    // gives "random" spawn delay for barrels
+    int getRandomDelay() const
     {
+        // its the same every run
+        // it will be between MAX_SPAWN_DELAY and MIN_SPAWN_DELAY
         return ((rand() % (MAX_SPAWN_DELAY + 1 - MIN_SPAWN_DELAY)) + MIN_SPAWN_DELAY); 
     }
 
 public:
     BarrelManager(Board* _gameBoard, Point _spawnerPos) : spawnerPosition(_spawnerPos), gameBoard(_gameBoard) {}
 
+    // updates all existing barrels, and spawns new ones
     void manageBarrels();
 };

@@ -36,7 +36,7 @@ private:
     // decides current roll direction based on floor below us '<' or '>'
     void setBarrelDirection();  
     
-    bool needsToExplode()
+    bool needsToExplode() const
     {
         // barrel needs to explode if it fell more than x tiles or if it reached wall
         return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
@@ -58,7 +58,7 @@ public:
     // moving or exploding
     void update();
 
-    bool exploded()
+    bool exploded() const
     {
         //when we see the explosion in its full size on the screen explosionPhase
         // will actually be greater than radius by one, see: drawExplosionPhase() 

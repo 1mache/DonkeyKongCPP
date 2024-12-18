@@ -74,7 +74,7 @@ public:
         return gameBoard->isObstacleAtPos(position.oneBelow());
     }
 
-    int getFallHeight() 
+    int getFallHeight() const 
     { 
         return fallHeight; 
     }
