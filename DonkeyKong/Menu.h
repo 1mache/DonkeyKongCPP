@@ -31,9 +31,9 @@ class Menu
 	enum INPUTS { UP, DOWN, SELECT };
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
 	static constexpr int NUM_OF_OPTIONS = 3;
-	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), " [1] Start Game", '1'};
-	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), " [8] Controls", '8' };
-	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), " [9] EXIT", '9'};
+	static constexpr MenuOption START_GAME_OPTION = { Point(34, 18), " [Start Game]", '1'};
+	static constexpr MenuOption CONTROLS_OPTION = { Point(35, 19), " [Controls]", '8' };
+	static constexpr MenuOption EXIT_OPTION = { Point(37, 21), " [EXIT]", '9'};
 
 	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
 
@@ -42,28 +42,28 @@ class Menu
 		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
 			"Q                                                                              Q", // 1
-			"Q                                                                              Q", // 2
-			"Q        DDDDD     OOOOO    N   N   K   K   EEEEE   Y   Y       .\"`\".          Q", // 3
-			"Q        D    D   O     O   NN  N   K  K    E        Y Y    .-./ _=_ \\.-.      Q", // 4
-			"Q        D    D   O     O   N N N   KKK     EEEE      Y    {  (,(oYo),) }}     Q", // 5
-			"Q        D    D   O     O   N  NN   K  K    E         Y   { { |   \"   | } }    Q", // 6
-			"Q        DDDDD     OOOOO    N   N   K   K   EEEEE     Y   {  { \\(---)/ }  }    Q", // 7
-			"Q                                                          {{  }'-=-'{ } }     Q", // 8
-			"Q        K   K   OOOOO    N   N   GGGG                     { { }._:_.{ } }     Q", // 9
-			"Q        K  K   O     O   NN  N   G                        {{  } -:- { } }     Q", // 10
-			"Q        KKK    O     O   N N N   G  GG                    {_{ }`===`{  _}     Q", // 11
-			"Q        K  K   O     O   N  NN   G   G                   ((((\\)     (/))))    Q", // 12
-			"Q        K   K   OOOOO    N   N   GGGG                                         Q", // 13
-			"Q                                                                              Q", // 14
-			"Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=     =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 15
+			"Q      DDDDD     OOOOO    N   N   K   K   EEEEE   Y   Y         .\"`\".          Q", // 2
+			"Q      D    D   O     O   NN  N   K  K    E        Y Y      .-./ _=_ \\.-.      Q", // 3
+			"Q      D    D   O     O   N N N   KKK     EEEE      Y      {  (,(oYo),) }}     Q", // 4
+			"Q      D    D   O     O   N  NN   K  K    E         Y     { { |   \"   | } }    Q", // 5
+			"Q      DDDDD     OOOOO    N   N   K   K   EEEEE     Y     {  { \\(---)/ }  }    Q", // 6
+			"Q                                                          {{  }'-=-'{ } }     Q", // 7
+			"Q      K   K   OOOOO    N   N   GGGG                       { { }._:_.{ } }     Q", // 8
+			"Q      K  K   O     O   NN  N   G                          {{  } -:- { } }     Q", // 9
+			"Q      KKK    O     O   N N N   G  GG                      {_{ }`===`{  _}     Q", // 10
+			"Q      K  K   O     O   N  NN   G   G                     ((((\\)     (/))))    Q", // 11
+			"Q      K   K   OOOOO    N   N   GGGG                                           Q", // 12
+			"Q                                                                              Q", // 13
+			"Q                                        by Ben Liberman and Dmytro Kreicherek Q", // 14
+			"Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>=         =<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 15
 			"Q                                                                              Q", // 16
 			"Q                                                                              Q", // 17
-			"Q    X/W   - navigate                                                          Q", // 18
-			"Q            options                                                           Q", // 19
-			"Q                                                                              Q", // 20
-			"Q    ENTER - select                                                            Q", // 21
-			"Q                                                                              Q", // 22
-			"Q                                         by Ben Liberman and Dima Kreicherek  Q", // 23
+			"Q   X/W   - navigate                                                           Q", // 18
+			"Q           options                                                            Q", // 19
+			"Q   ENTER - select                                                             Q", // 20
+			"Q                                                                              Q", // 21
+			"Q   (or use 1,8,9)                                                             Q", // 22
+			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
 
