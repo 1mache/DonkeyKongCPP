@@ -21,12 +21,14 @@ void flushInputBuffer()
 {
     while (_kbhit())
     {
-        //store it so ignored return value warning doesnt pop up
-        char ignored = _getch();
+        //we want to explicitly ignore return value without the warning popping up
+        // this is the approach we found here: https://stackoverflow.com/questions/689677/why-cast-unused-return-values-to-void 
+        (void)_getch();
     }
 }
 
 void clearScreen()
 {
+    // command that tells cmd to clear the screen
     system("cls");
 }
