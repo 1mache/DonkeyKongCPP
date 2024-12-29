@@ -6,6 +6,7 @@ void Board::resetBoard() {
 	}
 }
 
+// why height-1? just noticed this
 void Board::print() const {
 	for (int i = 0; i < HEIGHT-1; i++) {
 		std::cout << currentBoard[i] << '\n';
@@ -32,12 +33,20 @@ char Board::getCharAtPos(Point position) const
 	}
 }
 
-void Board::updateBoardWithChar(Point position, char newChar)
+void Board::updateCurrentBoardWithChar(Point position, char newChar)
 {
 	int x = position.getX();
 	int y = position.getY();
 
 	currentBoard[y][x] = newChar;
+}
+
+void Board::updateOriginalBoardWithChar(Point position, char newChar)
+{
+	int x = position.getX();
+	int y = position.getY();
+
+	//originalBoard[y][x] = newChar;
 }
 
 void Board::resetCharAtPos(Point position)

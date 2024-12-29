@@ -24,6 +24,8 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="GhostsManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Movement.cpp" />
@@ -37,6 +39,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GhostsManager.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Player.h" />

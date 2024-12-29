@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "Barrel.h"
 #include "BarrelManager.h"
+#include "GhostsManager.h"
 
 class Game
 {
@@ -26,6 +27,7 @@ class Game
 	Player player;
 
 	BarrelManager barrelManager;
+	GhostsManager ghostsManager;
 
 	int lives = MAX_LIVES;
 
@@ -50,7 +52,8 @@ class Game
 
 public:
 	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
-		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)) {}
+		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)),
+	    ghostsManager(GhostsManager(&gameBoard)){}
 	
 	bool start();
 

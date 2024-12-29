@@ -9,6 +9,7 @@ class Board {
 public:
 	static constexpr char BARREL = 'O';
 	static constexpr char EXPLOSION = '*';
+	static constexpr char GHOST = 'x';
 
 private:
 	static constexpr char SCREEN_BORDER = 'Q';
@@ -17,13 +18,14 @@ private:
 	// objects that mario cannot pass through
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'W', SCREEN_BORDER};
 	// things that kill mario
-	static constexpr char HAZARDS[] = { BARREL, EXPLOSION };
+	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST };
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 
+	// can i make it non const for deleting ghosts after spawn?
 	const char* originalBoard[HEIGHT] = {
 		// 00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		// 01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -38,11 +40,11 @@ private:
 		  "Q            =<<<<<<<<<<<<<<<======================>>>>>>>>>>>>>>>=            Q", // 8
 		  "Q            H                                                    H            Q", // 9
 		  "Q            H                      <=====>                       H            Q", // 10
-		  "Q            H                         H                          H            Q", // 11
+		  "Q            H     x                   H              x           H            Q", // 11
 		  "Q>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> H <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Q", // 12
 		  "Q                                      H                                       Q", // 13
 		  "Q                                      H                              =========Q", // 14
-		  "Q                                      H                                  H    Q", // 15
+		  "Q                      x               H                x                 H    Q", // 15
 		  "Q     ==<<==<<==<<==<<==<<==<<==<<==<<<=>>>==>>==>>==>>==>>==>>==>>==     H    Q", // 16
 		  "Q                             W                                     W     H    Q", // 17
 		  "Q>>>>>>>>>>>>>>>>>>>>>>>>>>   W    =============================    W     H    Q", // 18
@@ -63,7 +65,11 @@ public:
 	char getCharAtPos(Point position) const;
 	
 	// puts the given char at given position on current board
-	void updateBoardWithChar(Point position, char newChar);
+	void updateCurrentBoardWithChar(Point position, char newChar);
+
+	// puts the given char at given position on original board
+	void updateOriginalBoardWithChar(Point position, char newChar);
+
 	// resets the char at given position
 	void resetCharAtPos(Point position);
 

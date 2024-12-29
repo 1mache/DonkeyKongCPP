@@ -26,12 +26,13 @@ private:
     // 0 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
 
-    bool reachedWall() const
+    // Moved this to Movement
+    /*bool reachedWall() const
     {
         Point position = barrelMovement.getPosition();
         return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight())))
             && barrelMovement.checkOnGround());
-    }
+    }*/
     
     // decides current roll direction based on floor below us '<' or '>'
     void setBarrelDirection();  
@@ -40,7 +41,7 @@ private:
     {
         // barrel needs to explode if it fell more than x tiles or if it reached wall
         return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
-            || reachedWall());
+            || barrelMovement.reachedWall());
     }
 
     void moveBarrel();
