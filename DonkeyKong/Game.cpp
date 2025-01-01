@@ -102,6 +102,8 @@ void Game::continueGame()
 
 bool Game::start()
 {
+    srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
+
     gameBoard.resetBoard();
     gameBoard.print();
     updateLivesCounter();
@@ -117,6 +119,8 @@ bool Game::start()
 void Game::resetLevel()
 {
     clearScreen();
+
+    srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
 
     gameBoard.resetBoard();
     gameBoard.print();
