@@ -81,4 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dkong_01.screen">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

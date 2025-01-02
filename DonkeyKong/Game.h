@@ -19,7 +19,8 @@ class Game
 	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
 	static constexpr Point PAULINE_POS = { 39, 1 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
-
+	static constexpr const char* SCREEN_FILE_NAME = "dkong_*.screen";
+	static constexpr int NUM_OF_LEVELS = 3;
 	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
 	static constexpr int MAX_LIVES = 3;
 
