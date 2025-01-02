@@ -13,7 +13,6 @@ public:
 private:
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
-	static constexpr char PAULINE = '$';
 	// objects that mario cannot pass through
 	static constexpr char OBSTACLES[] = { '>', '<', '=', 'W', SCREEN_BORDER};
 	// things that kill mario
@@ -81,11 +80,6 @@ public:
 	bool isLadderAtPos(Point position)const 
 	{ 
 		return getCharAtPos(position) == LADDER; 
-	}
-
-	bool isPaulineAtPos(Point position) const 
-	{ 
-		return getCharAtPos(position) == PAULINE; 
 	}
 };
 

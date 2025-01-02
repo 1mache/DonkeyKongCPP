@@ -53,9 +53,9 @@ void Game::update()
             }
 
             //win check
-            if(gameBoard.isPaulineAtPos(player.getPosition()))
+            if(player.getPosition() == PAULINE_POS)
             {
-                break; // player reach pauline, exit loop 
+                break; // player reached pauline, exit loop 
             }
         }
 
@@ -98,6 +98,16 @@ void Game::continueGame()
         std::cout << gameBoard.getCharAtPos(restorePos);
         restorePos = restorePos.oneRight();
     }
+}
+
+bool Game::readLevelFromFile()
+{
+    // set mario start pos
+    // set ghost start positions
+    // set donkey kong pos
+    // set paulines pos
+    // set board accordingly
+    return true;
 }
 
 bool Game::start()

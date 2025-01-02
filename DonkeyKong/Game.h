@@ -17,6 +17,7 @@ class Game
 	static constexpr Point MARIO_START_POS = { 2, 23 };
 	static constexpr Point DONKEY_KONG_POS = { 39, 3 };
 	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
+	static constexpr Point PAULINE_POS = { 39, 1 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 
 	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
@@ -47,6 +48,9 @@ class Game
 	void pauseGame();
 
 	void continueGame();
+
+	//reads all the necessary info from level file, returns true if was successful 
+	bool readLevelFromFile();
 
 public:
 	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
