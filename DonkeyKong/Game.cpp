@@ -103,11 +103,8 @@ void Game::continueGame()
 bool Game::readLevelFromFile()
 {
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
-    // set mario start pos
     // set ghost start positions
-    // set donkey kong pos
-    // set paulines pos
-    // set board accordingly
+
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
     
     ifstream levelFile("dkong_01.screen", std::ios_base::in);
@@ -153,6 +150,14 @@ bool Game::readLevelFromFile()
         levelFile.ignore(1); // ignore newline char '\n' at the end of a line
         (*map)[row][screenWidth] = '\0'; // terminate the lines that we read
     }
+
+    if (marioStartPos == POS_NOT_SET || donkeyKongPos == POS_NOT_SET ||
+        paulinePos == POS_NOT_SET)
+    {
+        //there were no info on the positions essential for the game in the file
+        return false;
+    }
+
     gameBoard = new Board(map);
     
     return true;
@@ -160,8 +165,6 @@ bool Game::readLevelFromFile()
 
 bool Game::start()
 {
-    srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
-
     bool levelReadSuccess = readLevelFromFile();
 
     if(!levelReadSuccess)
@@ -171,16 +174,7 @@ bool Game::start()
         return false;
     }
 
-    gameBoard->resetBoard();
-    gameBoard->print();
-    updateLivesCounter();
-
-    //need to clear input buffer after animation 
-    flushInputBuffer();
-    
-    // reset player and barrel manager
-    player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
-    barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
+    resetLevel();
     
     update();
 
