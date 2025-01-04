@@ -60,6 +60,8 @@ class Game
 	bool readLevelFromFile();
 
 public:
+	Game(const Game& other) = delete;
+	Game& operator=(const Game& other) = delete;
 	~Game()
 	{
 		delete gameBoard;

@@ -31,6 +31,8 @@ private:
 public:
 	Board(const char (*const _originalBoard)[HEIGHT][WIDTH + 1]): originalBoard(_originalBoard)
 	{};
+	Board(const Board& other) = delete;
+	Board& operator=(const Board& other) = delete;
 	~Board()
 	{
 		delete[] originalBoard;
