@@ -2,7 +2,7 @@
 
 void Board::resetBoard() {
 	for (int i = 0; i < HEIGHT; i++) {
-		memcpy(currentBoard[i], originalBoard[i], WIDTH + 1);
+		memcpy(currentBoard[i], (*originalBoard)[i], WIDTH + 1);
 	}
 }
 
@@ -45,7 +45,7 @@ void Board::resetCharAtPos(Point position)
 	int x = position.getX();
 	int y = position.getY();
 	// take the char that was at the original board and put it at current
-	currentBoard[y][x] = originalBoard[y][x];
+	currentBoard[y][x] = (*originalBoard)[y][x];
 }
 
 bool Board::isObstacleAtPos(Point position) const

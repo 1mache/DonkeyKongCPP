@@ -16,16 +16,16 @@ void Game::update()
             // alter state by input if not paused 
             if(!isPaused)
             {
-                player.stateByKey(key);
+                player->stateByKey(key);
             }
         }
         
         if (!isPaused)
         {
-            player.movePlayer();
+            player->movePlayer();
 
             //check for barrel collisions and fall damage
-            if (player.checkCollision() || player.checkFallDamage())
+            if (player->checkCollision() || player->checkFallDamage())
             {
                 if(handleStrike())
                 {
@@ -37,10 +37,10 @@ void Game::update()
                 }
             }
 
-            barrelManager.manageBarrels();
+            barrelManager->manageBarrels();
 
             //check again for barrel collisions - after barrels moved
-            if (player.checkCollision())
+            if (player->checkCollision())
             {
                 if (handleStrike())
                 {
@@ -53,7 +53,7 @@ void Game::update()
             }
 
             //win check
-            if(player.getPosition() == PAULINE_POS)
+            if(player->getPosition() == paulinePos)
             {
                 break; // player reached pauline, exit loop 
             }
@@ -65,7 +65,7 @@ void Game::update()
 
 bool Game::handleStrike()
 {
-    player.takeDamage();
+    player->takeDamage();
     lives--;
 
     if (lives == 0)
@@ -95,18 +95,66 @@ void Game::continueGame()
     for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
     {
         gotoScreenPos(restorePos);
-        std::cout << gameBoard.getCharAtPos(restorePos);
+        std::cout << gameBoard->getCharAtPos(restorePos);
         restorePos = restorePos.oneRight();
     }
 }
 
 bool Game::readLevelFromFile()
 {
+    int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     // set mario start pos
     // set ghost start positions
     // set donkey kong pos
     // set paulines pos
     // set board accordingly
+    char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
+    
+    ifstream levelFile("dkong_01.screen", std::ios_base::in);
+    //vs
+    //ifstream levelFile("dkong_01.screen"); (ASK AMIR) ===========================
+
+    if(!levelFile.is_open())
+    {
+        //let the player know there is an issue with a the level files.
+        return false;
+    }
+
+    for (int row = 0; row < screenHeight; row++)
+    {
+        for (int col = 0; col < screenWidth; col++)
+        {
+            char c = levelFile.get();
+            switch (c)
+            {
+            // add case for ghosts
+            case MARIO_SPRITE:
+                marioStartPos = {col, row};
+                (*map)[row][col] = ' ';
+                continue; // we dont want to have the mario char on board, skip to next iteration
+                
+            case Board::DONKEY_KONG:
+                donkeyKongPos = {col, row};
+                break;
+
+            case Board::PAULINE:
+                paulinePos = {col, row};
+                break;
+            
+            case EOF: 
+                return false; // file ended before we read the entire dimensions of the level
+            default:
+                break;
+            }
+            
+            (*map)[row][col] = c;
+        }
+
+        levelFile.ignore(1); // ignore newline char '\n' at the end of a line
+        (*map)[row][screenWidth] = '\0'; // terminate the lines that we read
+    }
+    gameBoard = new Board(map);
+    
     return true;
 }
 
@@ -114,12 +162,26 @@ bool Game::start()
 {
     srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
 
-    gameBoard.resetBoard();
-    gameBoard.print();
+    bool levelReadSuccess = readLevelFromFile();
+
+    if(!levelReadSuccess)
+    {
+        // throw the biggest fucking exception!!!!!
+        std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
+        return false;
+    }
+
+    gameBoard->resetBoard();
+    gameBoard->print();
     updateLivesCounter();
 
     //need to clear input buffer after animation 
     flushInputBuffer();
+    
+    // reset player and barrel manager
+    player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
+    barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
+    
     update();
 
     // returns true if game is over
@@ -132,14 +194,16 @@ void Game::resetLevel()
 
     srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
 
-    gameBoard.resetBoard();
-    gameBoard.print();
+    gameBoard->resetBoard();
+    gameBoard->print();
     updateLivesCounter();
 
     //need to clear input buffer after animation  
     flushInputBuffer();
 
     // reset player and barrel manager
-    player = Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS);
-    barrelManager = BarrelManager(&gameBoard, DONKEY_KONG_POS);
+    delete player;
+    player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
+    delete barrelManager;
+    barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
 }

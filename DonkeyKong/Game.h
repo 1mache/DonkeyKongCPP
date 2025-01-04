@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <fstream>
 #include <conio.h>
 
 #include "Board.h"
@@ -10,24 +11,28 @@
 #include "Barrel.h"
 #include "BarrelManager.h"
 
+using std::ifstream;
+
 class Game
 {
 	static constexpr int ESC = 27;
 	static constexpr char MARIO_SPRITE = '@';
-	static constexpr Point MARIO_START_POS = { 2, 23 };
-	static constexpr Point DONKEY_KONG_POS = { 39, 3 };
 	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
-	static constexpr Point PAULINE_POS = { 39, 1 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* SCREEN_FILE_NAME = "dkong_*.screen";
 	static constexpr int NUM_OF_LEVELS = 3;
 	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
 	static constexpr int MAX_LIVES = 3;
 
-	Board gameBoard;
-	Player player;
+	//will be set when we read from file
+	Point marioStartPos = {};
+	Point donkeyKongPos = {};
+	Point paulinePos = {};
 
-	BarrelManager barrelManager;
+	Board* gameBoard = nullptr;
+	Player* player = nullptr;
+
+	BarrelManager* barrelManager = nullptr;
 
 	int lives = MAX_LIVES;
 
@@ -54,8 +59,12 @@ class Game
 	bool readLevelFromFile();
 
 public:
-	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
-		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)) {}
+	~Game()
+	{
+		delete gameBoard;
+		delete player;
+		delete barrelManager;
+	}
 	
 	bool start();
 
