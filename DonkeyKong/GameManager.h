@@ -1,11 +1,17 @@
 #pragma once
+
+#include <filesystem>
+#include <regex>
+
 #include "Game.h"
 #include "Menu.h"
 
 // this class manages the big picture of the game
 class GameManager
 {
-	static constexpr const char* SCREEN_FILE_NAME = "dkong_*.screen";
+	// string defining the pattern that we use to find level files. regular expression that means any 
+	// sequence of eng alphabet letters and digits after dkong_ that ends with .screen (also .*\\\\ for the path)
+	static constexpr const char* LEVEL_FILENAME_TEMPLATE = "dkong_[a-zA-Z0-9]+\\.screen";
 
 	std::vector<std::string> levelFileNames;
 	// reads all the file names of the level file name template into a vector above  

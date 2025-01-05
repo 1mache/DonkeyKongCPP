@@ -195,7 +195,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
 bool Game::start()
 {
     //TODO: handling exceptions 
-    gameBoard = readLevelFromFile("dkong_01.screen");
+    gameBoard = readLevelFromFile(levelFileNames.front());
 
     if(!gameBoard)
     {
