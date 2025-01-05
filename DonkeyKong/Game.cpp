@@ -100,14 +100,14 @@ void Game::continueGame()
     }
 }
 
-Board* Game::readLevelFromFile()
+Board* Game::readLevelFromFile(const std::string& filename)
 {
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     //TODO: set ghost start positions
 
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
     
-    std::ifstream levelFile("dkong_01.screen");
+    std::ifstream levelFile(filename);
 
     if(!levelFile.is_open())
     {
@@ -195,7 +195,7 @@ Board* Game::readLevelFromFile()
 bool Game::start()
 {
     //TODO: handling exceptions 
-    gameBoard = readLevelFromFile();
+    gameBoard = readLevelFromFile("dkong_01.screen");
 
     if(!gameBoard)
     {

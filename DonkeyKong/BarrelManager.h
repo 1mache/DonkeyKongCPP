@@ -1,12 +1,13 @@
 #pragma once
 
+#include <vector>
+#include <cstdlib>
+
 #include "Point.h"
 #include "Movement.h"
 #include "Constants.h"
-#include <vector>
 #include "Barrel.h"
 #include "Board.h"
-#include <cstdlib>
 
 class BarrelManager
 {

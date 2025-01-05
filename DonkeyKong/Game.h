@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <fstream>
 #include <conio.h>
+#include <vector>
 
 #include "Board.h"
 #include "Player.h"
@@ -18,8 +19,6 @@ class Game
 	static constexpr char MARIO_SPRITE = '@';
 	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
-	static constexpr const char* SCREEN_FILE_NAME = "dkong_*.screen";
-	static constexpr int NUM_OF_LEVELS = 3;
 	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
 	static constexpr int MAX_LIVES = 3;
 
@@ -27,7 +26,9 @@ class Game
 	Point marioStartPos = POS_NOT_SET;
 	Point donkeyKongPos = POS_NOT_SET;
 	Point paulinePos = POS_NOT_SET;
-
+	
+	// reference to a vector of file names
+	const std::vector<std::string>& levelFileNames;
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
 
@@ -55,10 +56,10 @@ class Game
 	void continueGame();
 
 	//reads all the necessary info from level file, returns true if was successful 
-	Board* readLevelFromFile();
+	Board* readLevelFromFile(const std::string& filename);
 
 public:
-	Game() = default;
+	Game(const std::vector<std::string>& _levelFileNames) : levelFileNames(_levelFileNames) {};
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete;
 	~Game()
