@@ -5,6 +5,7 @@
 #include <iostream>
 #include <windows.h>
 
+
 // modified gotoxy function from Amir's lesson. takes our point class instead of 
 // the individual x and y
 void gotoScreenPos(Point screenPosition);

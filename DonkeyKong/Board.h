@@ -11,12 +11,14 @@ public:
 	static constexpr char EXPLOSION = '*';
 	static constexpr char DONKEY_KONG = '&';
 	static constexpr char PAULINE = '$';
+	static constexpr char BLANK_SPACE = ' ';
+	static constexpr char DEFAULT_FLOOR = '=';
 
 private:
 	static constexpr char SCREEN_BORDER = 'Q';
 	static constexpr char LADDER = 'H';
 	// objects that mario cannot pass through
-	static constexpr char OBSTACLES[] = { '>', '<', '=', 'W', SCREEN_BORDER };
+	static constexpr char OBSTACLES[] = { '>', '<', DEFAULT_FLOOR, 'W', SCREEN_BORDER };
 	// things that kill mario
 	static constexpr char HAZARDS[] = { BARREL, EXPLOSION };
 
@@ -29,8 +31,7 @@ private:
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
 public:
-	Board(const char (*const _originalBoard)[HEIGHT][WIDTH + 1]): originalBoard(_originalBoard)
-	{};
+	Board(const char (*const _originalBoard)[HEIGHT][WIDTH + 1]): originalBoard(_originalBoard) {};
 	Board(const Board& other) = delete;
 	Board& operator=(const Board& other) = delete;
 	~Board()

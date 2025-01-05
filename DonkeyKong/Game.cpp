@@ -100,34 +100,48 @@ void Game::continueGame()
     }
 }
 
-bool Game::readLevelFromFile()
+Board* Game::readLevelFromFile()
 {
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
-    // set ghost start positions
+    //TODO: set ghost start positions
 
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
     
-    ifstream levelFile("dkong_01.screen", std::ios_base::in);
-    //vs
-    //ifstream levelFile("dkong_01.screen"); (ASK AMIR) ===========================
+    std::ifstream levelFile("dkong_01.screen");
 
     if(!levelFile.is_open())
     {
-        //let the player know there is an issue with a the level files.
-        return false;
+        // TODO: exception, file not found
+        return nullptr;
     }
 
+    bool fileEnded = false;
     for (int row = 0; row < screenHeight; row++)
     {
+        bool lineEnded = false;
         for (int col = 0; col < screenWidth; col++)
         {
+            //if line ended before board at that line was filled
+            if (lineEnded || fileEnded)
+            {
+                if (row == screenHeight - 1)
+                    // fill last line with floor
+                    (*map)[row][col] = Board::DEFAULT_FLOOR;
+                else
+                    // fill with blank space
+                    (*map)[row][col] = Board::BLANK_SPACE;
+
+                continue;
+            }
+
             char c = levelFile.get();
+
             switch (c)
             {
-            // add case for ghosts
+            //TODO: add case for ghosts
             case MARIO_SPRITE:
                 marioStartPos = {col, row};
-                (*map)[row][col] = ' ';
+                (*map)[row][col] = Board::BLANK_SPACE;
                 continue; // we dont want to have the mario char on board, skip to next iteration
                 
             case Board::DONKEY_KONG:
@@ -139,39 +153,55 @@ bool Game::readLevelFromFile()
                 break;
             
             case EOF: 
-                return false; // file ended before we read the entire dimensions of the level
+                fileEnded = true;
+                break;
+
+            case '\n':
+                lineEnded = true;
+                break;
+
             default:
                 break;
             }
-            
+
             (*map)[row][col] = c;
         }
 
-        levelFile.ignore(1); // ignore newline char '\n' at the end of a line
-        (*map)[row][screenWidth] = '\0'; // terminate the lines that we read
+        (*map)[row][screenWidth] = '\0'; // terminate the line that we read
+        
+        // if we have more than 80 chars in one of the lines in a file we want to discard them 
+        char discard = levelFile.get();
+        while(discard != '\n' && !levelFile.eof())
+        {
+            discard = levelFile.get();
+        }
+        // if we reached eof and its not the last row
+        if (levelFile.eof() && row != screenHeight - 1)
+            fileEnded = true;
     }
 
     if (marioStartPos == POS_NOT_SET || donkeyKongPos == POS_NOT_SET ||
         paulinePos == POS_NOT_SET)
     {
-        //there were no info on the positions essential for the game in the file
-        return false;
+        // TODO: exception there were no info on the positions essential for the game in the file
+        return nullptr;
     }
-
-    gameBoard = new Board(map);
     
-    return true;
+    levelFile.close();
+
+    return new Board(map);    
 }
 
 bool Game::start()
 {
-    bool levelReadSuccess = readLevelFromFile();
+    //TODO: handling exceptions 
+    gameBoard = readLevelFromFile();
 
-    if(!levelReadSuccess)
+    if(!gameBoard)
     {
         // throw the biggest fucking exception!!!!!
         std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
-        return false;
+        return true;
     }
 
     resetLevel();

@@ -11,8 +11,6 @@
 #include "Barrel.h"
 #include "BarrelManager.h"
 
-using std::ifstream;
-
 class Game
 {
 	static constexpr int ESC = 27;
@@ -57,9 +55,10 @@ class Game
 	void continueGame();
 
 	//reads all the necessary info from level file, returns true if was successful 
-	bool readLevelFromFile();
+	Board* readLevelFromFile();
 
 public:
+	Game() = default;
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete;
 	~Game()
