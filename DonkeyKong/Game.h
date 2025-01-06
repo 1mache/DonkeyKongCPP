@@ -29,6 +29,8 @@ class Game
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
+	int currLevel = 0;
+
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
 

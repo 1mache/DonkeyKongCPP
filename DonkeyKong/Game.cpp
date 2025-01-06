@@ -55,6 +55,7 @@ void Game::update()
             //win check
             if(player->getPosition() == paulinePos)
             {
+                currLevel++; // move to next level
                 break; // player reached pauline, exit loop 
             }
         }
@@ -194,19 +195,33 @@ Board* Game::readLevelFromFile(const std::string& filename)
 
 bool Game::start()
 {
-    //TODO: handling exceptions 
-    gameBoard = readLevelFromFile(levelFileNames.front());
-
-    if(!gameBoard)
+    if(levelFileNames.size() == 0)
     {
-        // throw the biggest fucking exception!!!!!
-        std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
+        // throw exception, no levels
         return true;
     }
+    // iterate until we`ve read all files
+    while(currLevel < levelFileNames.size())
+    {
+        std::string nextLevelFilename = levelFileNames[currLevel];
 
-    resetLevel();
-    
-    update();
+        //TODO: handling exceptions 
+        gameBoard = readLevelFromFile(nextLevelFilename);
+
+        if (!gameBoard)
+        {
+            // throw the biggest fucking exception!!!!!
+            std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
+            return true;
+        }
+
+        resetLevel();
+
+        update();
+        // game over check
+        if (lives == 0)
+            return true;   
+    }
 
     // returns true if game is over
     return (lives == 0);

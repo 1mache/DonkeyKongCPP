@@ -85,5 +85,11 @@
     <None Include="dkong_01.screen">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="dkong_02.screen">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="dkong_08.screen">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
