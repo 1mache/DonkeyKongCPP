@@ -150,6 +150,14 @@ bool Menu::selectOption()
 		return closeMenu;
 	}
 
+	if(currentScreenId == LEVELS_SCREEN_ID)
+	{
+		clearScreen();
+		chosenLevelId = arrowId;
+		closeMenu = true;
+		return closeMenu;
+	}
+
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
 		clearScreen();
@@ -194,6 +202,11 @@ bool Menu::selectOption(char hotkey)
 		{
 			clearScreen();
 			gotoControlScreen();
+		}
+		else if (hotkey == LEVELS_OPTION.hotkey)
+		{
+			clearScreen();
+			gotoLevelsScreen();
 		}
 		else if (hotkey == START_GAME_OPTION.hotkey)
 		{
