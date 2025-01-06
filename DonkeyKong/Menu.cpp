@@ -22,6 +22,8 @@ void Menu::printMainOptions() const
 	{
 		gotoScreenPos(option.screenPosition);
 		int textLen = strlen(option.text);
+		std::cout << " (" << option.hotkey << ')';
+
 		for (int i = 0; i < textLen; i++)
 		{
 			std::cout << option.text[i];
@@ -45,7 +47,7 @@ void Menu::update()
 		{
 			char key = _getch();
 			
-			if(currentScreenId == MAIN_SCREEN_ID)
+			if(currentScreenId == MAIN_SCREEN_ID || currentScreenId == LEVELS_SCREEN_ID)
 			{
 				//check if its arrow contol key
 				if(std::tolower(key) == KEYS[UP])

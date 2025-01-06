@@ -29,7 +29,7 @@ class Game
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
-	int currLevel = 0;
+	int currLevel;
 
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
@@ -61,7 +61,7 @@ class Game
 	Board* readLevelFromFile(const std::string& filename);
 
 public:
-	Game(const std::vector<std::string>& _levelFileNames) : levelFileNames(_levelFileNames) {};
+	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete;
 	~Game()

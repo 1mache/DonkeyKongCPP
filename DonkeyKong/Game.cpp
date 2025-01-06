@@ -103,6 +103,10 @@ void Game::continueGame()
 
 Board* Game::readLevelFromFile(const std::string& filename)
 {
+    marioStartPos = POS_NOT_SET;
+    donkeyKongPos = POS_NOT_SET;
+    paulinePos = POS_NOT_SET;
+
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     //TODO: set ghost start positions
 
@@ -122,14 +126,14 @@ Board* Game::readLevelFromFile(const std::string& filename)
         bool lineEnded = false;
         for (int col = 0; col < screenWidth; col++)
         {
-            //if line ended before board at that line was filled
+            //if line ended or file ended "prematurely"
             if (lineEnded || fileEnded)
             {
                 if (row == screenHeight - 1)
                     // fill last line with floor
                     (*map)[row][col] = Board::DEFAULT_FLOOR;
                 else
-                    // fill with blank space
+                    // by default fill with blank space
                     (*map)[row][col] = Board::BLANK_SPACE;
 
                 continue;
@@ -141,16 +145,35 @@ Board* Game::readLevelFromFile(const std::string& filename)
             {
             //TODO: add case for ghosts
             case MARIO_SPRITE:
-                marioStartPos = {col, row};
+                if(marioStartPos == POS_NOT_SET)
+                    marioStartPos = {col, row};
                 (*map)[row][col] = Board::BLANK_SPACE;
                 continue; // we dont want to have the mario char on board, skip to next iteration
                 
             case Board::DONKEY_KONG:
-                donkeyKongPos = {col, row};
+                if(donkeyKongPos == POS_NOT_SET)
+                {
+                    donkeyKongPos = {col, row};
+                }
+                else
+                {
+                    // only the first occurence of donkey kong matters
+                    (*map)[row][col] = Board::BLANK_SPACE;
+                    continue;
+                }
                 break;
 
             case Board::PAULINE:
-                paulinePos = {col, row};
+                if (paulinePos == POS_NOT_SET)
+                {
+                    paulinePos = { col, row };
+                }
+                else
+                {
+                    // only the first occurence of pauline matters
+                    (*map)[row][col] = Board::BLANK_SPACE;
+                    continue;
+                }
                 break;
             
             case EOF: 

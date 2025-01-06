@@ -9,7 +9,7 @@ void GameManager::launchGame()
 
 	while (true)
 	{	
-		Menu menu;
+		Menu menu(levelFileNames);
 
 		//returns true if the user chose the exit option in the menu
 		bool exitflag = menu.displayMainMenu();
@@ -18,7 +18,7 @@ void GameManager::launchGame()
 			break; // player chose exit in menu, exit game
 		}
 
-		Game game(levelFileNames);
+		Game game(levelFileNames, menu.getChosenLevelId());
 
 		// returns true if player lost
 		bool gameOver = game.start();

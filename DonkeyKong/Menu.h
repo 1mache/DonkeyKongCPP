@@ -3,6 +3,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include <vector>
 
 #include "Point.h"
 #include "Constants.h"
@@ -30,12 +31,13 @@ class Menu
 
 	enum INPUTS { UP, DOWN, SELECT };
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
-	static constexpr int NUM_OF_OPTIONS = 3;
-	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), " (1)[Start Game]", '1'};
-	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), " (8)[Controls]", '8' };
-	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), " (9)[EXIT]", '9'};
+	static constexpr int NUM_OF_OPTIONS = 4;
+	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), "[Start Game]", '1'};
+	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), "[Controls]", '7' };
+	static constexpr MenuOption LEVELS_OPTION = { Point(33, 20), "[Levels]", '8' };
+	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), "[EXIT]", '9'};
 
-	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, EXIT_OPTION };
+	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
 
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -62,7 +64,7 @@ class Menu
 			"Q           options                                                            Q", // 19
 			"Q   ENTER - select                                                             Q", // 20
 			"Q                                                                              Q", // 21
-			"Q   (or use 1,8,9)                                                             Q", // 22
+			"Q   (or use 1,7,8,9)                                                           Q", // 22
 			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
@@ -161,8 +163,9 @@ class Menu
 	//each screen has an ID 
 	static constexpr int MAIN_SCREEN_ID = 0;
 	static constexpr int CONTROL_SCREEN_ID = 1;
-	static constexpr int WIN_SCREEN_ID = 2;
-	static constexpr int GAMEOVER_SCREEN_ID = 3;
+	static constexpr int LEVELS_SCREEN_ID = 2;
+	static constexpr int WIN_SCREEN_ID = 3;
+	static constexpr int GAMEOVER_SCREEN_ID = 4;
 
 	//which screen are we on
 	int currentScreenId = MAIN_SCREEN_ID;
@@ -172,6 +175,11 @@ class Menu
 
 	// tells us if we selected the exit option
 	bool exitFlag = false;
+	
+	// by default the user "chooses" to play from the first level by selecting start game
+	int chosenLevelId = 0;
+	//level file names that we will display on separate screen
+	const std::vector<std::string>& levelFileNames;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -220,6 +228,8 @@ class Menu
 	}
 
 public:
+	Menu(const std::vector<std::string>& _levelFileNames): levelFileNames(_levelFileNames) {}
+
 	// returns true if we selected EXIT in menu 
 	bool displayMainMenu();
 
@@ -233,5 +243,10 @@ public:
 	{
 		gotoWinScreen();
 		update();
+	}
+
+	int getChosenLevelId() const
+	{
+		return chosenLevelId;
 	}
 };
