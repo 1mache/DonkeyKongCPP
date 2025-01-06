@@ -16,7 +16,8 @@ void Game::update()
             // alter state by input if not paused 
             if(!isPaused)
             {
-                player.stateByKey(key);
+                //player.stateByKey(key);
+                player.handleKeyboardInput(key);
             }
         }
         

@@ -5,7 +5,7 @@
 #include "Constants.h"
 #include <cstdlib>
 
-class Ghost
+class Ghost : public Movement
 {
 public:
     enum MoveDirection { LEFT, RIGHT };
@@ -17,7 +17,7 @@ private:
     static constexpr int MAX_DIR_CHANGE_VAL = 5;
 
     //movement component
-    Movement ghostMovement;
+    //Movement ghostMovement;
     Board* gameBoard = nullptr;
 
     // are we moving left or right
@@ -31,7 +31,7 @@ private:
     // decides current movement direction based on floor below us and other ghosts nearby
     void setGhostDirection()
     {
-        if (reachedAnotherGhost() || reachedEndOfFloor() || ghostMovement.reachedWall() || shouldRandomDirectionChange())
+        if (reachedAnotherGhost() || reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
         {
             changeDirection();
         }
@@ -51,7 +51,12 @@ private:
 public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
-        ghostMovement(Movement(_gameBoard, Board::GHOST, _startPos)), gameBoard(_gameBoard) {}
+        Movement(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
+
+    ~Ghost()
+    {
+        erase();
+    }
 
     void moveGhost();
 };

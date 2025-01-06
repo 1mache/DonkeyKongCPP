@@ -6,15 +6,15 @@ bool Ghost::reachedEndOfFloor() const
 
     if (currentMoveDirection == MoveDirection::LEFT)
     {
-        positionToCheck = ghostMovement.getPosition().oneLeft().oneBelow();
+        positionToCheck = getPosition().oneLeft().oneBelow();
     }
 
     else
     {
-        positionToCheck = ghostMovement.getPosition().oneRight().oneBelow();
+        positionToCheck = getPosition().oneRight().oneBelow();
     }
 
-    return(ghostMovement.canMoveToPos(positionToCheck));
+    return(canMoveToPos(positionToCheck));
 }
 
 bool Ghost::reachedAnotherGhost() const
@@ -25,10 +25,10 @@ bool Ghost::reachedAnotherGhost() const
 void Ghost::moveGhost()
 {
     // remove ghost from board in its previous position
-    gameBoard->resetCharAtPos(ghostMovement.getPosition());
+    gameBoard->resetCharAtPos(getPosition());
 
     setGhostDirection();
-    ghostMovement.move(DIRECTIONS[currentMoveDirection], false);
+    move(DIRECTIONS[currentMoveDirection], false);
     // place ghost on board in its new position
-    gameBoard->updateCurrentBoardWithChar(ghostMovement.getPosition(), Board::GHOST);
+    gameBoard->updateCurrentBoardWithChar(getPosition(), Board::GHOST);
 }

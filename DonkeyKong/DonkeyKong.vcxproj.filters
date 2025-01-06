@@ -92,5 +92,8 @@
     <ClInclude Include="GhostsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Hammer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

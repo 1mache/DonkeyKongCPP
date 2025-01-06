@@ -20,30 +20,14 @@ class GhostsManager
     std::vector<Ghost> ghostsVector;
 
     bool spawnedGhosts = false;
-    size_t ghostsNum = 0;
+    //size_t ghostsNum = 0;
 
-    void spawnAllGhosts()
+    void spawnAllGhosts();
+
+    void deleteGhost(int index)
     {
-        // check each char in the board if it's a ghost
-        for (int y = 0; y < Constants::SCREEN_HEIGHT; y++)
-        {
-            for (int x = 0; x < Constants::SCREEN_WIDTH; x++)
-            {
-                Point curPosition = { x, y };
-
-                if (gameBoard->getCharAtPos(curPosition) == gameBoard->GHOST)
-                {
-                    // erase original ghost in board
-                    gotoScreenPos(curPosition);
-                    gameBoard->updateCurrentBoardWithChar(curPosition, ' ');
-                    std::cout << ' ';
-
-                    // ghost constructor, creates ghost in the vector 
-                    ghostsVector.emplace_back(gameBoard, curPosition);
-                    ghostsNum += 1;
-                }
-            }
-        }
+        //deletes the ghost from the ghosts vector
+        ghostsVector.erase(ghostsVector.begin() + index);
     }
 
 public:
@@ -51,4 +35,6 @@ public:
 
     // updates all existing barrels, and spawns new ones
     void manageGhosts();
+
+    void destroyGhostAtPos(Point destroyPos);
 };

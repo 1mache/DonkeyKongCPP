@@ -51,11 +51,17 @@ class Game
 	void continueGame();
 
 public:
-	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS)), 
+	Game(): player(Player(&gameBoard, MARIO_SPRITE, MARIO_START_POS, this)), 
 		barrelManager(BarrelManager(&gameBoard, DONKEY_KONG_POS)),
 	    ghostsManager(GhostsManager(&gameBoard)){}
 	
 	bool start();
 
 	void resetLevel();
+
+	void destroyEnemyAtPos(Point position)
+	{
+		ghostsManager.destroyGhostAtPos(position);
+		barrelManager.destroyBarrelAtPos(position);
+	}
 };

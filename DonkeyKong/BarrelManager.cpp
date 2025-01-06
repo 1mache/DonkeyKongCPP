@@ -34,3 +34,15 @@ void BarrelManager::manageBarrels()
     updateAllBarrels();
     frameCounter--;
 }
+
+void BarrelManager::destroyBarrelAtPos(Point destroyPos)
+{
+    for (size_t i = 0; i < barrelsVector.size(); i++)
+    {
+        if (barrelsVector[i].getPosition() == destroyPos)
+        {
+            deleteBarrel(i);
+            break;
+        }
+    }
+}

@@ -72,13 +72,13 @@ bool Board::isObstacleAtPos(Point position) const
 	return false;
 }
 
-bool Board::isHazardAtPos(Point position) const
+bool Board::isHammerEnemyAtPos(Point position) const
 {
-	// for each hazard check if its in the position
+	// for each enemy destroyable by hammer check if its in the position
 	char charAtPos = getCharAtPos(position);
-	for (char hazardChar : HAZARDS)
+	for (char enemyChar : HAMMER_ENEMIES)
 	{
-		if(hazardChar == charAtPos)
+		if (enemyChar == charAtPos)
 		{
 			return true;
 		}
