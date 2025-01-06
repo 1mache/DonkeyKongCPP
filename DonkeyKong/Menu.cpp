@@ -1,5 +1,29 @@
 #include "Menu.h"
 
+void Menu::drawArrow()
+{
+	if(currentScreenId == MAIN_SCREEN_ID)
+	{
+		drawChar(ARROW, MAINMENU_OPTIONS[arrowId].screenPosition);
+	}
+	else if(currentScreenId == LEVELS_SCREEN_ID)
+	{
+		drawChar(ARROW, levelOptionPositions[arrowId]);
+	}
+}
+
+void Menu::eraseArrow()
+{
+	if(currentScreenId == MAIN_SCREEN_ID)
+	{
+		eraseChar(MAINMENU_OPTIONS[arrowId].screenPosition);
+	}
+	else
+	{
+		eraseChar(levelOptionPositions[arrowId]);
+	}
+}
+
 void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 {
 	for (int i = 0; i < HEIGHT - 1; i++) {
@@ -16,9 +40,19 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 	flushInputBuffer();
 }
 
+void Menu::setLevelOptionPositions()
+{
+	int optionCounter = 0;
+	for (const auto& filename : levelFileNames)
+	{
+		levelOptionPositions.push_back(Point(0, optionCounter) + LEVEL_OPTIONS_POS);
+		optionCounter++;
+	}
+}
+
 void Menu::printMainOptions() const
 {
-	for(const MenuOption& option: MENU_OPTIONS)
+	for(const MenuOption& option: MAINMENU_OPTIONS)
 	{
 		gotoScreenPos(option.screenPosition);
 		int textLen = strlen(option.text);
@@ -29,6 +63,22 @@ void Menu::printMainOptions() const
 			std::cout << option.text[i];
 			Sleep(LINE_PRINT_DELAY);
 		}
+	}
+
+	// during this animation we dont register input but it is still 
+	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
+	flushInputBuffer();
+}
+
+void Menu::printLevelOptions() const
+{
+	int optionCounter = 0;
+	for (const auto& filename : levelFileNames)
+	{
+		gotoScreenPos(levelOptionPositions[optionCounter]);
+		std::cout << " " << filename;
+
+		optionCounter++;
 	}
 
 	// during this animation we dont register input but it is still 
@@ -53,13 +103,13 @@ void Menu::update()
 				if(std::tolower(key) == KEYS[UP])
 				{
 					//erase arrow from prev position 
-					eraseChar(MENU_OPTIONS[arrowId].screenPosition);
-					arrowId = (arrowId - 1 + NUM_OF_OPTIONS) % NUM_OF_OPTIONS;
+					eraseArrow();
+					arrowId = (arrowId - 1 + currNumOfOptions) % currNumOfOptions;
 				}
 				else if(std::tolower(key) == KEYS[DOWN])
 				{
-					eraseChar(MENU_OPTIONS[arrowId].screenPosition);
-					arrowId = (arrowId + 1) % NUM_OF_OPTIONS;
+					eraseArrow();
+					arrowId = (arrowId + 1) % currNumOfOptions;
 				}
 				else
 				{
@@ -80,12 +130,9 @@ void Menu::update()
 			}
 		}
 
-		//move arrow if were on the main screen 
-		if(currentScreenId == MAIN_SCREEN_ID)
-		{
-			drawChar(ARROW, MENU_OPTIONS[arrowId].screenPosition);
-		}
-			
+		//draw arrow if were on a screen that has arrow main screen 
+		drawArrow();
+
 		Sleep(Constants::GAME_REFRESH_RATE);
 	}
 }
@@ -112,17 +159,22 @@ bool Menu::selectOption()
 	}
 
 	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
-	if (MENU_OPTIONS[arrowId] == CONTROLS_OPTION)
+	if (MAINMENU_OPTIONS[arrowId] == CONTROLS_OPTION)
 	{
 		clearScreen();
 		gotoControlScreen();
 	}
-	else if (MENU_OPTIONS[arrowId] == START_GAME_OPTION)
+	else if (MAINMENU_OPTIONS[arrowId] == LEVELS_OPTION)
+	{
+		clearScreen();
+		gotoLevelsScreen();
+	}
+	else if (MAINMENU_OPTIONS[arrowId] == START_GAME_OPTION)
 	{
 		clearScreen();
 		closeMenu = true;
 	}
-	else if (MENU_OPTIONS[arrowId] == EXIT_OPTION)
+	else if (MAINMENU_OPTIONS[arrowId] == EXIT_OPTION)
 	{
 		clearScreen();
 		exitFlag = true;
@@ -162,9 +214,20 @@ bool Menu::selectOption(char hotkey)
 void Menu::gotoMainScreen()
 {
 	arrowId = START_ARROW_ID;
+	currNumOfOptions = NUM_OF_MAIN_OPTIONS;
 	print(mainScreen, LINE_PRINT_DELAY);
 	printMainOptions();
 	currentScreenId = MAIN_SCREEN_ID;
+}
+
+void Menu::gotoLevelsScreen()
+{
+	arrowId = START_ARROW_ID;
+	currNumOfOptions = levelFileNames.size();
+	print(levelsScreen, LINE_PRINT_DELAY);
+	setLevelOptionPositions();
+	printLevelOptions();
+	currentScreenId = LEVELS_SCREEN_ID;
 }
 
 bool Menu::displayMainMenu()

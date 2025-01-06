@@ -109,7 +109,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     //TODO: set ghost start positions
-
+    // question on how to delete ===================================
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
     
     std::ifstream levelFile(filename);

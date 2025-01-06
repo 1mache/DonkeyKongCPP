@@ -31,13 +31,15 @@ class Menu
 
 	enum INPUTS { UP, DOWN, SELECT };
 	static constexpr char KEYS[] = { 'w', 'x', '\r' };
-	static constexpr int NUM_OF_OPTIONS = 4;
+	static constexpr int NUM_OF_MAIN_OPTIONS = 4;
 	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), "[Start Game]", '1'};
 	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), "[Controls]", '7' };
 	static constexpr MenuOption LEVELS_OPTION = { Point(33, 20), "[Levels]", '8' };
 	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), "[EXIT]", '9'};
 
-	static constexpr MenuOption MENU_OPTIONS[NUM_OF_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
+	static constexpr MenuOption MAINMENU_OPTIONS[NUM_OF_MAIN_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
+
+	static constexpr Point LEVEL_OPTIONS_POS = { 27,3 };
 
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -95,6 +97,36 @@ class Menu
 			"Q                                                                              Q", // 20
 			"Q                                                                              Q", // 21
 			"Q                                ENTER - Back                                  Q", // 22
+			"Q                                                                              Q", // 23
+			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
+	};
+
+	static constexpr const char* levelsScreen[HEIGHT] = {
+		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
+		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
+			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 0
+			"Q                                                                              Q", // 1
+			"Q                                  LEVELS:                                     Q", // 2
+			"Q                                                                              Q", // 3
+			"Q                                                                              Q", // 4
+			"Q                                                                              Q", // 5
+			"Q                                                                              Q", // 6
+			"Q                                                                              Q", // 7
+			"Q                                                                              Q", // 8
+			"Q                                                                              Q", // 9
+			"Q                                                                              Q", // 10
+			"Q                                                                              Q", // 11
+			"Q                                                                              Q", // 12
+			"Q                                                                              Q", // 13
+			"Q                                                                              Q", // 14
+			"Q                                                                              Q", // 15
+			"Q                                                                              Q", // 16
+			"Q                                                                              Q", // 17
+			"Q   X/W   - navigate                                                           Q", // 18
+			"Q           options                                                            Q", // 19
+			"Q   ENTER - select                                                             Q", // 20
+			"Q                                                                              Q", // 21
+			"Q                                                                              Q", // 22
 			"Q                                                                              Q", // 23
 			"QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", // 24
 	};
@@ -172,6 +204,8 @@ class Menu
 
 	//what menu option the arrow is pointing to
 	int arrowId = START_ARROW_ID;
+	// how many options we currently have on screen
+	int currNumOfOptions = NUM_OF_MAIN_OPTIONS;
 
 	// tells us if we selected the exit option
 	bool exitFlag = false;
@@ -180,6 +214,7 @@ class Menu
 	int chosenLevelId = 0;
 	//level file names that we will display on separate screen
 	const std::vector<std::string>& levelFileNames;
+	std::vector<Point> levelOptionPositions;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -192,12 +227,17 @@ class Menu
 		drawChar(' ', position);
 	}
 
+	void drawArrow();
+	void eraseArrow();
+
 	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
 
+	void setLevelOptionPositions();
 	// print the menu options with sleep between characters (animation)
 	void printMainOptions() const;
-	
+	void printLevelOptions() const;
+
 	// updates menu based on input 
 	void update();
 
@@ -208,6 +248,8 @@ class Menu
 	bool selectOption(char hotkey);
 
 	void gotoMainScreen();
+
+	void gotoLevelsScreen();
 
 	void gotoControlScreen()
 	{
@@ -233,7 +275,7 @@ public:
 	// returns true if we selected EXIT in menu 
 	bool displayMainMenu();
 
-	void displayGameOver() 
+	void displayGameOver()
 	{
 		gotoGameOverScreen();
 		update();
