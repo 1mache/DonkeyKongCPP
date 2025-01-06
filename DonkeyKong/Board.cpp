@@ -33,20 +33,12 @@ char Board::getCharAtPos(Point position) const
 	}
 }
 
-void Board::updateCurrentBoardWithChar(Point position, char newChar)
+void Board::updateBoardWithChar(Point position, char newChar)
 {
 	int x = position.getX();
 	int y = position.getY();
 
 	currentBoard[y][x] = newChar;
-}
-
-void Board::updateOriginalBoardWithChar(Point position, char newChar)
-{
-	int x = position.getX();
-	int y = position.getY();
-
-	//originalBoard[y][x] = newChar;
 }
 
 void Board::resetCharAtPos(Point position)
@@ -64,6 +56,21 @@ bool Board::isObstacleAtPos(Point position) const
 	for (char obstacleChar : OBSTACLES)
 	{
 		if (obstacleChar == charAtPos)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Board::isHazardAtPos(Point position) const
+{
+	// for each hazard check if its in the position
+	char charAtPos = getCharAtPos(position);
+	for (char enemyChar : HAZARDS)
+	{
+		if (enemyChar == charAtPos)
 		{
 			return true;
 		}

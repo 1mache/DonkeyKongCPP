@@ -30,5 +30,5 @@ void Ghost::moveGhost()
     setGhostDirection();
     move(DIRECTIONS[currentMoveDirection], false);
     // place ghost on board in its new position
-    gameBoard->updateCurrentBoardWithChar(getPosition(), Board::GHOST);
+    gameBoard->updateBoardWithChar(getPosition(), Board::GHOST);
 }

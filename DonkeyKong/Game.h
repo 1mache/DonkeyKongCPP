@@ -35,8 +35,7 @@ class Game
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
 
-	BarrelManager barrelManager;
-	GhostsManager ghostsManager;
+	GhostsManager* ghostsManager = nullptr;
 	BarrelManager* barrelManager = nullptr;
 
 	int lives = MAX_LIVES;
@@ -72,6 +71,7 @@ public:
 		delete gameBoard;
 		delete player;
 		delete barrelManager;
+		delete ghostsManager;
 	}
 	
 	bool start();
@@ -80,7 +80,7 @@ public:
 
 	void destroyEnemyAtPos(Point position)
 	{
-		ghostsManager.destroyGhostAtPos(position);
-		barrelManager.destroyBarrelAtPos(position);
+		ghostsManager->destroyGhostAtPos(position);
+		barrelManager->destroyBarrelAtPos(position);
 	}
 };

@@ -138,7 +138,7 @@ bool Player::canClimbDown(Point position) const
     // while climbing down, we need to be on the ladder that is above ground
     // or on the floor above the ladder 
     Point twoBelow = position.oneBelow().oneBelow();
-    bool positionAllowsClimbing = (gameBoard->isLadderAtPos(position) && !playerMovement.checkOnGround()) ||
+    bool positionAllowsClimbing = (gameBoard->isLadderAtPos(position) && checkOnGround()) ||
         gameBoard->isLadderAtPos(twoBelow);
 
     return positionAllowsClimbing && !midJump && !isFalling();
@@ -208,7 +208,7 @@ void Player::checkHammerPickup()
     if (gameBoard->isHammerAtPos(position))
     {
         hasHammer = true;
-        gameBoard->updateOriginalBoardWithChar(position, ' ');
+        gameBoard->resetCharAtPos(position);
     }
 }
 
@@ -217,9 +217,9 @@ void Player::handleHammer()
     if (hasHammer)
     {
         Point destroyPos = getPosition() + DIRECTIONS[hammerDir];
-        if (gameBoard->isHammerEnemyAtPos(destroyPos))
-        {
-            curGame->destroyEnemyAtPos(destroyPos);
-        }
+        //if (gameBoard->isHammerEnemyAtPos(destroyPos))
+        //{
+        //    curGame->destroyEnemyAtPos(destroyPos);
+        //}
     }
 }

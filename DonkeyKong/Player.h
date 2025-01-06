@@ -3,7 +3,6 @@
 #include "Point.h"
 #include "Movement.h"
 #include "Constants.h"
-#include "Game.h"
 
 class Player : public Movement
 {
@@ -17,10 +16,6 @@ class Player : public Movement
     static constexpr int JUMP_HEIGHT = 2;
     static constexpr int DEATH_ANIMATION_FRAMES = 5;
 
-    Game* curGame = nullptr;
-
-    //movement component
-    //Movement playerMovement;
     Board* gameBoard = nullptr;
 
     MoveState curState = STAY;
@@ -72,13 +67,8 @@ class Player : public Movement
     void stateByKey(char key);
 
 public:
-    Player(Board* _gameBoard, char _spriteChar, Point _startPos, Game* _game) :
-        Movement(_gameBoard, _spriteChar, _startPos), gameBoard(_gameBoard), curGame(_game) {}
-
-    //Point getPosition()
-    //{
-    //    return getPosition();
-    //}
+    Player(Board* _gameBoard, char _spriteChar, Point _startPos) :
+        Movement(_gameBoard, _spriteChar, _startPos), gameBoard(_gameBoard) {}
 
     void movePlayer();
 

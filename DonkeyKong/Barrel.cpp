@@ -23,7 +23,7 @@ void Barrel::moveBarrel()
     setBarrelDirection();
     move(DIRECTIONS[currentRollDirection], true);
     // place barrel on board in its new position
-    gameBoard->updateCurrentBoardWithChar(getPosition(), Board::BARREL);
+    gameBoard->updateBoardWithChar(getPosition(), Board::BARREL);
 }
 
 void Barrel::explode()
@@ -59,7 +59,7 @@ void Barrel::drawExplosionPhase()
                 if(gameBoard->isPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
                 {
                     gotoScreenPos(curCharPos);
-                    gameBoard->updateCurrentBoardWithChar(curCharPos ,Board::EXPLOSION);
+                    gameBoard->updateBoardWithChar(curCharPos ,Board::EXPLOSION);
                     std::cout << Board::EXPLOSION;
                 }
             }

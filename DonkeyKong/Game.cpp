@@ -16,7 +16,7 @@ void Game::update()
             // alter state by input if not paused 
             if(!isPaused)
             {
-                player->stateByKey(key);
+                player->handleKeyboardInput(key);
             }
         }
         
@@ -37,8 +37,8 @@ void Game::update()
                 }
             }
 
-            barrelManager.manageBarrels();
-            ghostsManager.manageGhosts();
+            barrelManager->manageBarrels();
+            ghostsManager->manageGhosts();
 
             //check again for barrel collisions - after barrels moved
             if (player->checkCollision())
@@ -269,4 +269,6 @@ void Game::resetLevel()
     player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
     delete barrelManager;
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
+    delete ghostsManager;
+    ghostsManager = new GhostsManager(gameBoard);
 }
