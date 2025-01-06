@@ -2,7 +2,7 @@
 
 void Barrel::setBarrelDirection()
 {
-    char charBelow = gameBoard->getCharAtPos(barrelMovement.getPosition().oneBelow());
+    char charBelow = gameBoard->getCharAtPos(getPosition().oneBelow());
 
     //set direction based on floor
     if (charBelow == LEFT_FLOOR)
@@ -18,20 +18,20 @@ void Barrel::setBarrelDirection()
 void Barrel::moveBarrel()
 {
     // remove barrel from board in its previous position
-    gameBoard->resetCharAtPos(barrelMovement.getPosition());
+    gameBoard->resetCharAtPos(getPosition());
     
     setBarrelDirection();
-    barrelMovement.move(DIRECTIONS[currentRollDirection], true);
+    move(DIRECTIONS[currentRollDirection], true);
     // place barrel on board in its new position
-    gameBoard->updateBoardWithChar(barrelMovement.getPosition(), Board::BARREL);
+    gameBoard->updateCurrentBoardWithChar(getPosition(), Board::BARREL);
 }
 
 void Barrel::explode()
 {
     // erase barrel from screen
-    barrelMovement.erase();
+    erase();
     // remove it from board
-    gameBoard->resetCharAtPos(barrelMovement.getPosition());
+    gameBoard->resetCharAtPos(getPosition());
 
     //start the explosion cycle
     drawExplosionPhase();
@@ -39,7 +39,7 @@ void Barrel::explode()
 
 void Barrel::drawExplosionPhase()
 {
-    Point position = barrelMovement.getPosition();
+    Point position = getPosition();
     
     //topLeft and bottomRight corners of the explosion "rings"
     Point cornerTL = position + Point(-explosionPhase, -explosionPhase);
@@ -59,7 +59,7 @@ void Barrel::drawExplosionPhase()
                 if(gameBoard->isPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
                 {
                     gotoScreenPos(curCharPos);
-                    gameBoard->updateBoardWithChar(curCharPos ,Board::EXPLOSION);
+                    gameBoard->updateCurrentBoardWithChar(curCharPos ,Board::EXPLOSION);
                     std::cout << Board::EXPLOSION;
                 }
             }
@@ -72,7 +72,7 @@ void Barrel::drawExplosionPhase()
 
 void Barrel::eraseExplosion()
 {
-    Point position = barrelMovement.getPosition();
+    Point position = getPosition();
     // top left and bottom right corners
     Point cornerTL = position + Point(-EXPLOSION_RADIUS, -EXPLOSION_RADIUS);
     Point cornerBR = position + Point(EXPLOSION_RADIUS, EXPLOSION_RADIUS);

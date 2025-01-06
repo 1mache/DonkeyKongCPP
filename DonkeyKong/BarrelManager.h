@@ -51,4 +51,6 @@ public:
 
     // updates all existing barrels, and spawns new ones
     void manageBarrels();
+
+    void destroyBarrelAtPos(Point destroyPos);
 };

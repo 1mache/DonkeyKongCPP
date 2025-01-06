@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "Barrel.h"
 #include "BarrelManager.h"
+#include "GhostsManager.h"
 
 class Game
 {
@@ -34,6 +35,8 @@ class Game
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
 
+	BarrelManager barrelManager;
+	GhostsManager ghostsManager;
 	BarrelManager* barrelManager = nullptr;
 
 	int lives = MAX_LIVES;
@@ -74,4 +77,10 @@ public:
 	bool start();
 
 	void resetLevel();
+
+	void destroyEnemyAtPos(Point position)
+	{
+		ghostsManager.destroyGhostAtPos(position);
+		barrelManager.destroyBarrelAtPos(position);
+	}
 };

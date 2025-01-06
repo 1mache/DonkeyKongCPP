@@ -79,4 +79,11 @@ public:
     { 
         return fallHeight; 
     }
+
+    // !! Moved this here from barrel, so also Ghost can use it
+    bool reachedWall() const
+    {
+        return(((!canMoveToPos(position.oneLeft())) || (!canMoveToPos(position.oneRight())))
+            && checkOnGround());
+    }
 };

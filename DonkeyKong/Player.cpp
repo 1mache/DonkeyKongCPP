@@ -3,7 +3,7 @@
 void Player::stateByKey(char key)
 {
     for (size_t i = 0; i < NUM_KEYS; i++) {
-        if (std::tolower(key) == KEYS[i]) {
+        if (key == KEYS[i]) {
             MoveState state = (MoveState)i;
             
             //set the current state acordingly if were not mid jump 
@@ -15,6 +15,11 @@ void Player::stateByKey(char key)
             if ((state != DOWN) && (state != UP))
             {
                 horizontalState = state;
+
+                if (state != STAY)
+                {
+                    hammerDir = state;
+                }
             }
             
             return;
@@ -22,9 +27,24 @@ void Player::stateByKey(char key)
     }
 }
 
+void Player::handleKeyboardInput(char key)
+{
+    char lowerKey = std::tolower(key);
+
+    if (lowerKey == hammerKey)
+    {
+        handleHammer();
+    }
+
+    else
+    {
+        stateByKey(lowerKey);
+    }
+}
+
 void Player::movePlayer()
 {
-    Point position = playerMovement.getPosition();
+    Point position = getPosition();
 
     bool gravity = true;
 
@@ -32,7 +52,7 @@ void Player::movePlayer()
     {
         // stop the player and dont apply gravity
         gravity = false;
-        playerMovement.move(DIRECTIONS[STAY], gravity);
+        move(DIRECTIONS[STAY], gravity);
         return;
     }
 
@@ -66,7 +86,9 @@ void Player::movePlayer()
     }
     
     // if we got here we just move the player horizontaly
-    playerMovement.move( DIRECTIONS[horizontalState], gravity);
+    move( DIRECTIONS[horizontalState], gravity);
+
+    checkHammerPickup();
 }
 
 void Player::jump()
@@ -74,10 +96,10 @@ void Player::jump()
     Point movePosition = DIRECTIONS[horizontalState];
 
     // position above player
-    Point above = playerMovement.getPosition().oneAbove();
+    Point above = getPosition().oneAbove();
 
     // if we're on the ground and there isnt floor above us OR we're mid jump and havent reached jump height
-    if ((playerMovement.checkOnGround() && !gameBoard->isObstacleAtPos(above))
+    if ((checkOnGround() && !gameBoard->isObstacleAtPos(above))
         || (midJump && (heightTraveled < JUMP_HEIGHT)))
     {
         // increment height traveled
@@ -98,7 +120,7 @@ void Player::jump()
     }
 
     // move accordingly 
-    playerMovement.move(movePosition, !midJump);
+    move(movePosition, !midJump);
 }
 
 bool Player::canClimbUp(Point position) const
@@ -127,10 +149,10 @@ void Player::climbUp()
     // midClimb tells us whether to continue climb or not
     if(midClimb)
     {                             //dont use gravity on ladder and allow passing through floor
-        playerMovement.move(DIRECTIONS[UP] , false, true);
+        move(DIRECTIONS[UP] , false, true);
         
         //if we reached ground we`re no longer climbing
-        if(playerMovement.checkOnGround())
+        if(checkOnGround())
         {
             midClimb = false;
             //stay after climbing up, feels more intuitive 
@@ -140,7 +162,7 @@ void Player::climbUp()
     else
     {
         //start climbing
-        playerMovement.move(DIRECTIONS[UP], false, true);
+        move(DIRECTIONS[UP], false, true);
         midClimb = true;
     }   
 }
@@ -151,10 +173,10 @@ void Player::climbDown()
     if (midClimb)
     { 
                                                     
-        playerMovement.move(DIRECTIONS[DOWN], false, false);
+        move(DIRECTIONS[DOWN], false, false);
         
         //if we reached ground we're no longer climbing
-        if (playerMovement.checkOnGround())
+        if (checkOnGround())
         {
             midClimb = false;
             curState = horizontalState = STAY;
@@ -163,7 +185,7 @@ void Player::climbDown()
     else
     {
         // start climbing
-        playerMovement.move(DIRECTIONS[DOWN], false, true);
+        move(DIRECTIONS[DOWN], false, true);
         midClimb = true;
     }
 }
@@ -173,9 +195,31 @@ void Player::takeDamage()
     //little animation 
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {
-        playerMovement.erase();
+        erase();
         Sleep(Constants::GAME_REFRESH_RATE * 2);
-        playerMovement.draw();
+        draw();
         Sleep(Constants::GAME_REFRESH_RATE * 2);
+    }
+}
+
+void Player::checkHammerPickup()
+{
+    Point position = getPosition();
+    if (gameBoard->isHammerAtPos(position))
+    {
+        hasHammer = true;
+        gameBoard->updateOriginalBoardWithChar(position, ' ');
+    }
+}
+
+void Player::handleHammer()
+{
+    if (hasHammer)
+    {
+        Point destroyPos = getPosition() + DIRECTIONS[hammerDir];
+        if (gameBoard->isHammerEnemyAtPos(destroyPos))
+        {
+            curGame->destroyEnemyAtPos(destroyPos);
+        }
     }
 }

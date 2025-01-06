@@ -4,7 +4,7 @@
 #include "Movement.h"
 #include "Constants.h"
 
-class Barrel
+class Barrel : public Movement
 {
 public:
     enum RollDirection { LEFT, RIGHT };
@@ -15,31 +15,32 @@ private:
     static constexpr char RIGHT_FLOOR = '>';
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
     static constexpr int EXPLOSION_RADIUS = 2;
-    
+
     //movement component
-    Movement barrelMovement;
+    //Movement barrelMovement;
     Board* gameBoard = nullptr;
-    
+
     // are we rolling left or right
     RollDirection currentRollDirection;
 
     // 0 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
 
-    bool reachedWall() const
+    // Moved this to Movement
+    /*bool reachedWall() const
     {
         Point position = barrelMovement.getPosition();
         return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight())))
             && barrelMovement.checkOnGround());
-    }
-    
+    }*/
+
     // decides current roll direction based on floor below us '<' or '>'
-    void setBarrelDirection();  
-    
+    void setBarrelDirection();
+
     bool needsToExplode() const
     {
         // barrel needs to explode if it fell more than x tiles or if it reached wall
-        return (((barrelMovement.getFallHeight() >= EXPLODE_FALL_HEIGHT) && barrelMovement.checkOnGround())
+        return (((getFallHeight() >= EXPLODE_FALL_HEIGHT) && checkOnGround())
             || reachedWall());
     }
 
@@ -52,8 +53,13 @@ private:
 public:
 
     Barrel(Board* _gameBoard, Point _startPos, RollDirection _dir) :
-        currentRollDirection(_dir), barrelMovement(Movement(_gameBoard, Board::BARREL, _startPos)), gameBoard(_gameBoard) {}
-    
+        currentRollDirection(_dir), Movement(_gameBoard, Board::BARREL, _startPos), gameBoard(_gameBoard) {}
+
+    ~Barrel()
+    {
+        erase();
+    }
+
     // updates barrel based on what its doing right now, whether its
     // moving or exploding
     void update();
