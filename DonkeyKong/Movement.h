@@ -41,6 +41,7 @@ protected:
     // you can choose whether to apply gravity or not,
     // the function can ignore obstacles, doesnt do it by default 
     void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
+    
     void draw() const
     {
         draw(position , spriteChar);

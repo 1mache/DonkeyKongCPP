@@ -39,6 +39,7 @@ class Menu
 
 	static constexpr MenuOption MAINMENU_OPTIONS[NUM_OF_MAIN_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
 
+	static constexpr int MAX_LEVELS_ON_SCREEN = 9;
 	static constexpr Point LEVEL_OPTIONS_POS = { 30, 3 };
 
 	static constexpr const char* mainScreen[HEIGHT] = {
@@ -206,6 +207,8 @@ class Menu
 	int arrowId = START_ARROW_ID;
 	// how many options we currently have on screen
 	int currNumOfOptions = NUM_OF_MAIN_OPTIONS;
+	// if there are too many levels to show at once we show them in groups of 9
+	int scrollValue = 0;
 
 	// tells us if we selected the exit option
 	bool exitFlag = false;

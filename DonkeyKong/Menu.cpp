@@ -96,14 +96,20 @@ void Menu::printMainOptions() const
 
 void Menu::printLevelOptions() const
 {
-	int optionCounter = 0;
-	for (const auto& option : levelOptions)
+	int startId = scrollValue * MAX_LEVELS_ON_SCREEN;
+	int stopId = startId + MAX_LEVELS_ON_SCREEN;
+	// check that stopId is in bounds of the vector
+	if(stopId > levelFileNames.size() - 1)
 	{
+		stopId = levelFileNames.size();
+	}
+	                               // +1 for [Back] option
+	for (int i = startId; i < stopId + 1; i++)
+	{
+		auto option = levelOptions[i];
 		gotoScreenPos(option.screenPosition);
 		std::cout << ' ' << option.hotkey << '.';
 		std::cout << option.text;
-
-		optionCounter++;
 	}
 
 	// during this animation we dont register input but it is still 
@@ -170,6 +176,7 @@ bool Menu::selectOption()
 		{
 			clearScreen();
 			gotoMainScreen();
+			return closeMenu;
 		}
 		else
 		{
@@ -243,7 +250,7 @@ bool Menu::selectOption(char hotkey)
 		}
 	}
 
-	if (currentScreenId == LEVELS_SCREEN_ID)
+	else if (currentScreenId == LEVELS_SCREEN_ID)
 	{
 		for (const auto& option : levelOptions)
 		{
@@ -251,6 +258,7 @@ bool Menu::selectOption(char hotkey)
 			{
 				clearScreen();
 				gotoMainScreen();
+				return closeMenu;
 			}
 			else if(option.hotkey == hotkey)
 			{
