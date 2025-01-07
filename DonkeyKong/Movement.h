@@ -36,16 +36,11 @@ class Movement
         }
     }
 
-public:
-
-    Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
-        gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
-
-    Point getPosition() const
-    {
-        return position;
-    }
-
+protected:
+    // moves the object and draws it in the new position,
+    // you can choose whether to apply gravity or not,
+    // the function can ignore obstacles, doesnt do it by default 
+    void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
     void draw() const
     {
         draw(position , spriteChar);
@@ -56,10 +51,15 @@ public:
         draw(position , ' ');
     }
 
-    // moves the object and draws it in the new position,
-    // you can choose whether to apply gravity or not,
-    // the function can ignore obstacles, doesnt do it by default 
-    void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
+public:
+
+    Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
+        gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
+
+    Point getPosition() const
+    {
+        return position;
+    }
 
     bool canMoveToPos(Point newPos) const 
     {
@@ -80,6 +80,7 @@ public:
         return fallHeight; 
     }
 
+    // ========================================================QUESTION
     // !! Moved this here from barrel, so also Ghost can use it
     bool reachedWall() const
     {
