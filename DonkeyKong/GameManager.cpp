@@ -3,7 +3,7 @@
 void GameManager::launchGame()
 {
 	// hide cursor
-	//ShowConsoleCursor(false);
+	ShowConsoleCursor(false);
 
 	readLevelFileNames();
 

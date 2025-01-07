@@ -138,7 +138,7 @@ bool Player::canClimbDown(Point position) const
     // while climbing down, we need to be on the ladder that is above ground
     // or on the floor above the ladder 
     Point twoBelow = position.oneBelow().oneBelow();
-    bool positionAllowsClimbing = (gameBoard->isLadderAtPos(position) && checkOnGround()) ||
+    bool positionAllowsClimbing = (gameBoard->isLadderAtPos(position) && !checkOnGround()) ||
         gameBoard->isLadderAtPos(twoBelow);
 
     return positionAllowsClimbing && !midJump && !isFalling();
