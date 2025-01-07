@@ -8,7 +8,7 @@ void Menu::drawArrow()
 	}
 	else if(currentScreenId == LEVELS_SCREEN_ID)
 	{
-		drawChar(ARROW, levelOptionPositions[arrowId]);
+		drawChar(ARROW, levelOptions[arrowId].screenPosition);
 	}
 }
 
@@ -20,7 +20,23 @@ void Menu::eraseArrow()
 	}
 	else
 	{
-		eraseChar(levelOptionPositions[arrowId]);
+		eraseChar(levelOptions[arrowId].screenPosition);
+	}
+}
+
+void Menu::updateArrowByKey(char key)
+{
+	//check if its arrow contol key
+	if (std::tolower(key) == KEYS[UP])
+	{
+		//erase arrow from prev position 
+		eraseArrow();
+		arrowId = (arrowId - 1 + currNumOfOptions) % currNumOfOptions;
+	}
+	else if (std::tolower(key) == KEYS[DOWN])
+	{
+		eraseArrow();
+		arrowId = (arrowId + 1) % currNumOfOptions;
 	}
 }
 
@@ -45,9 +61,17 @@ void Menu::setLevelOptionPositions()
 	int optionCounter = 0;
 	for (const auto& filename : levelFileNames)
 	{
-		levelOptionPositions.push_back(Point(0, optionCounter) + LEVEL_OPTIONS_POS);
+		Point optionPos = { 0, optionCounter };
+		optionPos = optionPos + LEVEL_OPTIONS_POS;
+		char hotkey = '0' + optionCounter;
+		// create menu options for all the levels 
+		MenuOption option = {optionPos, filename.c_str(), hotkey};
+		levelOptions.push_back(option);
 		optionCounter++;
 	}
+	// create another option that is the exit option
+	MenuOption backOption = { EXIT_OPTION.screenPosition, "[BACK]", EXIT_OPTION.hotkey };
+	levelOptions.push_back(backOption);
 }
 
 void Menu::printMainOptions() const
@@ -73,10 +97,11 @@ void Menu::printMainOptions() const
 void Menu::printLevelOptions() const
 {
 	int optionCounter = 0;
-	for (const auto& filename : levelFileNames)
+	for (const auto& option : levelOptions)
 	{
-		gotoScreenPos(levelOptionPositions[optionCounter]);
-		std::cout << " " << filename;
+		gotoScreenPos(option.screenPosition);
+		std::cout << ' ' << option.hotkey << '.';
+		std::cout << option.text;
 
 		optionCounter++;
 	}
@@ -99,23 +124,11 @@ void Menu::update()
 			
 			if(currentScreenId == MAIN_SCREEN_ID || currentScreenId == LEVELS_SCREEN_ID)
 			{
-				//check if its arrow contol key
-				if(std::tolower(key) == KEYS[UP])
-				{
-					//erase arrow from prev position 
-					eraseArrow();
-					arrowId = (arrowId - 1 + currNumOfOptions) % currNumOfOptions;
-				}
-				else if(std::tolower(key) == KEYS[DOWN])
-				{
-					eraseArrow();
-					arrowId = (arrowId + 1) % currNumOfOptions;
-				}
-				else
-				{
-					// if its not arrow control try to select option with this key
-					closeMenu = selectOption(key);
-				}
+				// try to update arrow with this key 
+				updateArrowByKey(key);
+
+				//try to select option with this key
+				closeMenu = selectOption(key);
 			}
 
 			//user pressed ENTER
@@ -152,10 +165,19 @@ bool Menu::selectOption()
 
 	if(currentScreenId == LEVELS_SCREEN_ID)
 	{
-		clearScreen();
-		chosenLevelId = arrowId;
-		closeMenu = true;
-		return closeMenu;
+		// back option
+		if(arrowId == currNumOfOptions-1)
+		{
+			clearScreen();
+			gotoMainScreen();
+		}
+		else
+		{
+			clearScreen();
+			chosenLevelId = arrowId;
+			closeMenu = true;
+			return closeMenu;
+		}
 	}
 
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
@@ -221,6 +243,25 @@ bool Menu::selectOption(char hotkey)
 		}
 	}
 
+	if (currentScreenId == LEVELS_SCREEN_ID)
+	{
+		for (const auto& option : levelOptions)
+		{
+			if (hotkey == EXIT_OPTION.hotkey)
+			{
+				clearScreen();
+				gotoMainScreen();
+			}
+			else if(option.hotkey == hotkey)
+			{
+				clearScreen();
+				chosenLevelId = arrowId;
+				closeMenu = true;
+				return closeMenu;
+			}
+		}
+	}
+
 	return closeMenu;
 }
 
@@ -236,7 +277,8 @@ void Menu::gotoMainScreen()
 void Menu::gotoLevelsScreen()
 {
 	arrowId = START_ARROW_ID;
-	currNumOfOptions = levelFileNames.size();
+	// all the levels + "back to main menu" option
+	currNumOfOptions = levelFileNames.size() + 1;
 	print(levelsScreen, LINE_PRINT_DELAY);
 	setLevelOptionPositions();
 	printLevelOptions();

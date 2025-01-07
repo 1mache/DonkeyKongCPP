@@ -39,7 +39,7 @@ class Menu
 
 	static constexpr MenuOption MAINMENU_OPTIONS[NUM_OF_MAIN_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
 
-	static constexpr Point LEVEL_OPTIONS_POS = { 32, 3 };
+	static constexpr Point LEVEL_OPTIONS_POS = { 30, 3 };
 
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -214,7 +214,7 @@ class Menu
 	int chosenLevelId = 0;
 	//level file names that we will display on separate screen
 	const std::vector<std::string>& levelFileNames;
-	std::vector<Point> levelOptionPositions;
+	std::vector<MenuOption> levelOptions;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -229,6 +229,9 @@ class Menu
 
 	void drawArrow();
 	void eraseArrow();
+
+	// if the key given to the function is relevant, updates arrow position on screen(if this screen has arrow)
+	void updateArrowByKey(char key);
 
 	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
