@@ -10,7 +10,7 @@ class Player : public Movement
     static constexpr Point DIRECTIONS[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
-    static constexpr char hammerKey = 'p';
+    static constexpr char HAMMER_KEY = 'p';
 
     static constexpr int MAX_FALL_HEIGHT = 5;
     static constexpr int JUMP_HEIGHT = 2;

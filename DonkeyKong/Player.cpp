@@ -31,7 +31,7 @@ void Player::handleKeyboardInput(char key)
 {
     char lowerKey = std::tolower(key);
 
-    if (lowerKey == hammerKey)
+    if (lowerKey == HAMMER_KEY)
     {
         handleHammer();
     }

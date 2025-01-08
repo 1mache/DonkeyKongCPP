@@ -29,8 +29,8 @@ class Menu
 	static constexpr int START_ARROW_ID = 0;
 	static constexpr int LINE_PRINT_DELAY = 30;
 
-	enum INPUTS { UP, DOWN, SELECT };
-	static constexpr char KEYS[] = { 'w', 'x', '\r' };
+	enum INPUTS { UP, DOWN, SELECT, SCROLL };
+	static constexpr char KEYS[] = { 'w', 'x', '\r', ' '};
 	static constexpr int NUM_OF_MAIN_OPTIONS = 4;
 	static constexpr MenuOption START_GAME_OPTION = { Point(31, 18), "[Start Game]", '1'};
 	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), "[Controls]", '7' };
@@ -40,7 +40,9 @@ class Menu
 	static constexpr MenuOption MAINMENU_OPTIONS[NUM_OF_MAIN_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
 
 	static constexpr int MAX_LEVELS_ON_SCREEN = 9;
-	static constexpr Point LEVEL_OPTIONS_POS = { 30, 3 };
+	static constexpr Point LEVEL_OPTIONS_POS = { 30, 4 };
+	static constexpr Point SCROLL_HINT_POS = { 4, 16 };
+	static constexpr const char* SCROLL_HINT_MESSAGE = "SPACE - SCROLL FOR MORE LEVELS";
 
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -217,7 +219,9 @@ class Menu
 	int chosenLevelId = 0;
 	//level file names that we will display on separate screen
 	const std::vector<std::string>& levelFileNames;
+	// all the options to choose from on the levels screen
 	std::vector<MenuOption> levelOptions;
+	const int maxScrolls;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -239,6 +243,7 @@ class Menu
 	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
 
+	// builds the leveOptions vector
 	void setLevelOptionPositions();
 	// print the menu options with sleep between characters (animation)
 	void printMainOptions() const;
@@ -252,6 +257,8 @@ class Menu
 	
 	//overloading for selecting options with numbers
 	bool selectOption(char hotkey);
+
+	void scroll(char key);
 
 	void gotoMainScreen();
 
@@ -276,7 +283,8 @@ class Menu
 	}
 
 public:
-	Menu(const std::vector<std::string>& _levelFileNames): levelFileNames(_levelFileNames) {}
+	Menu(const std::vector<std::string>& _levelFileNames): levelFileNames(_levelFileNames),
+		maxScrolls((_levelFileNames.size() / MAX_LEVELS_ON_SCREEN) + 1) {}
 
 	// returns true if we selected EXIT in menu 
 	bool displayMainMenu();

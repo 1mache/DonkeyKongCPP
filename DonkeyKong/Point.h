@@ -8,7 +8,7 @@ public:
 	Point() = default;
 	constexpr Point(int _x, int _y): x(_x), y(_y) {}
 
-	Point operator+(const Point& other)
+	Point operator+(const Point& other) const
 	{
 		return Point(x + other.x, y + other.y);
 	}
