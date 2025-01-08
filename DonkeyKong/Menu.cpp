@@ -305,8 +305,11 @@ void Menu::gotoLevelsScreen()
 	printLevelOptions();
 
 	// if there are levels that didnt fit in one screen display hint on how to scroll 
-	gotoScreenPos(SCROLL_HINT_POS);
-	std::cout << SCROLL_HINT_MESSAGE;
+	if(maxScrolls > 1)
+	{
+		gotoScreenPos(SCROLL_HINT_POS);
+		std::cout << SCROLL_HINT_MESSAGE;
+	}
 
 	currentScreenId = LEVELS_SCREEN_ID;
 }
