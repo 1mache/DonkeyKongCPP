@@ -109,8 +109,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
     paulinePos = POS_NOT_SET;
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
-    //TODO: set ghost start positions
-    // question on how to delete ===================================
+    // dynamic allocation of pointer to a 2D array, we will pass this to board, and the board will handle it 
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
     
     std::ifstream levelFile(filename);
@@ -141,65 +140,29 @@ Board* Game::readLevelFromFile(const std::string& filename)
             }
 
             char c = levelFile.get();
-
-            switch (c)
+            if (c == EOF)
             {
-            //TODO: add case for ghosts
-            case MARIO_SPRITE:
-                if(marioStartPos == POS_NOT_SET)
-                    marioStartPos = {col, row};
-                (*map)[row][col] = Board::BLANK_SPACE;
-                continue; // we dont want to have the mario char on board, skip to next iteration
-                
-            case Board::DONKEY_KONG:
-                if(donkeyKongPos == POS_NOT_SET)
-                {
-                    donkeyKongPos = {col, row};
-                }
-                else
-                {
-                    // only the first occurence of donkey kong matters
-                    (*map)[row][col] = Board::BLANK_SPACE;
-                    continue;
-                }
-                break;
-
-            case Board::PAULINE:
-                if (paulinePos == POS_NOT_SET)
-                {
-                    paulinePos = { col, row };
-                }
-                else
-                {
-                    // only the first occurence of pauline matters
-                    (*map)[row][col] = Board::BLANK_SPACE;
-                    continue;
-                }
-                break;
-            
-            case EOF: 
                 fileEnded = true;
-                break;
-
-            case '\n':
+            }
+            else if (c == '\n')
+            {
                 lineEnded = true;
-                break;
-
-            default:
-                break;
+            }
+            // the function decides whether the char should be added to board
+            else if (setEntityPositionByChar(c, { col, row })) 
+            {
+                (*map)[row][col] = c;
+            }
+            else
+            {
+                (*map)[row][col] = Board::BLANK_SPACE;
             }
 
-            (*map)[row][col] = c;
         }
 
         (*map)[row][screenWidth] = '\0'; // terminate the line that we read
-        
-        // if we have more than 80 chars in one of the lines in a file we want to discard them 
-        char discard = levelFile.get();
-        while(discard != '\n' && !levelFile.eof())
-        {
-            discard = levelFile.get();
-        }
+        discardRestOfLine(levelFile);
+
         // if we reached eof and its not the last row
         if (levelFile.eof() && row != screenHeight - 1)
             fileEnded = true;
@@ -215,6 +178,52 @@ Board* Game::readLevelFromFile(const std::string& filename)
     levelFile.close();
 
     return new Board(map);    
+}
+
+bool Game::setEntityPositionByChar(char c, Point position)
+{
+    // return val
+    bool isAddedToBoard = true;
+    switch (c)
+    {
+        //TODO: add case for ghosts
+        //TODO: add case for legend
+    case MARIO_SPRITE:
+        if (marioStartPos == POS_NOT_SET)
+            marioStartPos = position;
+        // if this function returned false:
+        isAddedToBoard = false; // we dont want to have the mario char on board
+        break;
+
+    case Board::DONKEY_KONG:
+        if (donkeyKongPos == POS_NOT_SET)
+            donkeyKongPos = position;
+        else
+            isAddedToBoard = false;
+        break;
+
+    case Board::PAULINE:
+        if (paulinePos == POS_NOT_SET)
+            paulinePos = position;
+        else
+            isAddedToBoard = false;
+        break;
+
+    default:
+        break;
+    }
+
+    return isAddedToBoard;
+}
+
+void Game::discardRestOfLine(std::ifstream& levelFile)
+{
+    // if we have more than 80 chars in one of the lines in a file we want to discard them 
+    char discard = levelFile.get();
+    while (discard != '\n' && !levelFile.eof())
+    {
+        discard = levelFile.get();
+    }
 }
 
 bool Game::start()
@@ -234,7 +243,7 @@ bool Game::start()
 
         if (!gameBoard)
         {
-            // throw the biggest fucking exception!!!!!
+            // throw the biggest exception!!!!!
             std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
             return true;
         }

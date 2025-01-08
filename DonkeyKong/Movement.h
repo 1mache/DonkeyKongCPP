@@ -49,7 +49,7 @@ protected:
 
     void erase() const
     {
-        draw(position , ' ');
+        draw(position , Board::BLANK_SPACE);
     }
 
 public:

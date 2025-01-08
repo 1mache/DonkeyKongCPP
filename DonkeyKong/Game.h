@@ -59,13 +59,18 @@ class Game
 
 	void continueGame();
 
-	//reads all the necessary info from level file, returns true if was successful 
+	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);
+	// gets a char and if its one of the chars that are relevant to game, sets their position
+	// returns if the char should be added to board (we dont always want that)
+	bool setEntityPositionByChar(char c, Point position);
+	// given ifstream object iterates until EOF or end of line \n 
+	void discardRestOfLine(std::ifstream& levelFile);
 
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
 	Game(const Game& other) = delete;
-	Game& operator=(const Game& other) = delete;
+	Game& operator=(const Game& other) = delete; 
 	~Game()
 	{
 		delete gameBoard;

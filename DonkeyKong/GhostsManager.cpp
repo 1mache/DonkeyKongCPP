@@ -48,6 +48,7 @@ void GhostsManager::destroyGhostAtPos(Point destroyPos)
         if (ghostsVector[i].getPosition() == destroyPos)
         {
             deleteGhost(i);
+            //destructor erases the char 
             break;
         }
     }

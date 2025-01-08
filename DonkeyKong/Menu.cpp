@@ -90,7 +90,7 @@ void Menu::printMainOptions() const
 	}
 
 	// during this animation we dont register input but it is still 
-	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
+	// saved in the buffer that khbit uses, this function cleans the buffer after the animation
 	flushInputBuffer();
 }
 
@@ -113,7 +113,7 @@ void Menu::printLevelOptions() const
 	}
 
 	// during this animation we dont register input but it is still 
-	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
+	// saved in the buffer that khbit uses, this function cleans the buffer after the animation
 	flushInputBuffer();
 }
 
