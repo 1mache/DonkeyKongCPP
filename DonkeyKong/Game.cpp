@@ -119,14 +119,16 @@ Board* Game::readLevelFromFile(const std::string& filename)
     paulinePos = Constants::POS_NOT_SET;
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
-    // dynamic allocation of pointer to a 2D array, we will pass this to board, and the board will handle it 
+    // dynamic allocation of pointer to a 2D array, we will pass this to board 
     char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
-    
+    // create a smart pointer out of it so it is safe, because we will pass ownership of it to board
+    std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> mapPtr(map);
+
     std::ifstream levelFile(filename);
 
     if(!levelFile.is_open())
     {
-        // TODO: exception, file not found
+        throw LevelFileException("File invalid. Couldn't open the file:" + filename);
         return nullptr;
     }
 
@@ -175,16 +177,16 @@ Board* Game::readLevelFromFile(const std::string& filename)
             fileEnded = true;
     }
 
-    if (marioStartPos == Constants::POS_NOT_SET || donkeyKongPos == Constants::POS_NOT_SET ||
-        paulinePos == Constants::POS_NOT_SET)
+    std::string entityMissing;
+    if(isEntityMissing(entityMissing))
     {
-        // TODO: exception there were no info on the positions essential for the game in the file
-        return nullptr;
+        levelFile.close();
+        throw LevelFileException("File invalid. " + entityMissing + " not found in the file");
     }
     
     levelFile.close();
 
-    return new Board(map);    
+    return new Board(std::move(mapPtr));
 }
 
 bool Game::setEntityPositionByChar(char c, Point position)
@@ -237,11 +239,37 @@ void Game::discardRestOfLine(std::ifstream& levelFile)
     }
 }
 
+bool Game::isEntityMissing(std::string& outEntityMissing)
+{
+    if (marioStartPos == Constants::POS_NOT_SET)
+    {
+        outEntityMissing = "Mario";
+        return true;
+    }
+    if (donkeyKongPos == Constants::POS_NOT_SET)
+    {
+        outEntityMissing = "Donkey Kong";
+        return true;
+    }
+    if (paulinePos == Constants::POS_NOT_SET)
+    {
+        outEntityMissing = "Pauline";
+        return true;
+    }
+    if (legendPos == Constants::POS_NOT_SET)
+    {
+        outEntityMissing = "Legend";
+        return true;
+    }
+
+    return false;
+}
+
 bool Game::start()
 {
     if(levelFileNames.size() == 0)
     {
-        // throw exception, no levels
+        throw LevelFileException("The list of levels passed to Game is empty.");
         return true;
     }
 
@@ -251,15 +279,7 @@ bool Game::start()
         std::string nextLevelFilename = levelFileNames[currLevel];
 
         delete gameBoard;
-        //TODO: handling exceptions 
         gameBoard = readLevelFromFile(nextLevelFilename);
-
-        if (!gameBoard)
-        {
-            // throw the biggest exception!!!!!
-            std::cout << "Yo something wrong with the level!!!!!!!" << std::endl;
-            return true;
-        }
 
         resetLevel();
 

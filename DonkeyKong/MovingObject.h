@@ -65,11 +65,6 @@ public:
     MovingObject(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
-    virtual ~MovingObject()
-    {
-        erase();
-    }
-
     Point getPosition() const
     {
         return position;
@@ -95,7 +90,7 @@ public:
     }
 
     // ========================================================QUESTION
-    // !! Moved this here from barrel, so also Ghost can use it
+    // !! Moved this here from barrel, so also Ghost can use it 
     bool reachedWall() const
     {
         return(((!canMoveToPos(position.oneLeft())) || (!canMoveToPos(position.oneRight())))

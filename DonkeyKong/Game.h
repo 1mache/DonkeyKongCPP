@@ -13,6 +13,7 @@
 #include "BarrelManager.h"
 #include "GhostsManager.h"
 #include "Constants.h"
+#include "LevelFileException.h"
 
 class Game
 {
@@ -64,6 +65,8 @@ class Game
 	bool setEntityPositionByChar(char c, Point position);
 	// given ifstream object iterates until EOF or end of line \n 
 	void discardRestOfLine(std::ifstream& levelFile);
+
+	bool isEntityMissing(std::string& outEntityMissing);
 
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};

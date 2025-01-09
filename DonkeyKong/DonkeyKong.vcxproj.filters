@@ -92,6 +92,9 @@
     <ClInclude Include="GhostsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LevelFileException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dkong_01.screen">

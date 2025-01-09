@@ -31,17 +31,11 @@ private:
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 	
-	const char (*const originalBoard)[HEIGHT][WIDTH + 1];
+	const std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> originalBoard;
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
 public:
-	Board(const char (*const _originalBoard)[HEIGHT][WIDTH + 1]): originalBoard(_originalBoard) {};
-	Board(const Board& other) = delete;
-	Board& operator=(const Board& other) = delete;
-	~Board()
-	{
-		delete[] originalBoard;
-	}
+	Board(std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> _originalBoard): originalBoard(std::move(_originalBoard)) {};
 
 	// resets the entire current board
 	void resetBoard();

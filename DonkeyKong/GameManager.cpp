@@ -6,6 +6,10 @@ void GameManager::launchGame()
 	ShowConsoleCursor(false);
 
 	readLevelFileNames();
+	//if(levelFileNames.size() == 0)
+	//{
+	//    display error
+	//}
 
 	while (true)
 	{	
@@ -23,8 +27,17 @@ void GameManager::launchGame()
 
 		Game game(levelFileNames, menu.getChosenLevelId());
 
-		// returns true if player lost
-		bool gameOver = game.start();
+		bool gameOver;
+		try
+		{
+			// returns true if player lost
+			 gameOver = game.start();
+		}
+		catch (const LevelFileException& ex)
+		{
+			std::cout << ex.what();
+			exit(1);
+		}
 
 		if (gameOver)
 		{
