@@ -1,32 +1,43 @@
 #include "GhostsManager.h"
 
-void GhostsManager::spawnAllGhosts()
+//void GhostsManager::spawnAllGhosts()
+//{
+//    // check each char in the board if it's a ghost
+//    for (int y = 0; y < Constants::SCREEN_HEIGHT; y++)
+//    {
+//        for (int x = 0; x < Constants::SCREEN_WIDTH; x++)
+//        {
+//            Point curPosition = { x, y };
+//
+//            if (gameBoard->getCharAtPos(curPosition) == gameBoard->GHOST)
+//            {
+//                // erase original ghost in board
+//                gotoScreenPos(curPosition);
+//                gameBoard->updateBoardWithChar(curPosition, ' ');
+//                std::cout << ' ';
+//
+//                // ghost constructor, creates ghost in the vector 
+//                ghostsVector.emplace_back(gameBoard, curPosition);
+//                //ghostsNum += 1;
+//            }
+//        }
+//    }
+//}
+
+void GhostsManager::spawnGhost(Point pos)
 {
-    //// check each char in the board if it's a ghost
-    //for (int y = 0; y < Constants::SCREEN_HEIGHT; y++)
-    //{
-    //    for (int x = 0; x < Constants::SCREEN_WIDTH; x++)
-    //    {
-    //        Point curPosition = { x, y };
-
-    //        if (gameBoard->getCharAtPos(curPosition) == gameBoard->GHOST)
-    //        {
-    //            // erase original ghost in board
-    //            gotoScreenPos(curPosition);
-    //            gameBoard->updateBoardWithChar(curPosition, ' ');
-    //            std::cout << ' ';
-
-    //            // ghost constructor, creates ghost in the vector 
-    //            ghostsVector.emplace_back(gameBoard, curPosition);
-    //            //ghostsNum += 1;
-    //        }
-    //    }
-    //}
+    ghostsStartPosVector.emplace_back(pos);
+    ghostsVector.emplace_back(gameBoard, pos);
 }
 
 void GhostsManager::manageGhosts()
 {
-    if (!spawnedGhosts)
+    for (size_t i = 0; i < ghostsVector.size(); i++)
+    {
+        ghostsVector[i].moveGhost();
+    }
+
+    /*if (!spawnedGhosts)
     {
         spawnAllGhosts();
         spawnedGhosts = true;
@@ -38,7 +49,7 @@ void GhostsManager::manageGhosts()
         {
             ghostsVector[i].moveGhost();
         }
-    }
+    }*/
 }
 
 void GhostsManager::destroyGhostAtPos(Point destroyPos)
@@ -54,10 +65,14 @@ void GhostsManager::destroyGhostAtPos(Point destroyPos)
     }
 }
 
-void GhostsManager::resetGhostsPos()
+void GhostsManager::resetGhosts()
 {
-    for (size_t i = 0; i < ghostsVector.size(); i++)
+    // empty the current ghosts vector, and then refill it with the start positions of each ghost
+    ghostsVector.clear();
+    ghostsVector.shrink_to_fit();
+
+    for (Point pos : ghostsStartPosVector)
     {
-        ghostsVector[i].resetGhostPos();
+        spawnGhost(pos);
     }
 }

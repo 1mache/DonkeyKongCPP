@@ -19,10 +19,12 @@ class GhostsManager
     Board* gameBoard = nullptr;
     std::vector<Ghost> ghostsVector;
 
+    std::vector<Point> ghostsStartPosVector;
+
     bool spawnedGhosts = false;
     //size_t ghostsNum = 0;
 
-    void spawnAllGhosts();
+    //void spawnAllGhosts();
 
     void deleteGhost(int index)
     {
@@ -38,5 +40,7 @@ public:
 
     void destroyGhostAtPos(Point destroyPos);
 
-    void resetGhostsPos();
+    void spawnGhost(Point pos);
+
+    void resetGhosts();
 };
