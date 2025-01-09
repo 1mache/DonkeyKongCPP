@@ -81,11 +81,20 @@ bool Game::handleStrike()
     }
 }
 
+void Game::updateLegend() const
+{
+    gotoScreenPos(legendPos);
+    std::cout << "Score: " << score;
+    gotoScreenPos(legendPos.oneBelow());
+    std::cout << "<3 : " << lives;
+}
+
 void Game::pauseGame()
 {
     isPaused = true;
+    Point pauseMessagePos = legendPos.oneBelow().oneBelow();
     // print pause message
-    gotoScreenPos(PAUSEMESSAGE_POS);
+    gotoScreenPos(pauseMessagePos);
     std::cout << PAUSE_MESSAGE;
 }
 
@@ -93,7 +102,8 @@ void Game::continueGame()
 {
     isPaused = false;
     //erase pause game message and restore what has been on the board 
-    Point restorePos = PAUSEMESSAGE_POS;
+    Point restorePos = legendPos.oneBelow().oneBelow();
+
     for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
     {
         gotoScreenPos(restorePos);
@@ -169,7 +179,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
     }
 
     if (marioStartPos == POS_NOT_SET || donkeyKongPos == POS_NOT_SET ||
-        paulinePos == POS_NOT_SET)
+        paulinePos == POS_NOT_SET || legendPos == POS_NOT_SET)
     {
         // TODO: exception there were no info on the positions essential for the game in the file
         return nullptr;
@@ -187,7 +197,6 @@ bool Game::setEntityPositionByChar(char c, Point position)
     switch (c)
     {
         //TODO: add case for ghosts
-        //TODO: add case for legend
     case MARIO_SPRITE:
         if (marioStartPos == POS_NOT_SET)
             marioStartPos = position;
@@ -207,6 +216,12 @@ bool Game::setEntityPositionByChar(char c, Point position)
             paulinePos = position;
         else
             isAddedToBoard = false;
+        break;
+
+    case LEGEND_CHAR:
+        if (legendPos == POS_NOT_SET)
+            legendPos = position;
+        isAddedToBoard = false;
         break;
 
     default:
@@ -268,7 +283,9 @@ void Game::resetLevel()
 
     gameBoard->resetBoard();
     gameBoard->print();
-    updateLivesCounter();
+
+    score = 0;
+    updateLegend();
 
     //need to clear input buffer after animation  
     flushInputBuffer();

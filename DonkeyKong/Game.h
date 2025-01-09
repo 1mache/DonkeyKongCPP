@@ -18,15 +18,17 @@ class Game
 	static constexpr int ESC = 27;
 	static constexpr Point POS_NOT_SET = {-1 , -1};
 	static constexpr char MARIO_SPRITE = '@';
-	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
+	static constexpr char LEGEND_CHAR = 'L';
+
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
-	static constexpr const char* PAUSE_MESSAGE = "Paused | ESC to continue";
+	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr int MAX_LIVES = 3;
 
 	//will be set when we read from file
 	Point marioStartPos = POS_NOT_SET;
 	Point donkeyKongPos = POS_NOT_SET;
 	Point paulinePos = POS_NOT_SET;
+	Point legendPos = POS_NOT_SET;
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
@@ -39,6 +41,7 @@ class Game
 	BarrelManager* barrelManager = nullptr;
 
 	int lives = MAX_LIVES;
+	int score = 0;
 
 	bool isPaused = false;
 
@@ -47,13 +50,8 @@ class Game
 
 	// what happens when mario gets hurt
 	bool handleStrike();
-
-	// update the lives counter on screen
-	void updateLivesCounter() const
-	{
-		gotoScreenPos(LIVES_COUNTER_POS);
-		std::cout << lives;
-	}
+	// lives and score
+	void updateLegend() const;
 
 	void pauseGame();
 

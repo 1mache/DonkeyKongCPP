@@ -92,9 +92,6 @@
     <ClInclude Include="GhostsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hammer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dkong_01.screen">
@@ -103,7 +100,7 @@
     <None Include="dkong_02.screen">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="dkong_08.screen">
+    <None Include="dkong_03.screen">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

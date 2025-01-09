@@ -50,7 +50,7 @@
   <ItemGroup>
     <None Include="dkong_01.screen" />
     <None Include="dkong_02.screen" />
-    <None Include="dkong_08.screen" />
+    <None Include="dkong_03.screen" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
