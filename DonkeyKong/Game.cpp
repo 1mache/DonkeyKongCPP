@@ -253,6 +253,7 @@ bool Game::start()
     {
         std::string nextLevelFilename = levelFileNames[currLevel];
 
+        delete gameBoard;
         //TODO: handling exceptions 
         gameBoard = readLevelFromFile(nextLevelFilename);
 
@@ -304,7 +305,9 @@ void Game::checkPlayerHitHammerEnemy()
     Point destroyPos = player->handleHammer();
     if (destroyPos != Constants::POS_NOT_SET)
     {
-        ghostsManager->destroyGhostAtPos(destroyPos);
-        barrelManager->destroyBarrelAtPos(destroyPos);
+        if(gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
+            barrelManager->destroyBarrelAtPos(destroyPos);
+        else
+            ghostsManager->destroyGhostAtPos(destroyPos);
     }
 }

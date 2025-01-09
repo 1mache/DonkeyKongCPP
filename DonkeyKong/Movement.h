@@ -54,7 +54,10 @@ protected:
 
     void setPosition(Point newPos)
     {
-        position = newPos;
+        if(gameBoard->isPosInBounds(newPos))
+        {
+            position = newPos;
+        }
     }
 
 public:
@@ -62,7 +65,7 @@ public:
     Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
-    ~Movement()
+    virtual ~Movement()
     {
         erase();
     }
