@@ -16,8 +16,6 @@ private:
     static constexpr int MAX_RANDOM_VAL = 100;
     static constexpr int MAX_DIR_CHANGE_VAL = 5;
 
-    Point startPos = Constants::POS_NOT_SET;
-
     //movement component
     //Movement ghostMovement;
     Board* gameBoard = nullptr;
@@ -53,12 +51,7 @@ private:
 public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
-        Movement(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard), startPos(_startPos) {}
+        Movement(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
 
     void moveGhost();
-
-    void resetGhostPos()
-    {
-        setPosition(startPos);
-    }
 };
