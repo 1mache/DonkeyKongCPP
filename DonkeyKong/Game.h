@@ -28,6 +28,7 @@ class Game
 	Point marioStartPos = Constants::POS_NOT_SET;
 	Point donkeyKongPos = Constants::POS_NOT_SET;
 	Point paulinePos = Constants::POS_NOT_SET;
+	Point legendPos = Constants::POS_NOT_SET;
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;

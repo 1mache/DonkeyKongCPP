@@ -52,6 +52,11 @@ protected:
         draw(position , Board::BLANK_SPACE);
     }
 
+    void setPosition(Point newPos)
+    {
+        position = newPos;
+    }
+
 public:
 
     Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
@@ -65,11 +70,6 @@ public:
     Point getPosition() const
     {
         return position;
-    }
-
-    void setPosition(Point newPos)
-    {
-        position = newPos;
     }
 
     bool canMoveToPos(Point newPos) const 

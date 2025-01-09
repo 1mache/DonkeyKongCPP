@@ -219,7 +219,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
         break;
 
     case LEGEND_CHAR:
-        if (legendPos == POS_NOT_SET)
+        if (legendPos == Constants::POS_NOT_SET)
             legendPos = position;
         isAddedToBoard = false;
         break;
