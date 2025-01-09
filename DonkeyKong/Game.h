@@ -12,11 +12,11 @@
 #include "Barrel.h"
 #include "BarrelManager.h"
 #include "GhostsManager.h"
+#include "Constants.h"
 
 class Game
 {
 	static constexpr int ESC = 27;
-	static constexpr Point POS_NOT_SET = {-1 , -1};
 	static constexpr char MARIO_SPRITE = '@';
 	static constexpr Point PAUSEMESSAGE_POS = { 4 , 2 };
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
@@ -24,9 +24,9 @@ class Game
 	static constexpr int MAX_LIVES = 3;
 
 	//will be set when we read from file
-	Point marioStartPos = POS_NOT_SET;
-	Point donkeyKongPos = POS_NOT_SET;
-	Point paulinePos = POS_NOT_SET;
+	Point marioStartPos = Constants::POS_NOT_SET;
+	Point donkeyKongPos = Constants::POS_NOT_SET;
+	Point paulinePos = Constants::POS_NOT_SET;
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
@@ -83,9 +83,5 @@ public:
 
 	void resetLevel();
 
-	void destroyEnemyAtPos(Point position)
-	{
-		ghostsManager->destroyGhostAtPos(position);
-		barrelManager->destroyBarrelAtPos(position);
-	}
+	void checkPlayerHitHammerEnemy();
 };

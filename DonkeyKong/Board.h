@@ -76,5 +76,10 @@ public:
 	{
 		return getCharAtPos(position) == HAMMER;
 	}
+
+	bool isGhostAtPos(Point position) const
+	{
+		return getCharAtPos(position) == GHOST;
+	}
 };
 

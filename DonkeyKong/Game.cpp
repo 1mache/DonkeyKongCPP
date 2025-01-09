@@ -104,9 +104,9 @@ void Game::continueGame()
 
 Board* Game::readLevelFromFile(const std::string& filename)
 {
-    marioStartPos = POS_NOT_SET;
-    donkeyKongPos = POS_NOT_SET;
-    paulinePos = POS_NOT_SET;
+    marioStartPos = Constants::POS_NOT_SET;
+    donkeyKongPos = Constants::POS_NOT_SET;
+    paulinePos = Constants::POS_NOT_SET;
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     // dynamic allocation of pointer to a 2D array, we will pass this to board, and the board will handle it 
@@ -168,8 +168,8 @@ Board* Game::readLevelFromFile(const std::string& filename)
             fileEnded = true;
     }
 
-    if (marioStartPos == POS_NOT_SET || donkeyKongPos == POS_NOT_SET ||
-        paulinePos == POS_NOT_SET)
+    if (marioStartPos == Constants::POS_NOT_SET || donkeyKongPos == Constants::POS_NOT_SET ||
+        paulinePos == Constants::POS_NOT_SET)
     {
         // TODO: exception there were no info on the positions essential for the game in the file
         return nullptr;
@@ -189,21 +189,21 @@ bool Game::setEntityPositionByChar(char c, Point position)
         //TODO: add case for ghosts
         //TODO: add case for legend
     case MARIO_SPRITE:
-        if (marioStartPos == POS_NOT_SET)
+        if (marioStartPos == Constants::POS_NOT_SET)
             marioStartPos = position;
         // if this function returned false:
         isAddedToBoard = false; // we dont want to have the mario char on board
         break;
 
     case Board::DONKEY_KONG:
-        if (donkeyKongPos == POS_NOT_SET)
+        if (donkeyKongPos == Constants::POS_NOT_SET)
             donkeyKongPos = position;
         else
             isAddedToBoard = false;
         break;
 
     case Board::PAULINE:
-        if (paulinePos == POS_NOT_SET)
+        if (paulinePos == Constants::POS_NOT_SET)
             paulinePos = position;
         else
             isAddedToBoard = false;
@@ -264,7 +264,7 @@ void Game::resetLevel()
 {
     clearScreen();
 
-    srand(time(0)); // we use rand for barrel spawning, so this gets us a new seed
+    srand(time(0)); // gets us a new seed for use in rand
 
     gameBoard->resetBoard();
     gameBoard->print();
@@ -280,4 +280,14 @@ void Game::resetLevel()
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
     delete ghostsManager;
     ghostsManager = new GhostsManager(gameBoard);
+}
+
+void Game::checkPlayerHitHammerEnemy()
+{
+    Point destroyPos = player->handleHammer();
+    if (destroyPos != Constants::POS_NOT_SET)
+    {
+        ghostsManager->destroyGhostAtPos(destroyPos);
+        barrelManager->destroyBarrelAtPos(destroyPos);
+    }
 }

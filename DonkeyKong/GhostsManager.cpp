@@ -53,3 +53,11 @@ void GhostsManager::destroyGhostAtPos(Point destroyPos)
         }
     }
 }
+
+void GhostsManager::resetGhostsPos()
+{
+    for (size_t i = 0; i < ghostsVector.size(); i++)
+    {
+        ghostsVector[i].resetGhostPos();
+    }
+}

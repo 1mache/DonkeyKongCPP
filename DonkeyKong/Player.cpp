@@ -212,14 +212,19 @@ void Player::checkHammerPickup()
     }
 }
 
-void Player::handleHammer()
+Point Player::handleHammer()
 {
     if (hasHammer)
     {
         Point destroyPos = getPosition() + DIRECTIONS[hammerDir];
-        //if (gameBoard->isHammerEnemyAtPos(destroyPos))
-        //{
-        //    curGame->destroyEnemyAtPos(destroyPos);
-        //}
+        if (gameBoard->isHammerEnemyAtPos(destroyPos))
+        {
+            return destroyPos;
+        }
+
+        else
+        {
+            return Constants::POS_NOT_SET;
+        }
     }
 }

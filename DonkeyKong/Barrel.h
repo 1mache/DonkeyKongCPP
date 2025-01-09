@@ -55,11 +55,6 @@ public:
     Barrel(Board* _gameBoard, Point _startPos, RollDirection _dir) :
         currentRollDirection(_dir), Movement(_gameBoard, Board::BARREL, _startPos), gameBoard(_gameBoard) {}
 
-    ~Barrel()
-    {
-        erase();
-    }
-
     // updates barrel based on what its doing right now, whether its
     // moving or exploding
     void update();

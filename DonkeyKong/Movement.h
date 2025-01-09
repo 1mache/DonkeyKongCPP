@@ -57,9 +57,19 @@ public:
     Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
+    ~Movement()
+    {
+        erase();
+    }
+
     Point getPosition() const
     {
         return position;
+    }
+
+    void setPosition(Point newPos)
+    {
+        position = newPos;
     }
 
     bool canMoveToPos(Point newPos) const 

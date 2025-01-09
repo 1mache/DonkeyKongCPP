@@ -61,8 +61,6 @@ class Player : public Movement
 
     void checkHammerPickup();
 
-    void handleHammer();
-
     // change state by valid keyboard input (in KEYS[])
     void stateByKey(char key);
 
@@ -89,4 +87,6 @@ public:
 
     // actions when loses life
     void takeDamage();
+
+    Point handleHammer();
 };

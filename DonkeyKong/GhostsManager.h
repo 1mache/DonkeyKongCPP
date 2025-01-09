@@ -37,4 +37,6 @@ public:
     void manageGhosts();
 
     void destroyGhostAtPos(Point destroyPos);
+
+    void resetGhostsPos();
 };
