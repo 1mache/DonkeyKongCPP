@@ -64,11 +64,16 @@ class Player : public MovingObject
     // change state by valid keyboard input (in KEYS[])
     void stateByKey(char key);
 
+    void movePlayer();
+
 public:
     Player(Board* _gameBoard, char _spriteChar, Point _startPos) :
         MovingObject(_gameBoard, _spriteChar, _startPos), gameBoard(_gameBoard) {}
 
-    void movePlayer();
+    void update() override
+    {
+        movePlayer();
+    }
 
     void handleKeyboardInput(char key);
 

@@ -101,4 +101,6 @@ public:
         return(((!canMoveToPos(position.oneLeft())) || (!canMoveToPos(position.oneRight())))
             && checkOnGround());
     }
+    
+    virtual void update() = 0;
 };

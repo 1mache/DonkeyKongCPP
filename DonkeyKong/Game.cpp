@@ -22,7 +22,7 @@ void Game::update()
         
         if (!isPaused)
         {
-            player->movePlayer();
+            player->update();
 
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
@@ -139,35 +139,32 @@ Board* Game::readLevelFromFile(const std::string& filename)
             //if line ended or file ended "prematurely"
             if (lineEnded || fileEnded)
             {
-                if (row == screenHeight - 1)
-                    // fill last line with floor
-                    (*map)[row][col] = Board::DEFAULT_FLOOR;
-                else
-                    // by default fill with blank space
-                    (*map)[row][col] = Board::BLANK_SPACE;
-
-                continue;
+                // fill with blank space
+                (*map)[row][col] = Board::BLANK_SPACE;
             }
 
             char c = levelFile.get();
             if (c == EOF)
             {
                 fileEnded = true;
+                continue;
             }
             else if (c == '\n')
             {
                 lineEnded = true;
+                continue;
             }
-            // the function decides whether the char should be added to board
-            else if (setEntityPositionByChar(c, { col, row })) 
+            else if (c != Board::BLANK_SPACE) 
             {
-                (*map)[row][col] = c;
+                // the function decides whether the char should be added to board
+                if(!setEntityPositionByChar(c, { col, row }))
+                {
+                    (*map)[row][col] = Board::BLANK_SPACE;
+                    continue;
+                }
             }
-            else
-            {
-                (*map)[row][col] = Board::BLANK_SPACE;
-            }
-
+            
+            (*map)[row][col] = c;
         }
 
         (*map)[row][screenWidth] = '\0'; // terminate the line that we read
@@ -196,7 +193,6 @@ bool Game::setEntityPositionByChar(char c, Point position)
     bool isAddedToBoard = true;
     switch (c)
     {
-        //TODO: add case for ghosts
     case MARIO_SPRITE:
         if (marioStartPos == Constants::POS_NOT_SET)
             marioStartPos = position;
@@ -248,6 +244,7 @@ bool Game::start()
         // throw exception, no levels
         return true;
     }
+
     // iterate until we`ve read all files
     while(currLevel < levelFileNames.size())
     {

@@ -34,7 +34,7 @@ void GhostsManager::manageGhosts()
 {
     for (size_t i = 0; i < ghostsVector.size(); i++)
     {
-        ghostsVector[i].moveGhost();
+        ghostsVector[i].update();
     }
 
     /*if (!spawnedGhosts)

@@ -48,10 +48,14 @@ private:
         return ((rand() % MAX_RANDOM_VAL) < MAX_DIR_CHANGE_VAL);
     }
 
+    void moveGhost();
 public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
         MovingObject(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
 
-    void moveGhost();
+    void update() override
+    {
+        moveGhost();
+    }
 };

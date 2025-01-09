@@ -57,7 +57,7 @@ public:
 
     // updates barrel based on what its doing right now, whether its
     // moving or exploding
-    void update();
+    void update() override;
 
     bool exploded() const
     {

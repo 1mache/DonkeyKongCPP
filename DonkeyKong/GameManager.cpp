@@ -45,7 +45,7 @@ void GameManager::readLevelFileNames()
 	// https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
 	// and changed to some extent
 
-	// using regex https://www.geeksforgeeks.org/how-to-match-a-pattern-in-a-string-in-cpp/
+	// using regex: https://www.geeksforgeeks.org/how-to-match-a-pattern-in-a-string-in-cpp/
 
 	std::regex pattern(LEVEL_FILENAME_TEMPLATE);
 
