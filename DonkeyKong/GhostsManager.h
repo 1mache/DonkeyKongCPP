@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Point.h"
-#include "Movement.h"
+#include "MovingObject.h"
 #include "Constants.h"
 #include <vector>
 #include "Ghost.h"

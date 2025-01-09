@@ -7,7 +7,7 @@
 #include "utils.h"
 
 // movement component of all the moving objects on screen
-class Movement
+class MovingObject
 {
     Point position;
     // char that represents the object on screen
@@ -62,10 +62,10 @@ protected:
 
 public:
 
-    Movement(Board* _gameBoard, char _spriteChar, Point _startPos): 
+    MovingObject(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
 
-    virtual ~Movement()
+    virtual ~MovingObject()
     {
         erase();
     }

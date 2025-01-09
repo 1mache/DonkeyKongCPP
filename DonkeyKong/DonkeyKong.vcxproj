@@ -28,7 +28,7 @@
     <ClCompile Include="GhostsManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Movement.cpp" />
+    <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -42,7 +42,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="GhostsManager.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Movement.h" />
+    <ClInclude Include="MovingObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="utils.h" />

@@ -4,7 +4,7 @@
 #include <cstdlib>
 
 #include "Point.h"
-#include "Movement.h"
+#include "MovingObject.h"
 #include "Constants.h"
 #include "Barrel.h"
 #include "Board.h"

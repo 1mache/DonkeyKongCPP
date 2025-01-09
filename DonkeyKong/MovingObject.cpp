@@ -1,6 +1,6 @@
-#include "Movement.h"
+#include "MovingObject.h"
 
-void Movement::move(Point moveDirection, bool useGravity, bool ignoreObstacles)
+void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacles)
 {
     erase();
 

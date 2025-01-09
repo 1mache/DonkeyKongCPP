@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Point.h"
-#include "Movement.h"
+#include "MovingObject.h"
 #include "Constants.h"
 
-class Player : public Movement
+class Player : public MovingObject
 {
     enum MoveState { UP, LEFT, DOWN, RIGHT, STAY };
     static constexpr Point DIRECTIONS[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
@@ -66,7 +66,7 @@ class Player : public Movement
 
 public:
     Player(Board* _gameBoard, char _spriteChar, Point _startPos) :
-        Movement(_gameBoard, _spriteChar, _startPos), gameBoard(_gameBoard) {}
+        MovingObject(_gameBoard, _spriteChar, _startPos), gameBoard(_gameBoard) {}
 
     void movePlayer();
 

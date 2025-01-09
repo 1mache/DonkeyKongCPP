@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Point.h"
-#include "Movement.h"
+#include "MovingObject.h"
 #include "Constants.h"
 
-class Barrel : public Movement
+class Barrel : public MovingObject
 {
 public:
     enum RollDirection { LEFT, RIGHT };
@@ -53,7 +53,7 @@ private:
 public:
 
     Barrel(Board* _gameBoard, Point _startPos, RollDirection _dir) :
-        currentRollDirection(_dir), Movement(_gameBoard, Board::BARREL, _startPos), gameBoard(_gameBoard) {}
+        currentRollDirection(_dir), MovingObject(_gameBoard, Board::BARREL, _startPos), gameBoard(_gameBoard) {}
 
     // updates barrel based on what its doing right now, whether its
     // moving or exploding

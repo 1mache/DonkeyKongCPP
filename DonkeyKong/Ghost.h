@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Point.h"
-#include "Movement.h"
+#include "MovingObject.h"
 #include "Constants.h"
 #include <cstdlib>
 
-class Ghost : public Movement
+class Ghost : public MovingObject
 {
 public:
     enum MoveDirection { LEFT, RIGHT };
@@ -51,7 +51,7 @@ private:
 public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
-        Movement(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
+        MovingObject(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
 
     void moveGhost();
 };
