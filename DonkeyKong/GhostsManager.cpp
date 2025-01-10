@@ -4,6 +4,10 @@ void GhostsManager::manageGhosts()
 {
     for (size_t i = 0; i < ghostsVector.size(); i++)
     {
+        ghostsVector[i].setGhostDirection();
+    }    
+    for (size_t i = 0; i < ghostsVector.size(); i++)
+    {
         ghostsVector[i].update();
     }
 }

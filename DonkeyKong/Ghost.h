@@ -47,7 +47,7 @@ public:
     // decides current movement direction based on floor below us and other ghosts nearby
     void setGhostDirection()
     {
-        if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
+        if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange() || reachedAnotherGhost())
         {
             changeDirection();
             //other.changeDirection();
