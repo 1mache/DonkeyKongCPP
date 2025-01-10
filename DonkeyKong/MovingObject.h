@@ -5,6 +5,7 @@
 #include "Board.h"
 #include "Point.h"
 #include "utils.h"
+#include <windows.h>
 
 // movement component of all the moving objects on screen
 class MovingObject
@@ -14,7 +15,10 @@ class MovingObject
     char spriteChar;
     
     Board* gameBoard = nullptr;
-    
+    // DEBUG ==================================================
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    WORD color = (rand() % 8) + 1;
+    // ==========================================================
     // counts how many lines we fell, 0 if not in free fall 
     int fallHeight = 0;
 
@@ -23,6 +27,9 @@ class MovingObject
         if(gameBoard->isPosInBounds(drawPosition))
         {
             gotoScreenPos(drawPosition);
+            // DEBUG ======================================================
+            SetConsoleTextAttribute(hConsole, color);
+            // ======================================================
             std::cout << c;
         }
     }

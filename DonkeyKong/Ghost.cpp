@@ -20,7 +20,7 @@ bool Ghost::reachedEndOfFloor() const
 bool Ghost::reachedAnotherGhost() const
 {
     Point checkPos = getPosition() + DIRECTIONS[currentMoveDirection];
-    return (gameBoard->isGhostAtPos(checkPos));
+    return gameBoard->isGhostAtPos(checkPos);
 }
 
 void Ghost::moveGhost()

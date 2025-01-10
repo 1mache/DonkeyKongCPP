@@ -117,6 +117,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
     marioStartPos = Constants::POS_NOT_SET;
     donkeyKongPos = Constants::POS_NOT_SET;
     paulinePos = Constants::POS_NOT_SET;
+    ghostsStartPositions.clear();
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     // dynamic allocation of pointer to a 2D array, we will pass this to board 
@@ -129,7 +130,6 @@ Board* Game::readLevelFromFile(const std::string& filename)
     if(!levelFile.is_open())
     {
         throw LevelFileException("File invalid. Couldn't open the file:" + filename);
-        return nullptr;
     }
 
     bool fileEnded = false;
@@ -219,6 +219,11 @@ bool Game::setEntityPositionByChar(char c, Point position)
     case LEGEND_CHAR:
         if (legendPos == Constants::POS_NOT_SET)
             legendPos = position;
+        isAddedToBoard = false;
+        break;
+    
+    case Board::GHOST:
+        ghostsStartPositions.push_back(position);
         isAddedToBoard = false;
         break;
 
@@ -313,8 +318,10 @@ void Game::resetLevel()
     player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
     delete barrelManager;
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
+    
     delete ghostsManager;
     ghostsManager = new GhostsManager(gameBoard);
+    ghostsManager->resetGhosts(ghostsStartPositions);
 }
 
 void Game::checkPlayerHitHammerEnemy()

@@ -14,10 +14,8 @@ public:
 private:
 
     static constexpr int MAX_RANDOM_VAL = 100;
-    static constexpr int MAX_DIR_CHANGE_VAL = 5;
+    static constexpr int MAX_DIR_CHANGE_VAL = 0;
 
-    //movement component
-    //Movement ghostMovement;
     Board* gameBoard = nullptr;
 
     // are we moving left or right
@@ -28,14 +26,6 @@ private:
 
     bool reachedAnotherGhost() const;
 
-    // decides current movement direction based on floor below us and other ghosts nearby
-    void setGhostDirection()
-    {
-        if (reachedAnotherGhost() || reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
-        {
-            changeDirection();
-        }
-    }
 
     void changeDirection()
     {
@@ -53,6 +43,16 @@ public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
         MovingObject(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
+
+    // decides current movement direction based on floor below us and other ghosts nearby
+    void setGhostDirection()
+    {
+        if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
+        {
+            changeDirection();
+            //other.changeDirection();
+        }
+    }
 
     void update() override
     {

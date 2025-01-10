@@ -10,21 +10,15 @@
 
 class GhostsManager
 {
-    /*static constexpr int MIN_SPAWN_DELAY = 20;
-    static constexpr int MAX_SPAWN_DELAY = 60;*/
-
-    // which way to push the next created barrel
-    //Barrel::RollDirection curBarrelDir = Barrel::RollDirection::RIGHT;
-
     Board* gameBoard = nullptr;
     std::vector<Ghost> ghostsVector;
 
-    std::vector<Point> ghostsStartPosVector;
-
     bool spawnedGhosts = false;
-    //size_t ghostsNum = 0;
 
-    //void spawnAllGhosts();
+    void spawnGhost(Point pos)
+    {
+        ghostsVector.emplace_back(gameBoard, pos);
+    }
 
     void deleteGhost(int index)
     {
@@ -35,12 +29,9 @@ class GhostsManager
 public:
     GhostsManager(Board* _gameBoard) : gameBoard(_gameBoard) {}
 
-    // updates all existing barrels, and spawns new ones
     void manageGhosts();
 
     void destroyGhostAtPos(Point destroyPos);
 
-    void spawnGhost(Point pos);
-
-    void resetGhosts();
+    void resetGhosts(const std::vector<Point>& startPositions);
 };
