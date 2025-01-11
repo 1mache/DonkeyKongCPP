@@ -27,6 +27,9 @@ class Player : public MovingObject
     // tells if player has hammer
     bool hasHammer = false;
 
+    // tells if player is currently using hammer (pressing 'p')
+    bool usingHammer = false;
+
     //  mid jump not falling
     bool midJump = false;
 

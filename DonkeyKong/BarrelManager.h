@@ -33,6 +33,7 @@ class BarrelManager
     void deleteBarrel(int index)
     {
         //deletes the barrel from the barrel vector
+        gameBoard->resetCharAtPos(barrelsVector[index].getPosition());
         barrelsVector.erase(barrelsVector.begin() + index);
     }
     

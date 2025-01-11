@@ -24,6 +24,9 @@ void Game::update()
         {
             player->update();
 
+            // Should this be here?
+            checkPlayerHitHammerEnemy();
+
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
             {
@@ -329,9 +332,13 @@ void Game::checkPlayerHitHammerEnemy()
     Point destroyPos = player->handleHammer();
     if (destroyPos != Constants::POS_NOT_SET)
     {
-        if(gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
+        if (gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
+        {
             barrelManager->destroyBarrelAtPos(destroyPos);
+        }
         else
+        {
             ghostsManager->destroyGhostAtPos(destroyPos);
+        }
     }
 }

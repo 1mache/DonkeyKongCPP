@@ -33,11 +33,12 @@ void Player::handleKeyboardInput(char key)
 
     if (lowerKey == HAMMER_KEY)
     {
-        handleHammer();
+        usingHammer = true;
     }
 
     else
     {
+        usingHammer = false;
         stateByKey(lowerKey);
     }
 }
@@ -214,10 +215,16 @@ void Player::checkHammerPickup()
 
 Point Player::handleHammer()
 {
-    if (hasHammer)
+    if (hasHammer && usingHammer)
     {
         Point destroyPos = getPosition() + DIRECTIONS[hammerDir];
+
+        // check for an enemy in one of 2 chars infront of player direction
         if (gameBoard->isHammerEnemyAtPos(destroyPos))
+        {
+            return destroyPos;
+        }
+        else if (gameBoard->isHammerEnemyAtPos(destroyPos + DIRECTIONS[hammerDir]))
         {
             return destroyPos;
         }
@@ -226,5 +233,10 @@ Point Player::handleHammer()
         {
             return Constants::POS_NOT_SET;
         }
+    }
+
+    else
+    {
+        return Constants::POS_NOT_SET;
     }
 }

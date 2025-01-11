@@ -14,7 +14,7 @@ public:
 private:
 
     static constexpr int MAX_RANDOM_VAL = 100;
-    static constexpr int MAX_DIR_CHANGE_VAL = 0;
+    static constexpr int MAX_DIR_CHANGE_VAL = 5;
 
     Board* gameBoard = nullptr;
 
@@ -50,7 +50,6 @@ public:
         if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange() || reachedAnotherGhost())
         {
             changeDirection();
-            //other.changeDirection();
         }
     }
 
