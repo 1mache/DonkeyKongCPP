@@ -70,6 +70,7 @@ class Game
 
 	bool isEntityMissing(std::string& outEntityMissing);
 
+	void checkPlayerHitEnemy();
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
 	Game(const Game& other) = delete;
@@ -85,6 +86,4 @@ public:
 	bool start();
 
 	void resetLevel();
-
-	void checkPlayerHitHammerEnemy();
 };

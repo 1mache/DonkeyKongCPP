@@ -24,8 +24,8 @@ void Game::update()
         {
             player->update();
 
-            // Should this be here?
-            checkPlayerHitHammerEnemy();
+            // Should this be here? ===================================================
+            checkPlayerHitEnemy();
 
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
@@ -327,7 +327,7 @@ void Game::resetLevel()
     ghostsManager->resetGhosts(ghostsStartPositions);
 }
 
-void Game::checkPlayerHitHammerEnemy()
+void Game::checkPlayerHitEnemy()
 {
     Point destroyPos = player->handleHammer();
     if (destroyPos != Constants::POS_NOT_SET)

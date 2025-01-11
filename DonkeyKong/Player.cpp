@@ -226,7 +226,7 @@ Point Player::handleHammer()
         }
         else if (gameBoard->isHammerEnemyAtPos(destroyPos + DIRECTIONS[hammerDir]))
         {
-            return destroyPos;
+            return destroyPos + DIRECTIONS[hammerDir];
         }
 
         else
