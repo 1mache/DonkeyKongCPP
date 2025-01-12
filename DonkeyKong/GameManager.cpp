@@ -13,9 +13,6 @@ void GameManager::launchGame()
 
 	while (true)
 	{	
-		// return the cursor to 0,0 need this after the merge in 06/01/for some reason
-		gotoScreenPos({0,0});
-
 		Menu menu(levelFileNames);
 
 		//returns true if the user chose the exit option in the menu
@@ -36,7 +33,7 @@ void GameManager::launchGame()
 		catch (const LevelFileException& ex)
 		{
 			std::cout << ex.what();
-			exit(1);
+			break;
 		}
 
 		if (gameOver)
