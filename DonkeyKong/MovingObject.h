@@ -49,15 +49,6 @@ protected:
     // the function can ignore obstacles, doesnt do it by default 
     void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
     
-    void draw() const
-    {
-        draw(position , spriteChar);
-    }
-
-    void erase() const
-    {
-        draw(position , Board::BLANK_SPACE);
-    }
 
     void setPosition(Point newPos)
     {
@@ -71,6 +62,16 @@ public:
 
     MovingObject(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
+
+    void draw() const
+    {
+        draw(position , spriteChar);
+    }
+
+    void erase() const
+    {
+        draw(position , Board::BLANK_SPACE);
+    }
 
     Point getPosition() const
     {

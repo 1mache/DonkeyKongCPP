@@ -24,7 +24,7 @@ void Game::update()
         {
             player->update();
 
-            // Should this be here? ===================================================
+            // Should this be here? =================================================== I think so, vro
             checkPlayerHitEnemy();
 
             //check for barrel collisions and fall damage
@@ -41,7 +41,9 @@ void Game::update()
             }
 
             barrelManager->manageBarrels();
-            ghostsManager->manageGhosts();
+            
+            if(ghostsManager)
+                ghostsManager->manageGhosts();
 
             //check again for barrel collisions - after barrels moved
             if (player->checkCollision())
@@ -92,6 +94,20 @@ void Game::updateLegend() const
     std::cout << "<3 : " << lives;
 }
 
+void Game::resetGhostsManager()
+{
+    if (!ghostsStartPositions.empty())
+    {
+        delete ghostsManager;
+        ghostsManager = new GhostsManager(gameBoard);
+        ghostsManager->resetGhosts(ghostsStartPositions);
+    }
+    else
+    {
+        delete ghostsManager;
+    }
+}
+
 void Game::pauseGame()
 {
     isPaused = true;
@@ -120,7 +136,10 @@ Board* Game::readLevelFromFile(const std::string& filename)
     marioStartPos = Constants::POS_NOT_SET;
     donkeyKongPos = Constants::POS_NOT_SET;
     paulinePos = Constants::POS_NOT_SET;
+    legendPos = Constants::POS_NOT_SET;
+    hammerPos = Constants::POS_NOT_SET;
     ghostsStartPositions.clear();
+
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
     // dynamic allocation of pointer to a 2D array, we will pass this to board 
@@ -230,6 +249,12 @@ bool Game::setEntityPositionByChar(char c, Point position)
         isAddedToBoard = false;
         break;
 
+    case Board::HAMMER:
+        if (hammerPos == Constants::POS_NOT_SET)
+            hammerPos = position;
+        isAddedToBoard = false;
+        break;
+
     default:
         break;
     }
@@ -273,6 +298,23 @@ bool Game::isEntityMissing(std::string& outEntityMissing)
     return false;
 }
 
+
+void Game::checkPlayerHitEnemy()
+{
+    Point destroyPos = player->handleHammer();
+    if (destroyPos != Constants::POS_NOT_SET)
+    {
+        if (gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
+        {
+            barrelManager->destroyBarrelAtPos(destroyPos);
+        }
+        else
+        {
+            ghostsManager->destroyGhostAtPos(destroyPos);
+        }
+    }
+}
+
 bool Game::start()
 {
     if(levelFileNames.size() == 0)
@@ -308,6 +350,10 @@ void Game::resetLevel()
     srand(time(0)); // gets us a new seed for use in rand
 
     gameBoard->resetBoard();
+    // if there is a hammer on the level, add it to current board
+    if (hammerPos != Constants::POS_NOT_SET)
+        gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
+
     gameBoard->print();
 
     score = 0;
@@ -322,23 +368,5 @@ void Game::resetLevel()
     delete barrelManager;
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
     
-    delete ghostsManager;
-    ghostsManager = new GhostsManager(gameBoard);
-    ghostsManager->resetGhosts(ghostsStartPositions);
-}
-
-void Game::checkPlayerHitEnemy()
-{
-    Point destroyPos = player->handleHammer();
-    if (destroyPos != Constants::POS_NOT_SET)
-    {
-        if (gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
-        {
-            barrelManager->destroyBarrelAtPos(destroyPos);
-        }
-        else
-        {
-            ghostsManager->destroyGhostAtPos(destroyPos);
-        }
-    }
+    resetGhostsManager();
 }

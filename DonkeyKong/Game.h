@@ -30,6 +30,7 @@ class Game
 	Point donkeyKongPos = Constants::POS_NOT_SET;
 	Point paulinePos = Constants::POS_NOT_SET;
 	Point legendPos = Constants::POS_NOT_SET;
+	Point hammerPos = Constants::POS_NOT_SET;
 
 	std::vector<Point> ghostsStartPositions;
 	
@@ -55,6 +56,8 @@ class Game
 	bool handleStrike();
 	// lives and score
 	void updateLegend() const;
+
+	void resetGhostsManager();
 
 	void pauseGame();
 

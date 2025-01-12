@@ -24,6 +24,7 @@ class GhostsManager
     {
         //deletes the ghost from the ghosts vector
         gameBoard->resetCharAtPos(ghostsVector[index].getPosition());
+        ghostsVector[index].erase();
         ghostsVector.erase(ghostsVector.begin() + index);
     }
 
