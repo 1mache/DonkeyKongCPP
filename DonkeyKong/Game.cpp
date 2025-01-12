@@ -52,10 +52,10 @@ void Game::update()
                 }
             }
 
-            barrelManager->manageBarrels();
-            
             if(ghostsManager)
                 ghostsManager->manageGhosts();
+
+            barrelManager->manageBarrels();
 
             //check again for barrel collisions - after barrels moved
             if (player->checkCollision())

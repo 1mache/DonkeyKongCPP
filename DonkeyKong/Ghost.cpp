@@ -28,9 +28,20 @@ void Ghost::moveGhost()
     // remove ghost from board in its previous position
     gameBoard->resetCharAtPos(getPosition());
 
+    MoveDirection prevDirection = currentMoveDirection;
+    
     setGhostDirection();
 
-    move(DIRECTIONS[currentMoveDirection], false);
+    // if we changed direction this turn, dont move
+    if(currentMoveDirection != prevDirection)
+    {
+        move(Constants::POINT_ZERO, false);
+    }
+    else
+    {
+        move(DIRECTIONS[currentMoveDirection], false);
+    }
+
     // place ghost on board in its new position
     gameBoard->updateBoardWithChar(getPosition(), Board::GHOST);
 }
