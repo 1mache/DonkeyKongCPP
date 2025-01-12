@@ -13,20 +13,15 @@ class GhostsManager
     Board* gameBoard = nullptr;
     std::vector<Ghost> ghostsVector;
 
-    bool spawnedGhosts = false;
-
     void spawnGhost(Point pos)
     {
         ghostsVector.emplace_back(gameBoard, pos);
+        gameBoard->updateBoardWithChar(pos, Board::GHOST);
     }
 
-    void deleteGhost(int index)
-    {
-        //deletes the ghost from the ghosts vector
-        gameBoard->resetCharAtPos(ghostsVector[index].getPosition());
-        ghostsVector[index].erase();
-        ghostsVector.erase(ghostsVector.begin() + index);
-    }
+    void deleteGhost(int index);
+
+    Ghost* findOther(Point position);
 
 public:
     GhostsManager(Board* _gameBoard) : gameBoard(_gameBoard) {}

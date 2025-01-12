@@ -1,5 +1,14 @@
 #include "BarrelManager.h"
 
+void BarrelManager::deleteBarrel(int index)
+{
+    gameBoard->resetCharAtPos(barrelsVector[index].getPosition());
+    // erase it from the screen
+    barrelsVector[index].erase();
+    //deletes the barrel from the barrel vector
+    barrelsVector.erase(barrelsVector.begin() + index);
+}
+
 void BarrelManager::updateAllBarrels()
 {
     for (size_t i = 0; i < barrelsVector.size(); i++)
