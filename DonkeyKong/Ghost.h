@@ -16,7 +16,7 @@ class Ghost : public MovingObject
     Board* gameBoard = nullptr;
 
     // are we moving left or right
-    MoveDirection currentMoveDirection = MoveDirection::LEFT;
+    MoveDirection currentMoveDirection = MoveDirection::RIGHT;
 
     // sets ghosts direction based on environment (not including other ghosts) , if needed
     // returns whether this actually changed the direction

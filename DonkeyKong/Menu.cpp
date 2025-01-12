@@ -187,7 +187,7 @@ bool Menu::selectOption()
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
 		clearScreen();
-		// game over and win screen do break the input loop
+		// game over and win screen do break the input loop, one cycle of the game ensded
 		return true;
 	}
 	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
