@@ -1,5 +1,15 @@
 #include "Ghost.h"
 
+bool Ghost::adjustDirection()
+{
+    if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
+    {
+        changeDirection();
+        return true;
+    }
+    return false;
+}
+
 bool Ghost::reachedEndOfFloor() const
 {
     Point positionToCheck;
@@ -28,12 +38,8 @@ void Ghost::moveGhost()
     // remove ghost from board in its previous position
     gameBoard->resetCharAtPos(getPosition());
 
-    MoveDirection prevDirection = currentMoveDirection;
-    
-    setGhostDirection();
-
     // if we changed direction this turn, dont move
-    if(currentMoveDirection != prevDirection)
+    if(adjustDirection())
     {
         move(Constants::POINT_ZERO, false);
     }

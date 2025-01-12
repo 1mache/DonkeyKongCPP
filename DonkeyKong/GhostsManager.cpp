@@ -9,7 +9,7 @@ void GhostsManager::deleteGhost(int index)
     ghostsVector.erase(ghostsVector.begin() + index);
 }
 
-Ghost* GhostsManager::findOther(Point position)
+Ghost* GhostsManager::findByPosition(Point position)
 {
     for (Ghost& ghost : ghostsVector)
     {
@@ -22,30 +22,27 @@ Ghost* GhostsManager::findOther(Point position)
 
 void GhostsManager::manageGhosts()
 {
-/*    for (size_t i = 0; i < ghostsVector.size(); i++)
-    {
-        ghostsVector[i].setGhostDirection();
-    }*/    
     for (Ghost& ghost : ghostsVector)
     {
         Ghost* other = nullptr;
-        // case: xx
+        // case: xx they are close together
         if(ghost.reachedAnotherGhost())
         {
-            other = findOther(ghost.getPosition() + ghost.getGhostDirection());
+            other = findByPosition(ghost.getPosition() + ghost.getDirection());
         }
         ghost.update();
-        // case: x x
+        // case: x x, after we updated it also becomes xx
         if(ghost.reachedAnotherGhost())
         {
-            other = findOther(ghost.getPosition() + ghost.getGhostDirection());
+            other = findByPosition(ghost.getPosition() + ghost.getDirection());
         }
 
         if(other)
         {
             // if they are moving one towards another
-            if ((other->getGhostDirection() + ghost.getGhostDirection()) == Point(0, 0))
+            if ((other->getDirection() + ghost.getDirection()) == Constants::POINT_ZERO)
             {
+                // change the directions of both
                 ghost.changeDirection();
                 other->changeDirection();
             }

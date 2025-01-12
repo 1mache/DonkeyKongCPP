@@ -320,7 +320,7 @@ void Game::checkPlayerHitEnemy()
         {
             barrelManager->destroyBarrelAtPos(destroyPos);
         }
-        else
+        if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST)
         {
             ghostsManager->destroyGhostAtPos(destroyPos);
         }

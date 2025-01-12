@@ -7,27 +7,20 @@
 
 class Ghost : public MovingObject
 {
-public:
     enum MoveDirection { LEFT, RIGHT };
     static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
-private:
-
     static constexpr int MAX_RANDOM_VAL = 100;
-    static constexpr int MAX_DIR_CHANGE_VAL = 5;
+    static constexpr int DIR_CHANGE_CHANCE = 5;
 
     Board* gameBoard = nullptr;
 
     // are we moving left or right
     MoveDirection currentMoveDirection = MoveDirection::LEFT;
 
-    void setGhostDirection()
-    {
-        if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
-        {
-            changeDirection();
-        }
-    }
+    // sets ghosts direction based on environment (not including other ghosts) , if needed
+    // returns whether this actually changed the direction
+    bool adjustDirection();
     
     // check if ghost reached end of a floor
     bool reachedEndOfFloor() const;
@@ -35,7 +28,7 @@ private:
 
     bool shouldRandomDirectionChange() const
     {
-        return ((rand() % MAX_RANDOM_VAL) < MAX_DIR_CHANGE_VAL);
+        return ((rand() % MAX_RANDOM_VAL) < DIR_CHANGE_CHANCE);
     }
 
     void moveGhost();
@@ -44,20 +37,18 @@ public:
     Ghost(Board* _gameBoard, Point _startPos) :
         MovingObject(_gameBoard, Board::GHOST, _startPos), gameBoard(_gameBoard) {}
 
-    // decides current movement direction based on floor below us and other ghosts nearby
-
-    Point getGhostDirection()
+    Point getDirection() const
     {
         return DIRECTIONS[currentMoveDirection];
     }
+
+    bool reachedAnotherGhost() const;
 
     void changeDirection()
     {
         // move direction has 2 values (index 0 or 1), and 1-direction gives the opposite value 
         currentMoveDirection = MoveDirection(1 - currentMoveDirection);
     }
-
-    bool reachedAnotherGhost() const;
 
     void update() override
     {

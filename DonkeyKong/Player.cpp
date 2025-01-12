@@ -229,14 +229,8 @@ Point Player::handleHammer()
             return destroyPos + DIRECTIONS[hammerDir];
         }
 
-        else
-        {
-            return Constants::POS_NOT_SET;
-        }
-    }
-
-    else
-    {
         return Constants::POS_NOT_SET;
     }
+
+    return Constants::POS_NOT_SET;
 }
