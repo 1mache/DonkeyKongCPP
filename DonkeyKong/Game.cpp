@@ -2,12 +2,19 @@
 
 void Game::update()
 {
+    constexpr char KEY_NOT_SET = -1;
+
     while (true)
     {
         if (_kbhit())
         {
-            char key = _getch();
-            if (key == ESC)
+            char key1 = _getch();
+            char key2 = KEY_NOT_SET;
+           
+            if(_kbhit())
+                key2 = _getch();
+
+            if (key1 == ESC || key2 == ESC)
             {
                 // when ESC is pressed alter between paused and not paused
                 if (!isPaused) pauseGame();
@@ -16,16 +23,21 @@ void Game::update()
             // alter state by input if not paused 
             if(!isPaused)
             {
-                player->handleKeyboardInput(key);
+                player->handleKeyboardInput(key1);
+                
+                if(key2 != KEY_NOT_SET)
+                    player->handleKeyboardInput(key2);
             }
         }
         
         if (!isPaused)
         {
+            // First check if we hit something
+            checkPlayerHitEnemy();
+            
+            // then update the player (move him)
             player->update();
 
-            // Should this be here? =================================================== I think so, vro
-            checkPlayerHitEnemy();
 
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
