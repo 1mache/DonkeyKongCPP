@@ -63,6 +63,7 @@ class Player : public MovingObject
     void climbDown();
 
     void checkHammerPickup();
+    void hammerAnimation(Point destroyPos);
 
     // change state by valid keyboard input (in KEYS[])
     void stateByKey(char key);
