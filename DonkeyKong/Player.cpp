@@ -213,11 +213,41 @@ void Player::checkHammerPickup()
     }
 }
 
+void Player::hammerAnimation(Point destroyPos)
+{
+    if (gameBoard->isPosInBounds(destroyPos))
+    {
+        gotoScreenPos(destroyPos);
+        std::cout << '~';
+    }
+    if (gameBoard->isPosInBounds(destroyPos + DIRECTIONS[hammerDir]))
+    {
+        gotoScreenPos(destroyPos + DIRECTIONS[hammerDir]);
+        std::cout << '~';
+    }
+
+    Sleep(Constants::GAME_REFRESH_RATE);
+
+    if (gameBoard->isPosInBounds(destroyPos))
+    {
+        gotoScreenPos(destroyPos);
+        std::cout << gameBoard->getCharAtPos(destroyPos);
+    }
+    if (gameBoard->isPosInBounds(destroyPos + DIRECTIONS[hammerDir]))
+    {
+        gotoScreenPos(destroyPos + DIRECTIONS[hammerDir]);
+        std::cout << gameBoard->getCharAtPos(destroyPos + DIRECTIONS[hammerDir]);
+    }
+}
+
 Point Player::handleHammer()
 {
     if (hasHammer && usingHammer)
     {
+        usingHammer = false;
         Point destroyPos = getPosition() + DIRECTIONS[hammerDir];
+        
+        hammerAnimation(destroyPos);
 
         // check for an enemy in one of 2 chars infront of player direction
         if (gameBoard->isHammerEnemyAtPos(destroyPos))
@@ -228,7 +258,7 @@ Point Player::handleHammer()
         {
             return destroyPos + DIRECTIONS[hammerDir];
         }
-
+        
         return Constants::POS_NOT_SET;
     }
 
