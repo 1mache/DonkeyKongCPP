@@ -61,7 +61,7 @@ void Menu::setLevelOptionPositions()
 	int startId = scrollValue * MAX_LEVELS_ON_SCREEN;
 	int stopId = startId + MAX_LEVELS_ON_SCREEN;
 	// check that stopId is in bounds of the vector
-	if (stopId > levelFileNames.size() - 1)
+	if (levelFileNames.size() == 0 || stopId > levelFileNames.size() - 1)
 	{
 		stopId = levelFileNames.size();
 	}

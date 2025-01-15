@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
+#include <filesystem>
 #include <fstream>
 #include <conio.h>
 #include <vector>
@@ -18,6 +19,7 @@
 class Game
 {
 	static constexpr int ESC = 27;
+	static constexpr char ENTER = '\r';
 	static constexpr char MARIO_SPRITE = '@';
 	static constexpr char LEGEND_CHAR = 'L';
 
@@ -51,6 +53,7 @@ class Game
 
 	// game loop
 	void update();
+	void getPlayerConfirmation();
 
 	void drawHammer();
 

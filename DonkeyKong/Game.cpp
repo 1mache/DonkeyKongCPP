@@ -84,6 +84,19 @@ void Game::update()
     }
 }
 
+void Game::getPlayerConfirmation()
+{
+    while(true)
+    {
+        if (_kbhit())
+        {
+            char key = _getch();
+            if (key == ENTER)
+                break;
+        }
+    }
+}
+
 void Game::drawHammer()
 {
     // if the hammer exists on the level and player hasnt picked it up yet
@@ -170,7 +183,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
 
     if(!levelFile.is_open())
     {
-        throw LevelFileException("File invalid. Couldn't open the file: " + filename);
+        throw LevelFileException("File error. Couldn't open the file: " + filename);
     }
 
     bool fileEnded = false;
@@ -223,7 +236,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
     if(isEntityMissing(entityMissing))
     {
         levelFile.close();
-        throw LevelFileException("File invalid. " + entityMissing + " not found in the file");
+        throw LevelFileException("File error. " + entityMissing + " not found in the file");
     }
     
     levelFile.close();
@@ -349,7 +362,9 @@ bool Game::start()
 {
     if(levelFileNames.size() == 0)
     {
-        throw LevelFileException("The list of levels passed to Game is empty.");
+        std::cout << "No levels for the game to load, check: " << std::filesystem::current_path() << " for level files" << std::endl;
+        std::cout << "Press ENTER to go back to main menu";
+        getPlayerConfirmation();
         return true;
     }
 
@@ -359,14 +374,38 @@ bool Game::start()
         std::string nextLevelFilename = levelFileNames[currLevel];
 
         delete gameBoard;
-        gameBoard = readLevelFromFile(nextLevelFilename);
+        try        
+        {
+            gameBoard = readLevelFromFile(nextLevelFilename);
+        }
+        catch (LevelFileException& e)
+        {
+            clearScreen();
+            std::cout << "Level number " << currLevel + 1 << ", filename: "<< nextLevelFilename << " is invalid" << std::endl;
+            std::cout << e.what() << std::endl;
+            // if the last level is invalid game over
+            if (currLevel == levelFileNames.size() - 1)
+            {
+                std::cout << "This was the last level, press ENTER to end game";
+                getPlayerConfirmation();
+                return true;
+            }
+            else
+            {
+                std::cout << "Press ENTER to load next level";
+                getPlayerConfirmation();
+            }
+            
+            currLevel++;
+            continue;
+        }
 
         resetLevel();
 
         update();
         // game over check
         if (lives == 0)
-            return true;   
+            return true;
     }
 
     // returns true if game is over
