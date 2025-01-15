@@ -264,7 +264,8 @@ bool Menu::selectOption(char key)
 			else if(option.hotkey == key)
 			{
 				clearScreen();
-				chosenLevelId = arrowId + (scrollValue * MAX_LEVELS_ON_SCREEN);
+				int hotkeyNum = key - '0';
+				chosenLevelId = hotkeyNum + (scrollValue * MAX_LEVELS_ON_SCREEN);
 				closeMenu = true;
 				return closeMenu;
 			}
