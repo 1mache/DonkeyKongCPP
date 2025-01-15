@@ -57,6 +57,8 @@ void Game::update()
 
             barrelManager->manageBarrels();
 
+            drawHammer();
+
             //check again for barrel collisions - after barrels moved
             if (player->checkCollision())
             {
@@ -79,6 +81,19 @@ void Game::update()
         }
 
         Sleep(Constants::GAME_REFRESH_RATE);
+    }
+}
+
+void Game::drawHammer()
+{
+    // if the hammer exists on the level and player hasnt picked it up yet
+    if (hammerPos != Constants::POS_NOT_SET && !player->isHoldingHammer())
+    {
+        // draw the hammer
+        gotoScreenPos(hammerPos);
+        std::cout << Board::HAMMER;
+        // add it to current board
+        gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
     }
 }
 
@@ -145,25 +160,17 @@ void Game::continueGame()
 
 Board* Game::readLevelFromFile(const std::string& filename)
 {
-    marioStartPos = Constants::POS_NOT_SET;
-    donkeyKongPos = Constants::POS_NOT_SET;
-    paulinePos = Constants::POS_NOT_SET;
-    legendPos = Constants::POS_NOT_SET;
-    hammerPos = Constants::POS_NOT_SET;
-    ghostsStartPositions.clear();
-
+    resetEntitiesPositions();
 
     int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
-    // dynamic allocation of pointer to a 2D array, we will pass this to board 
-    char (*map)[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1] = new char[1][Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1];
-    // create a smart pointer out of it so it is safe, because we will pass ownership of it to board
-    std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> mapPtr(map);
+    // create a vector that represents the board, see Board::posToIndex on how we access its elements
+    std::vector<char> map(screenHeight * screenWidth);
 
     std::ifstream levelFile(filename);
 
     if(!levelFile.is_open())
     {
-        throw LevelFileException("File invalid. Couldn't open the file:" + filename);
+        throw LevelFileException("File invalid. Couldn't open the file: " + filename);
     }
 
     bool fileEnded = false;
@@ -172,11 +179,12 @@ Board* Game::readLevelFromFile(const std::string& filename)
         bool lineEnded = false;
         for (int col = 0; col < screenWidth; col++)
         {
+            Point pos = {col, row};
             //if line ended or file ended "prematurely"
             if (lineEnded || fileEnded)
             {
                 // fill with blank space
-                (*map)[row][col] = Board::BLANK_SPACE;
+                map[Board::posToIndex(pos)] = Board::BLANK_SPACE;
             }
 
             char c = levelFile.get();
@@ -195,15 +203,15 @@ Board* Game::readLevelFromFile(const std::string& filename)
                 // the function decides whether the char should be added to board
                 if(!setEntityPositionByChar(c, { col, row }))
                 {
-                    (*map)[row][col] = Board::BLANK_SPACE;
+                    map[Board::posToIndex(pos)] = Board::BLANK_SPACE;
                     continue;
                 }
             }
             
-            (*map)[row][col] = c;
+            map[Board::posToIndex(pos)] = c;
         }
 
-        (*map)[row][screenWidth] = '\0'; // terminate the line that we read
+        //(*map)[row][screenWidth] = '\0'; // terminate the line that we read
         discardRestOfLine(levelFile);
 
         // if we reached eof and its not the last row
@@ -220,7 +228,17 @@ Board* Game::readLevelFromFile(const std::string& filename)
     
     levelFile.close();
 
-    return new Board(std::move(mapPtr));
+    return new Board(std::move(map));
+}
+
+void Game::resetEntitiesPositions()
+{
+    marioStartPos = Constants::POS_NOT_SET;
+    donkeyKongPos = Constants::POS_NOT_SET;
+    paulinePos = Constants::POS_NOT_SET;
+    legendPos = Constants::POS_NOT_SET;
+    hammerPos = Constants::POS_NOT_SET;
+    ghostsStartPositions.clear();
 }
 
 bool Game::setEntityPositionByChar(char c, Point position)
@@ -362,9 +380,11 @@ void Game::resetLevel()
     srand(time(0)); // gets us a new seed for use in rand
 
     gameBoard->resetBoard();
-    // if there is a hammer on the level, add it to current board
-    if (hammerPos != Constants::POS_NOT_SET)
+    
+    if(hammerPos != Constants::POS_NOT_SET)
+    {
         gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
+    }
 
     gameBoard->print();
 

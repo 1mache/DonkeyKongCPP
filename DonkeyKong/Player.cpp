@@ -87,9 +87,7 @@ void Player::movePlayer()
     }
     
     // if we got here we just move the player horizontaly
-    move( DIRECTIONS[horizontalState], gravity);
-
-    checkHammerPickup();
+    move(DIRECTIONS[horizontalState], gravity);
 }
 
 void Player::jump()
@@ -191,7 +189,7 @@ void Player::climbDown()
     }
 }
 
-void Player::takeDamage()
+void Player::takeDamage() const
 {
     //little animation 
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
@@ -213,7 +211,7 @@ void Player::checkHammerPickup()
     }
 }
 
-void Player::hammerAnimation(Point destroyPos)
+void Player::hammerAnimation(Point destroyPos) const
 {
     if (gameBoard->isPosInBounds(destroyPos))
     {

@@ -63,7 +63,7 @@ class Player : public MovingObject
     void climbDown();
 
     void checkHammerPickup();
-    void hammerAnimation(Point destroyPos);
+    void hammerAnimation(Point destroyPos) const;
 
     // change state by valid keyboard input (in KEYS[])
     void stateByKey(char key);
@@ -77,6 +77,7 @@ public:
     void update() override
     {
         movePlayer();
+        checkHammerPickup();
     }
 
     void handleKeyboardInput(char key);
@@ -95,7 +96,11 @@ public:
     }
 
     // actions when loses life
-    void takeDamage();
-
+    void takeDamage() const;
+    
+    bool isHoldingHammer() const
+    {
+        return hasHammer;
+    }
     Point handleHammer();
 };

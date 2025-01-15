@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iostream>
 #include <windows.h>
+#include <vector>
 #include "Point.h"
 #include "Constants.h"
 
@@ -15,6 +16,11 @@ public:
 	static constexpr char HAMMER = 'p';
 	static constexpr char BLANK_SPACE = ' ';
 	static constexpr char DEFAULT_FLOOR = '=';
+
+	static int posToIndex(Point point)
+	{
+		return (point.getY()* Constants::SCREEN_WIDTH) + point.getX();
+	}
 
 private:
 	static constexpr char SCREEN_BORDER = 'Q';
@@ -31,11 +37,11 @@ private:
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 	
-	const std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> originalBoard;
+	const std::vector<char> originalBoard;
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
 public:
-	Board(std::unique_ptr<const char[Constants::SCREEN_HEIGHT][Constants::SCREEN_WIDTH + 1]> _originalBoard): originalBoard(std::move(_originalBoard)) {};
+	Board(std::vector<char>&& _originalBoard): originalBoard(std::move(_originalBoard)) {};
 
 	// resets the entire current board
 	void resetBoard();

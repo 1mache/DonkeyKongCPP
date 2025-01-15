@@ -52,6 +52,8 @@ class Game
 	// game loop
 	void update();
 
+	void drawHammer();
+
 	// what happens when mario gets hurt
 	bool handleStrike();
 	// lives and score
@@ -65,6 +67,7 @@ class Game
 
 	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);
+	void resetEntitiesPositions();
 	// gets a char and if its one of the chars that are relevant to game, sets their position
 	// returns if the char should be added to board (we dont always want that)
 	bool setEntityPositionByChar(char c, Point position);

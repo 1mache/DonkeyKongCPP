@@ -1,8 +1,15 @@
 #include "Board.h"
 
 void Board::resetBoard() {
-	for (int i = 0; i < HEIGHT; i++) {
-		memcpy(currentBoard[i], (*originalBoard)[i], WIDTH + 1);
+	for (int row = 0; row < HEIGHT; row++)
+	{
+		for (int col = 0; col < WIDTH+1; col++)
+		{
+			if (col == WIDTH)
+				currentBoard[row][col] = '\0';
+			else
+				currentBoard[row][col] = originalBoard[posToIndex(Point(col, row))];
+		}
 	}
 }
 
@@ -46,7 +53,7 @@ void Board::resetCharAtPos(Point position)
 	int x = position.getX();
 	int y = position.getY();
 	// take the char that was at the original board and put it at current
-	currentBoard[y][x] = (*originalBoard)[y][x];
+	currentBoard[y][x] = originalBoard[posToIndex(position)];
 }
 
 bool Board::isObstacleAtPos(Point position) const
