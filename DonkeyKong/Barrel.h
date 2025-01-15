@@ -50,6 +50,11 @@ private:
     void drawExplosionPhase();
     void eraseExplosion();
 
+    bool reachedWall() const
+    {
+        return((!canMoveToPos(getPosition() + DIRECTIONS[currentRollDirection])) && checkOnGround());
+    }
+
 public:
 
     Barrel(Board* _gameBoard, Point _startPos, RollDirection _dir) :

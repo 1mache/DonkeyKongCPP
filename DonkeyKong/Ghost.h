@@ -32,6 +32,12 @@ class Ghost : public MovingObject
     }
 
     void moveGhost();
+
+    bool reachedWall() const
+    {
+        return(!canMoveToPos(getPosition() + getDirection()));
+    }
+
 public:
 
     Ghost(Board* _gameBoard, Point _startPos) :
