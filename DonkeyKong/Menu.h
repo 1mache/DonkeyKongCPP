@@ -297,15 +297,7 @@ public:
 		update();
 	}
 
-	void displayWinScreen(int finalScore)
-	{
-		gotoWinScreen();
-
-		gotoScreenPos(WIN_SCORE_POS);
-		std::cout << "Score: " << finalScore;
-
-		update();
-	}
+	void displayWinScreen(int finalScore);
 
 	int getChosenLevelId() const
 	{

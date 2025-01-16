@@ -38,7 +38,6 @@ void Game::update()
             // then update the player (move him)
             player->update();
 
-
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
             {
@@ -76,8 +75,11 @@ void Game::update()
             if(player->getPosition() == paulinePos)
             {
                 currLevel++; // move to next level
+                score += PRINCESS_SCORE_AMOUNT;
                 break; // player reached pauline, exit loop 
             }
+
+            updateLegend();
         }
 
         Sleep(Constants::GAME_REFRESH_RATE);
@@ -131,7 +133,12 @@ void Game::updateLegend() const
     gotoScreenPos(legendPos);
     std::cout << "Score: " << score;
     gotoScreenPos(legendPos.oneBelow());
-    std::cout << "<3 : " << lives;
+    std::cout << "Lives <3: " << lives;
+    if(player->isHoldingHammer())
+    {
+        gotoScreenPos(legendPos.oneBelow().oneBelow());
+        std::cout << Board::HAMMER;
+    }
 }
 
 void Game::resetGhostsManager()
@@ -356,7 +363,7 @@ void Game::checkPlayerHitEnemy()
             ghostsManager->destroyGhostAtPos(destroyPos);
         }
 
-        addScore(ENEMY_SCORE_AMOUNT);
+        score += ENEMY_SCORE_AMOUNT;
     }
 }
 
@@ -429,8 +436,6 @@ void Game::resetLevel()
 
     gameBoard->print();
 
-    updateLegend();
-
     //need to clear input buffer after animation  
     flushInputBuffer();
 
@@ -441,4 +446,6 @@ void Game::resetLevel()
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
     
     resetGhostsManager();
+
+    updateLegend();
 }

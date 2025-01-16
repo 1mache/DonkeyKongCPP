@@ -77,6 +77,8 @@ public:
     void update() override
     {
         movePlayer();
+        // the reset is needed every update to ensure we are in usingHammer = true for only one frame
+        usingHammer = false;
         checkHammerPickup();
     }
 

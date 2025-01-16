@@ -35,10 +35,8 @@ void Player::handleKeyboardInput(char key)
     {
         usingHammer = true;
     }
-
     else
     {
-        usingHammer = false;
         stateByKey(lowerKey);
     }
 }

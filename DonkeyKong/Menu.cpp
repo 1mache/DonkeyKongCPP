@@ -324,3 +324,13 @@ bool Menu::displayMainMenu()
 	
 	return exitFlag;
 }
+
+void Menu::displayWinScreen(int finalScore)
+{
+	gotoWinScreen();
+
+	gotoScreenPos(WIN_SCORE_POS);
+	std::cout << "Score: " << finalScore;
+
+	update();
+}
