@@ -26,6 +26,7 @@ class Game
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr int MAX_LIVES = 3;
+	static constexpr int ENEMY_SCORE_AMOUNT = 15;
 
 	//will be set when we read from file
 	Point marioStartPos = Constants::POS_NOT_SET;
@@ -80,6 +81,13 @@ class Game
 	bool isEntityMissing(std::string& outEntityMissing);
 
 	void checkPlayerHitEnemy();
+
+	void addScore(int amount)
+	{
+		score += amount;
+		updateLegend();
+	}
+
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
 	Game(const Game& other) = delete;
@@ -95,4 +103,9 @@ public:
 	bool start();
 
 	void resetLevel();
+
+	int getScore()
+	{
+		return score;
+	}
 };

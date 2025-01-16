@@ -31,7 +31,7 @@ void GameManager::launchGame()
 		else
 		{
 			clearScreen();
-			menu.displayWinScreen();
+			menu.displayWinScreen(game.getScore());
 		}
 	}
 }

@@ -44,6 +44,8 @@ class Menu
 	static constexpr Point SCROLL_HINT_POS = { 4, 16 };
 	static constexpr const char* SCROLL_HINT_MESSAGE = "SPACE - SCROLL FOR MORE LEVELS";
 
+	static constexpr Point WIN_SCORE_POS = { 6, 11 };
+
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
 		//   01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -295,9 +297,13 @@ public:
 		update();
 	}
 
-	void displayWinScreen()
+	void displayWinScreen(int finalScore)
 	{
 		gotoWinScreen();
+
+		gotoScreenPos(WIN_SCORE_POS);
+		std::cout << "Score: " << finalScore;
+
 		update();
 	}
 

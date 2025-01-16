@@ -355,6 +355,8 @@ void Game::checkPlayerHitEnemy()
         {
             ghostsManager->destroyGhostAtPos(destroyPos);
         }
+
+        addScore(ENEMY_SCORE_AMOUNT);
     }
 }
 
@@ -427,7 +429,6 @@ void Game::resetLevel()
 
     gameBoard->print();
 
-    score = 0;
     updateLegend();
 
     //need to clear input buffer after animation  
