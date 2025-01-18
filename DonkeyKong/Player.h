@@ -11,6 +11,7 @@ class Player : public MovingObject
     static constexpr char KEYS[] = { 'w', 'a', 'x', 'd', 's' };
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
     static constexpr char HAMMER_KEY = 'p';
+    static constexpr char HAMMER_ANIM_CHAR = '~';
 
     static constexpr int MAX_FALL_HEIGHT = 5;
     static constexpr int JUMP_HEIGHT = 2;
@@ -61,7 +62,8 @@ class Player : public MovingObject
     void climbUp();
 
     void climbDown();
-
+    
+    // checks if the player picked up hammer
     void checkHammerPickup();
     void hammerAnimation(Point destroyPos) const;
 
@@ -104,5 +106,8 @@ public:
     {
         return hasHammer;
     }
+
+    // if the player uses the hammer right now and found something that he can destroy, 
+    // this returns the Point position of whatever needs to be destroyed, if Mario hit something
     Point handleHammer();
 };

@@ -211,19 +211,21 @@ void Player::checkHammerPickup()
 
 void Player::hammerAnimation(Point destroyPos) const
 {
+    // prints two ~ symbols in the direction Mario is facing,
+    // if the positions are in bounds
     if (gameBoard->isPosInBounds(destroyPos))
     {
         gotoScreenPos(destroyPos);
-        std::cout << '~';
+        std::cout << HAMMER_ANIM_CHAR;
     }
     if (gameBoard->isPosInBounds(destroyPos + DIRECTIONS[hammerDir]))
     {
         gotoScreenPos(destroyPos + DIRECTIONS[hammerDir]);
-        std::cout << '~';
+        std::cout << HAMMER_ANIM_CHAR;
     }
 
     Sleep(Constants::GAME_REFRESH_RATE);
-
+    
     if (gameBoard->isPosInBounds(destroyPos))
     {
         gotoScreenPos(destroyPos);
@@ -255,6 +257,7 @@ Point Player::handleHammer()
             return destroyPos + DIRECTIONS[hammerDir];
         }
         
+        // if we didnt hit an enemy that can be destroyed by hammer, return position not set
         return Constants::POS_NOT_SET;
     }
 
