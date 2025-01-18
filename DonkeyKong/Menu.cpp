@@ -24,7 +24,7 @@ void Menu::eraseArrow()
 	}
 }
 
-void Menu::updateArrowByKey(char key)
+void Menu::tryUpdateArrow(char key)
 {
 	//check if its arrow contol key
 	if (std::tolower(key) == KEYS[UP])
@@ -135,14 +135,14 @@ void Menu::update()
 			if(currentScreenId == MAIN_SCREEN_ID)
 			{
 				// try to update arrow with this key 
-				updateArrowByKey(key);
+				tryUpdateArrow(key);
 			}
 			if(currentScreenId == LEVELS_SCREEN_ID)
 			{
 				// try to scroll with this key
-				scroll(key);
+				tryScroll(key);
 				// try to update arrow with this key 
-				updateArrowByKey(key);
+				tryUpdateArrow(key);
 			}
 		}
 
@@ -225,7 +225,6 @@ bool Menu::selectOption(char key)
 	}
 
 	bool closeMenu = false;
-	// this function only works on the main screen
 	if(currentScreenId == MAIN_SCREEN_ID)
 	{
 		if (key == CONTROLS_OPTION.hotkey)
@@ -253,17 +252,20 @@ bool Menu::selectOption(char key)
 
 	else if (currentScreenId == LEVELS_SCREEN_ID)
 	{
+		if (key == EXIT_OPTION.hotkey)
+		{
+			clearScreen();
+			gotoMainScreen();
+			return closeMenu;
+		}
+
+		// try to find the match for a hotkey among the level options 
 		for (const auto& option : levelOptions)
 		{
-			if (key == EXIT_OPTION.hotkey)
+			if(option.hotkey == key)
 			{
 				clearScreen();
-				gotoMainScreen();
-				return closeMenu;
-			}
-			else if(option.hotkey == key)
-			{
-				clearScreen();
+				// number representation of our hotkey ( hotkey is a digit )
 				int hotkeyNum = key - '0';
 				chosenLevelId = hotkeyNum + (scrollValue * MAX_LEVELS_ON_SCREEN);
 				closeMenu = true;
@@ -275,14 +277,16 @@ bool Menu::selectOption(char key)
 	return closeMenu;
 }
 
-void Menu::scroll(char key)
+void Menu::tryScroll(char key)
 {
-	if(key == KEYS[SCROLL] && maxScrolls != 1)
+	//if the key is right and if we have more than 9 levels
+	if(key == KEYS[SCROLL] && maxScrolls > 1)
 	{
 		scrollValue = (scrollValue + 1) % maxScrolls;
 		clearScreen();
 		levelOptions.clear();
 
+		// launch the screen again, this time the next set of options will be shown
 		gotoLevelsScreen();
 	}
 }

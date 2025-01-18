@@ -36,6 +36,7 @@ class Menu
 	static constexpr MenuOption CONTROLS_OPTION = { Point(32, 19), "[Controls]", '7' };
 	static constexpr MenuOption LEVELS_OPTION = { Point(33, 20), "[Levels]", '8' };
 	static constexpr MenuOption EXIT_OPTION = { Point(34, 21), "[EXIT]", '9'};
+	static constexpr Point WIN_SCORE_POS = { 6, 11 };
 
 	static constexpr MenuOption MAINMENU_OPTIONS[NUM_OF_MAIN_OPTIONS] = { START_GAME_OPTION, CONTROLS_OPTION, LEVELS_OPTION, EXIT_OPTION };
 
@@ -43,8 +44,6 @@ class Menu
 	static constexpr Point LEVEL_OPTIONS_POS = { 30, 4 };
 	static constexpr Point SCROLL_HINT_POS = { 4, 16 };
 	static constexpr const char* SCROLL_HINT_MESSAGE = "SPACE - SCROLL FOR MORE LEVELS";
-
-	static constexpr Point WIN_SCORE_POS = { 6, 11 };
 
 	static constexpr const char* mainScreen[HEIGHT] = {
 		//   00000000001111111111222222222233333333334444444444555555555566666666667777777777    
@@ -223,6 +222,7 @@ class Menu
 	const std::vector<std::string>& levelFileNames;
 	// all the options to choose from on the levels screen
 	std::vector<MenuOption> levelOptions;
+	// amount of times we can scroll before we get to the first 9 levels again
 	const int maxScrolls;
 
 	void drawChar(char ch, Point position) const
@@ -240,7 +240,7 @@ class Menu
 	void eraseArrow();
 
 	// if the key given to the function is relevant, updates arrow position on screen(if this screen has arrow)
-	void updateArrowByKey(char key);
+	void tryUpdateArrow(char key);
 
 	// prints the given screen
 	void print(const char* const screen[HEIGHT], int lineSleep) const;
@@ -249,18 +249,22 @@ class Menu
 	void setLevelOptionPositions();
 	// print the menu options with sleep between characters (animation)
 	void printMainOptions() const;
+	// prints all the levels to choose from on the levels screen
 	void printLevelOptions() const;
 
 	// updates menu based on input 
 	void update();
 
-	// selecting options with ENTER
+	// selecting options with ENTER, returns whether the Menu closes after we selected something
+	// for example "start game" closes the menu because the game starts 
 	bool selectOption();
 	
 	//overloading for selecting options with numbers
 	bool selectOption(char hotkey);
 
-	void scroll(char key);
+	// relevant only to the levels screen
+	// if the key given to us is the scroll key this will show the next batch of options
+	void tryScroll(char key);
 
 	void gotoMainScreen();
 
