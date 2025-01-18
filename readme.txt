@@ -3,6 +3,7 @@ Ben Liberman: 322465600
 Dmytro Kreicherek: 338062755
 
 ============<Exercise 2>============
+
 Level file validation:
 -   The following entities have to be in the game, if their positions are not
     specified in the level file, the file is considered invalid.
@@ -19,16 +20,22 @@ Features:
     this makes it easier to hit something.
     https://mama.mta.ac.il/mod/forum/discuss.php?d=3638
 
--   Because Ghosts are supposed to move on floor and dont have any vertical movement logic,
-    all the Ghosts that dont have floor beneath their spawn positions arent spawned at all.
+-   Because Ghosts are supposed to move on a floor and dont have any vertical movement logic,
+    all the Ghosts that dont have floor beneath their spawn positions dont get spawned at all.
+
 Bonuses:
--   A Ghost cannot both move and change its direction in a single frame. See Ghost::moveGhost().
+-   The Ghosts wait until the next frame to move if they changed direction that frame. See Ghost::moveGhost().
     This made it a little easier to dodge them, and made them look better on screen.
 
--   The s
+-   The screen with level selection allows selection both with digits 0-8 (9 is reserved for BACK)
+    and with an arrow that can be controlled with W, X (up, down).
+    If there are more than 9 levels, they are shown in groups of 9 and the user can scroll them!
+
+-   The hammer has an animation when you use it.
 
 ============<Exercise 2>============
 ============<Exercise 1>============
+
 Features:
 -   Mario can move freely during fall and change horizontal directions midjump
     We chose free fall option 3 from here: https://mama.mta.ac.il/mod/forum/discuss.php?d=2206

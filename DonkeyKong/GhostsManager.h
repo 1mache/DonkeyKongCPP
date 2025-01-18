@@ -32,7 +32,7 @@ public:
     // moves all of the ghosts and hadles them meeting one another
     void manageGhosts();
 
-    // deletes ghost in the give position (if there is a ghost there)
+    // deletes ghost in the given position (if there is a ghost there)
     void destroyGhostAtPos(Point destroyPos);
 
     // spawns all the ghosts given their start positions

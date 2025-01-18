@@ -70,6 +70,8 @@ void GhostsManager::resetGhosts(const std::vector<Point>& startPositions)
 
     for (Point pos : startPositions)
     {
-        spawnGhost(pos);
+        // spawn the ghost if there is a flooe beneath him
+        if(gameBoard->isObstacleAtPos(pos.oneBelow()))
+            spawnGhost(pos);
     }
 }

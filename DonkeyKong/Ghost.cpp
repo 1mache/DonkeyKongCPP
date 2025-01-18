@@ -17,16 +17,6 @@ bool Ghost::reachedEndOfFloor() const
     // check if the position of one char in front and below of the ghost direction doesn't contain a floor char 
     positionToCheck = (getPosition() + getDirection()).oneBelow();
 
-    /*if (currentMoveDirection == MoveDirection::LEFT)
-    {
-        positionToCheck = getPosition().oneLeft().oneBelow();
-    }
-
-    else
-    {
-        positionToCheck = getPosition().oneRight().oneBelow();
-    }*/
-
     return(canMoveToPos(positionToCheck));
 }
 
