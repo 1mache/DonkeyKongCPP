@@ -99,6 +99,24 @@ void Game::getPlayerConfirmation()
     }
 }
 
+void Game::displayException(LevelFileException& e)
+{
+    clearScreen();
+    std::cout << "Level number " << currLevel + 1 << ", filename: " << levelFileNames[currLevel] << " is invalid" << std::endl;
+    std::cout << e.what() << std::endl;
+    // if the last level is invalid game over
+    if (currLevel == levelFileNames.size() - 1)
+    {
+        std::cout << "This was the last level, press ENTER to end game";
+        getPlayerConfirmation();
+    }
+    else
+    {
+        std::cout << "Press ENTER to load next level";
+        getPlayerConfirmation();
+    }
+}
+
 void Game::drawHammer()
 {
     // if the hammer exists on the level and player hasnt picked it up yet
@@ -143,15 +161,12 @@ void Game::updateLegend() const
 
 void Game::resetGhostsManager()
 {
+    delete ghostsManager;
+    
     if (!ghostsStartPositions.empty())
     {
-        delete ghostsManager;
         ghostsManager = new GhostsManager(gameBoard);
         ghostsManager->resetGhosts(ghostsStartPositions);
-    }
-    else
-    {
-        delete ghostsManager;
     }
 }
 
@@ -231,7 +246,6 @@ Board* Game::readLevelFromFile(const std::string& filename)
             map[Board::posToIndex(pos)] = c;
         }
 
-        //(*map)[row][screenWidth] = '\0'; // terminate the line that we read
         discardRestOfLine(levelFile);
 
         // if we reached eof and its not the last row
@@ -239,6 +253,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
             fileEnded = true;
     }
 
+    // save the name of whoever is missing to the string
     std::string entityMissing;
     if(isEntityMissing(entityMissing))
     {
@@ -351,13 +366,17 @@ bool Game::isEntityMissing(std::string& outEntityMissing)
 
 void Game::checkPlayerHitEnemy()
 {
+    // get the position that the player wants to destroy
     Point destroyPos = player->handleHammer();
+
     if (destroyPos != Constants::POS_NOT_SET)
     {
+        // if its a barrel
         if (gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
         {
             barrelManager->destroyBarrelAtPos(destroyPos);
         }
+        // if its a ghost
         if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST)
         {
             ghostsManager->destroyGhostAtPos(destroyPos);
@@ -389,22 +408,11 @@ bool Game::start()
         }
         catch (LevelFileException& e)
         {
-            clearScreen();
-            std::cout << "Level number " << currLevel + 1 << ", filename: "<< nextLevelFilename << " is invalid" << std::endl;
-            std::cout << e.what() << std::endl;
-            // if the last level is invalid game over
-            if (currLevel == levelFileNames.size() - 1)
-            {
-                std::cout << "This was the last level, press ENTER to end game";
-                getPlayerConfirmation();
-                return true;
-            }
-            else
-            {
-                std::cout << "Press ENTER to load next level";
-                getPlayerConfirmation();
-            }
+            displayException(e);
             
+            if (currLevel == levelFileNames.size() - 1)
+                return true;
+
             currLevel++;
             continue;
         }

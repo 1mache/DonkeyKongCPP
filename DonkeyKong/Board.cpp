@@ -13,7 +13,6 @@ void Board::resetBoard() {
 	}
 }
 
-// why height-1? just noticed this
 void Board::print() const {
 	for (int i = 0; i < HEIGHT-1; i++) {
 		std::cout << currentBoard[i] << '\n';

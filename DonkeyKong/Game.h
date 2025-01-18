@@ -40,6 +40,7 @@ class Game
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
+	// which level are we on (id)
 	int currLevel;
 
 	Board* gameBoard = nullptr;
@@ -55,15 +56,20 @@ class Game
 
 	// game loop
 	void update();
+	// waits until user presses enter
 	void getPlayerConfirmation();
 
+	void displayException(LevelFileException& e);
+
+	// draws the hammer in hammerPos
 	void drawHammer();
 
 	// what happens when mario gets hurt
 	bool handleStrike();
-	// lives and score
+	// show lives and score on screen
 	void updateLegend() const;
 
+	// deletes ghost manager and creates new one if needed
 	void resetGhostsManager();
 
 	void pauseGame();
@@ -72,15 +78,16 @@ class Game
 
 	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);
+	// sets all the entity positions to not set
 	void resetEntitiesPositions();
 	// gets a char and if its one of the chars that are relevant to game, sets their position
 	// returns if the char should be added to board (we dont always want that)
 	bool setEntityPositionByChar(char c, Point position);
 	// given ifstream object iterates until EOF or end of line \n 
 	void discardRestOfLine(std::ifstream& levelFile);
-
+	// checks if some entity position wasnt set and returns its name via output parameter
 	bool isEntityMissing(std::string& outEntityMissing);
-
+	// checks if player hit something that can be killed with a hammer and if so destroys it
 	void checkPlayerHitEnemy();
 
 public:

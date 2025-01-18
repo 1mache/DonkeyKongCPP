@@ -58,6 +58,8 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 
 void Menu::setLevelOptionPositions()
 {
+	levelOptions.clear();
+
 	int startId = scrollValue * MAX_LEVELS_ON_SCREEN;
 	int stopId = startId + MAX_LEVELS_ON_SCREEN;
 	// check that stopId is in bounds of the vector

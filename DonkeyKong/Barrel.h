@@ -16,8 +16,6 @@ private:
     static constexpr int EXPLODE_FALL_HEIGHT = 8;
     static constexpr int EXPLOSION_RADIUS = 2;
 
-    //movement component
-    //Movement barrelMovement;
     Board* gameBoard = nullptr;
 
     // are we rolling left or right
@@ -25,14 +23,6 @@ private:
 
     // 0 <= phase <= EXPLOSION_RADIUS + 1
     int explosionPhase = 0;
-
-    // Moved this to Movement
-    /*bool reachedWall() const
-    {
-        Point position = barrelMovement.getPosition();
-        return(((!barrelMovement.canMoveToPos(position.oneLeft())) || (!barrelMovement.canMoveToPos(position.oneRight())))
-            && barrelMovement.checkOnGround());
-    }*/
 
     // decides current roll direction based on floor below us '<' or '>'
     void setBarrelDirection();
