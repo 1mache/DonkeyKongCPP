@@ -86,7 +86,7 @@ void Game::update()
     }
 }
 
-void Game::getPlayerConfirmation()
+void Game::getPlayerConfirmation() const
 {
     while(true)
     {

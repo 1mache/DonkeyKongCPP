@@ -57,7 +57,7 @@ class Game
 	// game loop
 	void update();
 	// waits until user presses enter
-	void getPlayerConfirmation();
+	void getPlayerConfirmation() const;
 
 	void displayException(LevelFileException& e);
 
@@ -106,7 +106,7 @@ public:
 
 	void resetLevel();
 
-	int getScore()
+	int getScore() const
 	{
 		return score;
 	}

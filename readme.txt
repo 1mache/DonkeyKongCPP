@@ -2,6 +2,33 @@ Submitters:
 Ben Liberman: 322465600
 Dmytro Kreicherek: 338062755
 
+============<Exercise 2>============
+Level file validation:
+-   The following entities have to be in the game, if their positions are not
+    specified in the level file, the file is considered invalid.
+    Mario, Pauline, Donkey Kong and the legend which provides game info
+
+-   Multiple instances of entities listed above in the file is allowed, tho only 
+    the first instance matters.
+
+-   Having incomplete lines (<80 characters) or file with <25 lines is allowed,
+    the rest of the line/ file is the filled with blank spaces
+
+Features:
+-   The hammer strikes 2 tiles in the direction Mario is facing instead of 1,
+    this makes it easier to hit something.
+    https://mama.mta.ac.il/mod/forum/discuss.php?d=3638
+
+-   Because Ghosts are supposed to move on floor and dont have any vertical movement logic,
+    all the Ghosts that dont have floor beneath their spawn positions arent spawned at all.
+Bonuses:
+-   A Ghost cannot both move and change its direction in a single frame. See Ghost::moveGhost().
+    This made it a little easier to dodge them, and made them look better on screen.
+
+-   The s
+
+============<Exercise 2>============
+============<Exercise 1>============
 Features:
 -   Mario can move freely during fall and change horizontal directions midjump
     We chose free fall option 3 from here: https://mama.mta.ac.il/mod/forum/discuss.php?d=2206
@@ -33,3 +60,4 @@ Bonuses:
 
 -   The exlosion of Barrels is animated (in game loop) and happens in phases
     Mario's death is also animated.
+============<Exercise 1>============
