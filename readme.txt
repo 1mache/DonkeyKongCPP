@@ -16,6 +16,8 @@ Level file validation:
     the rest of the line/ file is the filled with blank spaces
 
 Features:
+-   
+
 -   The hammer strikes 2 tiles in the direction Mario is facing instead of 1,
     this makes it easier to hit something.
     https://mama.mta.ac.il/mod/forum/discuss.php?d=3638

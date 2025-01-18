@@ -26,7 +26,7 @@ class Game
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr int MAX_LIVES = 3;
-	static constexpr int ENEMY_SCORE_AMOUNT = 15;
+	static constexpr int ENEMY_SCORE_AMOUNT = 25;
 	static constexpr int PRINCESS_SCORE_AMOUNT = 100;
 
 	//will be set when we read from file
