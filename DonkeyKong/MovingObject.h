@@ -7,7 +7,6 @@
 #include "utils.h"
 #include <windows.h>
 
-// movement component of all the moving objects on screen
 class MovingObject
 {
     Point position;
@@ -15,10 +14,7 @@ class MovingObject
     char spriteChar;
     
     Board* gameBoard = nullptr;
-    // DEBUG ==================================================
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    WORD color = (rand() % 8) + 1;
-    // ==========================================================
+
     // counts how many lines we fell, 0 if not in free fall 
     int fallHeight = 0;
 
@@ -27,9 +23,6 @@ class MovingObject
         if(gameBoard->isPosInBounds(drawPosition))
         {
             gotoScreenPos(drawPosition);
-            // DEBUG ======================================================
-            SetConsoleTextAttribute(hConsole, color);
-            // ======================================================
             std::cout << c;
         }
     }
@@ -48,20 +41,13 @@ protected:
     // you can choose whether to apply gravity or not,
     // the function can ignore obstacles, doesnt do it by default 
     void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
-    
-
-    void setPosition(Point newPos)
-    {
-        if(gameBoard->isPosInBounds(newPos))
-        {
-            position = newPos;
-        }
-    }
 
 public:
 
     MovingObject(Board* _gameBoard, char _spriteChar, Point _startPos): 
         gameBoard(_gameBoard), spriteChar(_spriteChar), position(_startPos) {}
+
+    virtual ~MovingObject() {};
 
     void draw() const
     {
@@ -97,5 +83,7 @@ public:
         return fallHeight; 
     }
     
+    // function that the every object overrides and is used for the object to update itself in the current frame
+    // its position, certain states, etc.
     virtual void update() = 0;
 };

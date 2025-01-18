@@ -17,6 +17,7 @@ public:
 	static constexpr char BLANK_SPACE = ' ';
 	static constexpr char DEFAULT_FLOOR = '=';
 
+	// function that translates 2D position to an index in originalBoard
 	static int posToIndex(Point point)
 	{
 		return (point.getY()* Constants::SCREEN_WIDTH) + point.getX();
@@ -37,6 +38,8 @@ private:
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 	
+	// the original board is now a vector of HEIGHT * WIDTH size that represents 2D board as before, 
+	// this makes creating it outside the class and passing it to here easier
 	const std::vector<char> originalBoard;
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
