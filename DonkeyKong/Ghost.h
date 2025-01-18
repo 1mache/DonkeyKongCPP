@@ -10,6 +10,7 @@ class Ghost : public MovingObject
     enum MoveDirection { LEFT, RIGHT };
     static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };
 
+    // values for random direction change of 0.05 probability
     static constexpr int MAX_RANDOM_VAL = 100;
     static constexpr int DIR_CHANGE_CHANCE = 5;
 
@@ -25,7 +26,7 @@ class Ghost : public MovingObject
     // check if ghost reached end of a floor
     bool reachedEndOfFloor() const;
 
-
+    // return true if we got a random value in [0,DIR_CHANGE_CHANCE) out of [0,MAX_RANDOM_VAL)
     bool shouldRandomDirectionChange() const
     {
         return ((rand() % MAX_RANDOM_VAL) < DIR_CHANGE_CHANCE);
@@ -33,6 +34,7 @@ class Ghost : public MovingObject
 
     void moveGhost();
 
+    // return true if ghost reached a wall in its movement direction
     bool reachedWall() const
     {
         return(!canMoveToPos(getPosition() + getDirection()));
@@ -48,7 +50,11 @@ public:
         return DIRECTIONS[currentMoveDirection];
     }
 
-    bool reachedAnotherGhost() const;
+    bool reachedAnotherGhost() const
+    {
+        Point checkPos = getPosition() + DIRECTIONS[currentMoveDirection];
+        return gameBoard->isGhostAtPos(checkPos);
+    }
 
     void changeDirection()
     {

@@ -14,7 +14,10 @@ bool Ghost::reachedEndOfFloor() const
 {
     Point positionToCheck;
 
-    if (currentMoveDirection == MoveDirection::LEFT)
+    // check if the position of one char in front and below of the ghost direction doesn't contain a floor char 
+    positionToCheck = (getPosition() + getDirection()).oneBelow();
+
+    /*if (currentMoveDirection == MoveDirection::LEFT)
     {
         positionToCheck = getPosition().oneLeft().oneBelow();
     }
@@ -22,15 +25,9 @@ bool Ghost::reachedEndOfFloor() const
     else
     {
         positionToCheck = getPosition().oneRight().oneBelow();
-    }
+    }*/
 
     return(canMoveToPos(positionToCheck));
-}
-
-bool Ghost::reachedAnotherGhost() const
-{
-    Point checkPos = getPosition() + DIRECTIONS[currentMoveDirection];
-    return gameBoard->isGhostAtPos(checkPos);
 }
 
 void Ghost::moveGhost()
