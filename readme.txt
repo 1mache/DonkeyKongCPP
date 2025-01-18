@@ -16,7 +16,9 @@ Level file validation:
     the rest of the line/ file is the filled with blank spaces
 
 Features:
--   
+-   Because of filesystem namespace that is used, the project should be played on C++ 17 or above
+
+-   Score: You get 25 pts for hitting an enemy with a hammer and 100 pts for reaching the princess (completing a level)
 
 -   The hammer strikes 2 tiles in the direction Mario is facing instead of 1,
     this makes it easier to hit something.

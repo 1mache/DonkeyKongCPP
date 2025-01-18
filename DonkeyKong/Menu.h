@@ -97,7 +97,7 @@ class Menu
 			"Q                                                                              Q", // 16
 			"Q                                                                              Q", // 17
 			"Q             A - Move Left | D - Move Right | W - Jump/Climb Up               Q", // 18
-			"Q                             X - Climb Down | ESC - Pause                     Q", // 19
+			"Q             X - Climb Down | ESC - Pause   | P - Use Hammer                  Q", // 19
 			"Q                                                                              Q", // 20
 			"Q                                                                              Q", // 21
 			"Q                                ENTER - Back                                  Q", // 22
