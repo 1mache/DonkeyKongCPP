@@ -29,6 +29,19 @@ class Game
 	static constexpr int ENEMY_SCORE_AMOUNT = 25;
 	static constexpr int PRINCESS_SCORE_AMOUNT = 100;
 
+protected:
+	
+	static constexpr char KEY_NOT_SET = -1;
+	struct KeyInput
+	{
+		char key1 = KEY_NOT_SET, key2 = KEY_NOT_SET;
+		bool notSet()
+		{
+			return key1 == KEY_NOT_SET && key2 == KEY_NOT_SET;
+		}
+	};
+
+private:
 	//will be set when we read from file
 	Point marioStartPos = Constants::POS_NOT_SET;
 	Point donkeyKongPos = Constants::POS_NOT_SET;
@@ -90,11 +103,17 @@ class Game
 	// checks if player hit something that can be killed with a hammer and if so destroys it
 	void checkPlayerHitEnemy();
 
+	virtual KeyInput getInputKeys() const;
+	virtual void setRandSeed() const
+	{
+		srand(time(0)); // gets us a new seed for use in rand
+	}
+
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete; 
-	~Game()
+	virtual ~Game()
 	{
 		delete gameBoard;
 		delete player;

@@ -2,19 +2,13 @@
 
 void Game::update()
 {
-    constexpr char KEY_NOT_SET = -1;
-
     while (true)
     {
-        if (_kbhit())
+        KeyInput input = getInputKeys();
+        
+        if (!input.notSet())
         {
-            char key1 = _getch();
-            char key2 = KEY_NOT_SET;
-           
-            if(_kbhit())
-                key2 = _getch();
-
-            if (key1 == ESC || key2 == ESC)
+            if (input.key1 == ESC || input.key2 == ESC)
             {
                 // when ESC is pressed alter between paused and not paused
                 if (!isPaused) pauseGame();
@@ -23,10 +17,10 @@ void Game::update()
             // alter state by input if not paused 
             if(!isPaused)
             {
-                player->handleKeyboardInput(key1);
+                player->handleKeyboardInput(input.key1);
                 
-                if(key2 != KEY_NOT_SET)
-                    player->handleKeyboardInput(key2);
+                if(input.key2 != KEY_NOT_SET)
+                    player->handleKeyboardInput(input.key2);
             }
         }
         
@@ -42,13 +36,9 @@ void Game::update()
             if (player->checkCollision() || player->checkFallDamage())
             {
                 if(handleStrike())
-                {
                     continue; // level was reset, continue the game loop
-                }
                 else
-                {
                     break; // going to menu
-                }
             }
 
             if(ghostsManager)
@@ -62,13 +52,10 @@ void Game::update()
             if (player->checkCollision())
             {
                 if (handleStrike())
-                {
                     continue; // level was reset, continue the game loop
-                }
                 else
-                {
+
                     break; // going to menu
-                }
             }
 
             //win check
@@ -386,6 +373,19 @@ void Game::checkPlayerHitEnemy()
     }
 }
 
+Game::KeyInput Game::getInputKeys() const
+{
+    KeyInput input;
+
+    if (_kbhit())
+        input.key1 = _getch();
+
+    if (_kbhit())
+        input.key2 = _getch();
+
+    return input;
+}
+
 bool Game::start()
 {
     if(levelFileNames.size() == 0)
@@ -433,7 +433,7 @@ void Game::resetLevel()
 {
     clearScreen();
 
-    srand(time(0)); // gets us a new seed for use in rand
+    setRandSeed();
 
     gameBoard->resetBoard();
     

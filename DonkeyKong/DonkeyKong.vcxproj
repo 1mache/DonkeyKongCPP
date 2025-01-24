@@ -30,6 +30,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ReplayGame.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="Steps.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="ReplayGame.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="Steps.h" />
     <ClInclude Include="utils.h" />
