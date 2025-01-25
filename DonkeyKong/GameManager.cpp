@@ -18,7 +18,7 @@ void GameManager::launchGame()
 			break; // player chose exit in menu, exit game
 		}
 
-		Game game(levelFileNames, menu.getChosenLevelId(), true);
+		Game game(levelFileNames, menu.getChosenLevelId(), mode == SAVE);
 
 		// returns true if player lost
 		bool gameOver = game.start();
