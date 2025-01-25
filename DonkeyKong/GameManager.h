@@ -10,7 +10,7 @@
 class GameManager
 {
 	// string defining the pattern that we use to find level files. regular expression that means any 
-	// sequence of eng alphabet letters and digits after dkong_ that ends with .screen (also .*\\\\ for the path)
+	// sequence of eng alphabet letters and digits after dkong_ that ends with .screen
 	static constexpr const char* LEVEL_FILENAME_TEMPLATE = "dkong_.+\\.screen";
 	// same for .steps files and .results files
 	static constexpr const char* STEPS_FILENAME_TEMPLATE = "dkong_.+\\.steps";

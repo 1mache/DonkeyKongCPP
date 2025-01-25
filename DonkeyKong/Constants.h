@@ -11,4 +11,5 @@ public:
 	static constexpr int GAME_REFRESH_RATE = 75;
 	static constexpr Point POS_NOT_SET = { -1 , -1 };
 	static constexpr Point POINT_ZERO = { 0 , 0 };
+	static constexpr char KEY_NOT_SET = 0;
 };

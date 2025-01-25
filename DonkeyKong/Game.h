@@ -15,9 +15,12 @@
 #include "GhostsManager.h"
 #include "Constants.h"
 #include "LevelFileException.h"
+#include "Steps.h"
+#include "Results.h"
 
 class Game
 {
+private:
 	static constexpr int ESC = 27;
 	static constexpr char ENTER = '\r';
 	static constexpr char MARIO_SPRITE = '@';
@@ -30,18 +33,30 @@ class Game
 	static constexpr int PRINCESS_SCORE_AMOUNT = 100;
 
 protected:
-	
-	static constexpr char KEY_NOT_SET = -1;
 	struct KeyInput
 	{
-		char key1 = KEY_NOT_SET, key2 = KEY_NOT_SET;
+		char key1 = Constants::KEY_NOT_SET, key2 = Constants::KEY_NOT_SET;
+		
+		KeyInput() = default;
+		KeyInput(const std::pair<char, char>& pair): key1(pair.first), key2(pair.second){};
+		
 		bool notSet()
 		{
-			return key1 == KEY_NOT_SET && key2 == KEY_NOT_SET;
+			return key1 == Constants::KEY_NOT_SET && key2 == Constants::KEY_NOT_SET;
+		}
+
+		std::pair<char, char> toPair()
+		{
+			return std::pair(key1, key2);
 		}
 	};
 
 private:
+	// will the game be recorded
+	const bool recorded;
+	Steps recSteps;
+	Results recResults;
+
 	//will be set when we read from file
 	Point marioStartPos = Constants::POS_NOT_SET;
 	Point donkeyKongPos = Constants::POS_NOT_SET;
@@ -104,13 +119,18 @@ private:
 	void checkPlayerHitEnemy();
 
 	virtual KeyInput getInputKeys() const;
-	virtual void setRandSeed() const
+	virtual void setRandSeed()
 	{
-		srand(time(0)); // gets us a new seed for use in rand
+		long seed = time(0);
+		if(recorded)
+			recSteps.setRandomSeed(seed);
+
+		srand(seed); // gets us a new seed for use in rand
 	}
 
 public:
-	Game(const std::vector<std::string>& _levelFileNames, int startLevelId) : levelFileNames(_levelFileNames), currLevel(startLevelId) {};
+	Game(const std::vector<std::string>& _levelFileNames, int startLevelId, bool _recorded) : 
+		levelFileNames(_levelFileNames), currLevel(startLevelId), recorded(_recorded) {};
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete; 
 	virtual ~Game()
@@ -123,10 +143,14 @@ public:
 	
 	virtual bool start();
 
-	void resetLevel();
+	virtual void resetLevel();
 
 	int getScore() const
 	{
 		return score;
+	}
+	int getCurrentLevel() const 
+	{
+		return currLevel;
 	}
 };

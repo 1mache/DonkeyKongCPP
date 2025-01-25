@@ -19,8 +19,11 @@ void Game::update()
             {
                 player->handleKeyboardInput(input.key1);
                 
-                if(input.key2 != KEY_NOT_SET)
+                if(input.key2 != Constants::KEY_NOT_SET)
                     player->handleKeyboardInput(input.key2);
+                
+                /*if(recorded)
+                    recSteps.addStep()*/
             }
         }
         

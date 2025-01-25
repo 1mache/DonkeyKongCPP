@@ -3,6 +3,8 @@
 Results Results::loadResults(const std::string& filename) 
 {
 	std::ifstream results_file(filename);
+	if(!results_file.is_open()){}
+		// TODO: do something here
 	Results results;
 	size_t size;
 	results_file >> size;
@@ -21,6 +23,9 @@ Results Results::loadResults(const std::string& filename)
 void Results::saveResults(const std::string& filename) const 
 {
 	std::ofstream results_file(filename);
+	if (!results_file.is_open()) {}
+		// TODO: do something here
+
 	results_file << results.size();
 	for (const auto& result : results) 
 	{

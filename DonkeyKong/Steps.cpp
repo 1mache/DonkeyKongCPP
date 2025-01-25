@@ -4,7 +4,7 @@ Steps Steps::loadSteps(const std::string& filename)
 {
 	Steps steps;
 	std::ifstream steps_file(filename);
-	if(!steps_file.is_open())
+	if(!steps_file.is_open()){}
 		//TODO: throw exception
 
 	steps_file >> steps.randomSeed;
@@ -12,8 +12,8 @@ Steps Steps::loadSteps(const std::string& filename)
 	steps_file >> size;
 	while (!steps_file.eof() && size != 0) {
 		size_t iteration;
-		char step;
-		steps_file >> iteration >> step;
+		std::pair <char, char> step;
+		steps_file >> iteration >> step.first >> step.second;
 		steps.addStep(iteration, step);
 		
 		size--;
@@ -25,12 +25,13 @@ Steps Steps::loadSteps(const std::string& filename)
 void Steps::saveSteps(const std::string& filename) const 
 {
 	std::ofstream steps_file(filename);
-	if (!steps_file.is_open())
+	if (!steps_file.is_open()){}
 		//TODO: throw exception
 
 	steps_file << randomSeed << '\n' << steps.size();
-	for (const auto& step : steps) {
-		steps_file << '\n' << step.first << ' ' << step.second;
+	for (const auto& stepPair : steps) {
+		const auto step = stepPair.second;
+		steps_file << '\n' << stepPair.first << ' ' << step.first << step.second;
 	}
 	steps_file.close();
 }

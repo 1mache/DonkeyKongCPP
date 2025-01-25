@@ -6,7 +6,7 @@ class Steps
 {
 	long randomSeed = 0;
 	// list of pairs: iteration id, step
-	std::list<std::pair<size_t, char>> steps; 
+	std::list<std::pair<size_t, std::pair<char, char>>> steps;
 public:
 	static Steps loadSteps(const std::string& filename);
 
@@ -22,7 +22,7 @@ public:
 		randomSeed = seed;
 	}
 
-	void addStep(size_t iteration, char step) 
+	void addStep(size_t iteration, std::pair <char ,char> step)
 	{
 		steps.push_back({ iteration, step });
 	}
@@ -32,9 +32,9 @@ public:
 		return !steps.empty() && steps.front().first == iteration;
 	}
 
-	char popStep() 
+	std::pair <char, char> popStep()
 	{
-		char step = steps.front().second;
+		std::pair <char, char> step = steps.front().second;
 		steps.pop_front();
 		return step;
 	}
