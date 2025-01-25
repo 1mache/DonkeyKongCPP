@@ -3,8 +3,8 @@
 
 class ReplayGame: public Game
 {
-	const std::vector<std::string>& stepsFileNames;
-	const std::vector<std::string>& resultsFileNames;
+	//const std::vector<std::string>& stepsFileNames;
+	//const std::vector<std::string>& resultsFileNames;
 
 	Steps steps;
 	Results results;
@@ -20,12 +20,12 @@ public:
 																					// games that are replayed are not recorded
 	ReplayGame(const std::vector<std::string>& _levelFileNames, int startLevelId) : Game(_levelFileNames, startLevelId, false) {};
 	
-	void resetLevel() override
-	{
-		int curLevel = getCurrentLevel();
-		steps = Steps::loadSteps(stepsFileNames[curLevel]);
-		results = Results::loadResults(resultsFileNames[curLevel]);
+	//void resetLevel() override
+	//{
+	//	int curLevel = getCurrentLevel();
+	//	steps = Steps::loadSteps(stepsFileNames[curLevel]);
+	//	results = Results::loadResults(resultsFileNames[curLevel]);
 
-		Game::resetLevel();
-	}
+	//	Game::resetLevel();
+	//}
 };

@@ -18,7 +18,7 @@ void GameManager::launchGame()
 			break; // player chose exit in menu, exit game
 		}
 
-		Game game(levelFileNames, menu.getChosenLevelId());
+		Game game(levelFileNames, menu.getChosenLevelId(), false);
 
 		// returns true if player lost
 		bool gameOver = game.start();
@@ -44,7 +44,11 @@ void GameManager::readLevelFileNames()
 
 	// using regex: https://www.geeksforgeeks.org/how-to-match-a-pattern-in-a-string-in-cpp/
 
-	std::regex pattern(LEVEL_FILENAME_TEMPLATE);
+	// string defining the template that we use to find level files. regular expression that means any 
+	// sequence of eng alphabet letters and digits after dkong_ that ends with .screen
+	std::string levelFileNameTemplate = std::string(Constants::FILENAME_PREFIX) + ".+\\" + Constants::LEVEL_FILE_EXT;
+
+	std::regex pattern(levelFileNameTemplate);
 
 	namespace fs = std::filesystem;
 	std::string path = fs::current_path().string();
