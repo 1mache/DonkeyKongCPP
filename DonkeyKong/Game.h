@@ -70,6 +70,8 @@ private:
 	const std::vector<std::string>& levelFileNames;
 	// which level are we on (id)
 	int currLevel;
+	// counts iterations
+	size_t iterationCounter = 0;
 
 	Board* gameBoard = nullptr;
 	Player* player = nullptr;
@@ -92,8 +94,10 @@ private:
 	// draws the hammer in hammerPos
 	void drawHammer();
 
-	// what happens when mario gets hurt
+	// what happens when Mario gets hurt
 	bool handleStrike();
+	// what happens when Mario reaches Pauline
+	void levelWon();
 	// show lives and score on screen
 	void updateLegend() const;
 
@@ -103,6 +107,8 @@ private:
 	void pauseGame();
 
 	void continueGame();
+
+	void moveToNextLevel();
 
 	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);
@@ -128,6 +134,9 @@ private:
 		srand(seed); // gets us a new seed for use in rand
 	}
 
+	void saveSteps();
+	void saveResults();
+
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId, bool _recorded) : 
 		levelFileNames(_levelFileNames), currLevel(startLevelId), recorded(_recorded) {};
@@ -141,7 +150,17 @@ public:
 		delete ghostsManager;
 	}
 	
-	virtual bool start();
+	// utility function:
+	// for a level fileName "dkong_01.screen" returns the "01" part
+	static std::string getLevelTag(std::string levelFileName)
+	{
+		size_t prefixSize = std::strlen(Constants::FILENAME_PREFIX);
+		size_t extStartId = levelFileName.find(Constants::LEVEL_FILE_EXT);
+
+		return levelFileName.substr(prefixSize, extStartId - prefixSize);
+	}
+
+	bool start();
 
 	virtual void resetLevel();
 

@@ -27,6 +27,11 @@ public:
 		steps.push_back({ iteration, step });
 	}
 
+	void clear()
+	{
+		steps.clear();
+	}
+
 	bool isNextStepOnIteration(size_t iteration) const 
 	{
 		return !steps.empty() && steps.front().first == iteration;

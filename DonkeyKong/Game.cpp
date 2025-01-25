@@ -14,21 +14,25 @@ void Game::update()
                 if (!isPaused) pauseGame();
                 else continueGame();
             }
-            // alter state by input if not paused 
-            if(!isPaused)
+            else
             {
-                player->handleKeyboardInput(input.key1);
-                
-                if(input.key2 != Constants::KEY_NOT_SET)
-                    player->handleKeyboardInput(input.key2);
-                
-                /*if(recorded)
-                    recSteps.addStep()*/
+                // alter state by input if not paused 
+                if (!isPaused)
+                {
+                    player->handleKeyboardInput(input.key1);
+
+                    if (input.key2 != Constants::KEY_NOT_SET)
+                        player->handleKeyboardInput(input.key2);
+
+                    if (recorded)
+                        recSteps.addStep(iterationCounter, {input.key1, input.key2});
+                }
             }
         }
         
         if (!isPaused)
         {
+            iterationCounter++;
             // First check if we hit something
             checkPlayerHitEnemy();
             
@@ -64,8 +68,7 @@ void Game::update()
             //win check
             if(player->getPosition() == paulinePos)
             {
-                currLevel++; // move to next level
-                score += PRINCESS_SCORE_AMOUNT;
+                levelWon();
                 break; // player reached pauline, exit loop 
             }
 
@@ -127,13 +130,35 @@ bool Game::handleStrike()
 
     if (lives == 0)
     {
+        if(recorded)
+        {
+            recResults.addResult(iterationCounter, Results::DIED);
+            saveSteps();
+            saveResults();
+        }
         return false;
     }
     else
     {
+        if (recorded)
+            recResults.addResult(iterationCounter, Results::LOST_LIFE);
+
         resetLevel();
         return true;
     }
+}
+
+void Game::levelWon()
+{
+    if (recorded)
+    {
+        recResults.addResult(iterationCounter, Results::FINISHED);
+        saveSteps();
+        saveResults();
+    }
+
+    score += PRINCESS_SCORE_AMOUNT;
+    moveToNextLevel();
 }
 
 void Game::updateLegend() const
@@ -181,6 +206,22 @@ void Game::continueGame()
         std::cout << gameBoard->getCharAtPos(restorePos);
         restorePos = restorePos.oneRight();
     }
+}
+
+void Game::moveToNextLevel()
+{
+    // clear the results and steps if we are recording, this is a new level
+    if (recorded)
+    {
+        recSteps.clear();
+        recResults.clear();
+    }
+
+    //DEBUG: moved to resetLevel()
+    // reset iterationCounter
+    //iterationCounter = 0;
+
+    currLevel++;
 }
 
 Board* Game::readLevelFromFile(const std::string& filename)
@@ -389,6 +430,20 @@ Game::KeyInput Game::getInputKeys() const
     return input;
 }
 
+void Game::saveSteps()
+{
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevel]);
+    std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::STEPS_FILE_EXT;
+    recSteps.saveSteps(filename);
+}
+
+void Game::saveResults()
+{
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevel]);
+    std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::RESULTS_FILE_EXT;
+    recResults.saveResults(filename);
+}
+
 bool Game::start()
 {
     if(levelFileNames.size() == 0)
@@ -403,7 +458,7 @@ bool Game::start()
     while(currLevel < levelFileNames.size())
     {
         std::string nextLevelFilename = levelFileNames[currLevel];
-
+        std::string nextLevelTag = Game::getLevelTag(nextLevelFilename);
         delete gameBoard;
         try        
         {
@@ -416,13 +471,14 @@ bool Game::start()
             if (currLevel == levelFileNames.size() - 1)
                 return true;
 
-            currLevel++;
+            moveToNextLevel();
             continue;
         }
 
         resetLevel();
 
         update();
+
         // game over check
         if (lives == 0)
             return true;
@@ -435,6 +491,8 @@ bool Game::start()
 void Game::resetLevel()
 {
     clearScreen();
+    // DEBUG: maybe this wont work, if not place in moveToNextLevel
+    iterationCounter = 0;
 
     setRandSeed();
 

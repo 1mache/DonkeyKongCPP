@@ -5,7 +5,7 @@
 class Results
 {
 public:
-	enum ResultValue { tookAHit, finished, noResult };
+	enum ResultValue { LOST_LIFE, FINISHED, DIED, NO_RESULT };
 private:
 	std::list<std::pair<size_t, ResultValue>> results;
 public:
@@ -16,6 +16,11 @@ public:
 	void addResult(size_t iteration, ResultValue result)
 	{
 		results.push_back({ iteration, result });
+	}
+
+	void clear()
+	{
+		results.clear();
 	}
 
 	ResultValue popResult();

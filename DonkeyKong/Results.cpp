@@ -38,7 +38,7 @@ void Results::saveResults(const std::string& filename) const
 Results::ResultValue Results::popResult()
 {
 	if (results.empty())
-		return Results::noResult;
+		return Results::NO_RESULT;
 
 	auto result = results.front();
 	results.pop_front();
