@@ -121,7 +121,7 @@ public:
 		delete ghostsManager;
 	}
 	
-	bool start();
+	virtual bool start();
 
 	void resetLevel();
 
