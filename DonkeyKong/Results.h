@@ -5,6 +5,7 @@
 class Results
 {
 public:
+	static constexpr size_t NO_ITERATION = -1;
 	enum ResultValue { LOST_LIFE, FINISHED, DIED, NO_RESULT };
 private:
 	std::list<std::pair<size_t, ResultValue>> results;
@@ -23,11 +24,6 @@ public:
 		results.clear();
 	}
 
-	ResultValue popResult();
-
-	bool isFinishedBy(size_t iteration) const
-	{
-		return results.empty() || results.back().first <= iteration;
-	}
+	std::pair<size_t, ResultValue> popResult();
 };
 

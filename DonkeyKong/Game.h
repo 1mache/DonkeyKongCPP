@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 #include <windows.h>
-#include <filesystem>
-#include <fstream>
+#include <sstream>
 #include <conio.h>
 #include <vector>
 
@@ -52,11 +51,21 @@ protected:
 	};
 
 	// sets the current level to be of the same tag like the filename passed to it
-	// see: ReplayGame.start() for use case
-	void setCurrLevelByTag(const std::string& filename);
+	// returns if it was successful. see: ReplayGame.start() for use case
+	bool trySetCurrLevelByTag(const std::string& filename);
 	// waits until user presses enter
 	void getPlayerConfirmation() const;
-
+	// prints the message to screen then waits until user presses ENTER 
+	void handleError(std::string errorMsg)
+	{
+		std::cout << errorMsg;
+		getPlayerConfirmation();
+	}
+	// what happens when Mario gets hurt, returns false if he dies true otherwise
+	virtual bool handleStrike();
+	// what happens when Mario reaches Pauline
+	virtual void levelWon();
+	virtual void moveToNextLevel();
 private:
 	// will the game be recorded
 	const bool recorded;
@@ -93,15 +102,11 @@ private:
 	// game loop
 	void update();
 
-	void displayException(LevelFileException& e);
+	void displayLevelException(LevelFileException& e);
 
 	// draws the hammer in hammerPos
 	void drawHammer();
 
-	// what happens when Mario gets hurt
-	bool handleStrike();
-	// what happens when Mario reaches Pauline
-	void levelWon();
 	// show lives and score on screen
 	void updateLegend() const;
 
@@ -111,8 +116,6 @@ private:
 	void pauseGame();
 
 	void continueGame();
-
-	void moveToNextLevel();
 
 	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);
@@ -127,8 +130,9 @@ private:
 	bool isEntityMissing(std::string& outEntityMissing);
 	// checks if player hit something that can be killed with a hammer and if so destroys it
 	void checkPlayerHitEnemy();
-
-	virtual KeyInput getInputKeys() const;
+	// virtual function that gets 2 keys of input
+	virtual KeyInput getInputKeys();
+	// virtual function that sets the random seed either by time or from file 
 	virtual void setRandSeed()
 	{
 		long seed = time(0);
@@ -171,7 +175,7 @@ public:
 	{
 		return score;
 	}
-	int getIterationCounter() const 
+	size_t getIterationCounter() const 
 	{
 		return iterationCounter;
 	}

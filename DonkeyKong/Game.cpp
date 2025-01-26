@@ -1,8 +1,7 @@
 #include "Game.h"
 
-void Game::setCurrLevelByTag(const std::string& filename)
+bool Game::trySetCurrLevelByTag(const std::string& tag)
 {
-    std::string tag = Game::getLevelTag(filename);
     std::string currTag;
     
     for (int i = 0; i < levelFileNames.size(); i++)
@@ -11,11 +10,11 @@ void Game::setCurrLevelByTag(const std::string& filename)
         if(currTag == tag)
         {
             currLevelId = i;
-            return;
+            return true;
         }
     }
 
-    //TODO: if we got here that means there is no level for that recording, throw exception or something
+    return false;
 }
 
 void Game::getPlayerConfirmation() const
@@ -29,6 +28,44 @@ void Game::getPlayerConfirmation() const
                 break;
         }
     }
+}
+
+bool Game::handleStrike()
+{
+    player->takeDamage();
+    lives--;
+
+    if (lives == 0)
+    {
+        if (recorded)
+        {
+            recResults.addResult(iterationCounter, Results::DIED);
+            saveSteps();
+            saveResults();
+        }
+        return false;
+    }
+    else
+    {
+        if (recorded)
+            recResults.addResult(iterationCounter, Results::LOST_LIFE);
+
+        resetLevel();
+        return true;
+    }
+}
+
+void Game::levelWon()
+{
+    if (recorded)
+    {
+        recResults.addResult(iterationCounter, Results::FINISHED);
+        saveSteps();
+        saveResults();
+    }
+
+    score += PRINCESS_SCORE_AMOUNT;
+    moveToNextLevel();
 }
 
 void Game::update()
@@ -110,22 +147,22 @@ void Game::update()
     }
 }
 
-void Game::displayException(LevelFileException& e)
+void Game::displayLevelException(LevelFileException& e)
 {
     clearScreen();
-    std::cout << "Level number " << currLevelId + 1 << ", filename: " << levelFileNames[currLevelId] << " is invalid" << std::endl;
-    std::cout << e.what() << std::endl;
+    std::ostringstream errorMsgStream;
+    errorMsgStream << "Level number " << currLevelId + 1 << ", filename: " << levelFileNames[currLevelId] << " is invalid" << std::endl;
+    errorMsgStream << e.what() << std::endl;
     // if the last level is invalid game over
     if (currLevelId == levelFileNames.size() - 1)
     {
-        std::cout << "This was the last level, press ENTER to end game";
-        getPlayerConfirmation();
+        errorMsgStream << "This was the last level, press ENTER to end game";
     }
     else
     {
-        std::cout << "Press ENTER to load next level";
-        getPlayerConfirmation();
+        errorMsgStream << "Press ENTER to load next level";
     }
+    handleError(errorMsgStream.str());
 }
 
 void Game::drawHammer()
@@ -139,44 +176,6 @@ void Game::drawHammer()
         // add it to current board
         gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
     }
-}
-
-bool Game::handleStrike()
-{
-    player->takeDamage();
-    lives--;
-
-    if (lives == 0)
-    {
-        if(recorded)
-        {
-            recResults.addResult(iterationCounter, Results::DIED);
-            saveSteps();
-            saveResults();
-        }
-        return false;
-    }
-    else
-    {
-        if (recorded)
-            recResults.addResult(iterationCounter, Results::LOST_LIFE);
-
-        resetLevel();
-        return true;
-    }
-}
-
-void Game::levelWon()
-{
-    if (recorded)
-    {
-        recResults.addResult(iterationCounter, Results::FINISHED);
-        saveSteps();
-        saveResults();
-    }
-
-    score += PRINCESS_SCORE_AMOUNT;
-    moveToNextLevel();
 }
 
 void Game::updateLegend() const
@@ -435,7 +434,7 @@ void Game::checkPlayerHitEnemy()
     }
 }
 
-Game::KeyInput Game::getInputKeys() const
+Game::KeyInput Game::getInputKeys()
 {
     KeyInput input;
 
@@ -466,9 +465,10 @@ bool Game::start()
 {
     if(levelFileNames.size() == 0)
     {
-        std::cout << "No levels for the game to load, check: " << std::filesystem::current_path() << " for level files" << std::endl;
-        std::cout << "Press ENTER to go back to main menu";
-        getPlayerConfirmation();
+        std::ostringstream errorMsgStream;
+        errorMsgStream << "No levels for the game to load, check: " << getWorkingDirectoryStr() << " for level files" << std::endl
+                        << "Press ENTER to go back to main menu";
+        handleError(errorMsgStream.str());
         return true;
     }
 
@@ -484,7 +484,7 @@ bool Game::start()
         }
         catch (LevelFileException& e)
         {
-            displayException(e);
+            displayLevelException(e);
             
             if (currLevelId == levelFileNames.size() - 1)
                 return true;

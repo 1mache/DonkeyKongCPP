@@ -27,12 +27,6 @@ void flushInputBuffer()
     }
 }
 
-void clearScreen()
-{
-    // command that tells cmd to clear the screen
-    system("cls");
-}
-
 void readFileNames(std::vector<std::string>& outVector, std::string extension)
 {
     // the dir iteration code was taken from here:

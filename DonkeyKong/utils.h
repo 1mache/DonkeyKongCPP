@@ -19,6 +19,15 @@ void ShowConsoleCursor(bool showFlag);
 // for use see Menu.print()
 void flushInputBuffer();
 // clears the console screen and places the cursor at (0,0)
-void clearScreen();
+inline void clearScreen()
+{
+    // command that tells cmd to clear the screen
+    system("cls");
+}
 // reads all the file names that are in the game format with the specified extension into the specified vector  
 void readFileNames(std::vector<std::string>& outVector, std::string extension);
+// returns the working directory path as a string
+inline std::string getWorkingDirectoryStr()
+{
+    return std::filesystem::current_path().string();
+}

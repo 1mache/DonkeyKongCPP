@@ -35,12 +35,12 @@ void Results::saveResults(const std::string& filename) const
 	results_file.close();
 }
 
-Results::ResultValue Results::popResult()
+std::pair < size_t, Results::ResultValue > Results::popResult()
 {
 	if (results.empty())
-		return Results::NO_RESULT;
+		return { NO_ITERATION, Results::NO_RESULT };
 
 	auto result = results.front();
 	results.pop_front();
-	return result.second;
+	return result;
 }
