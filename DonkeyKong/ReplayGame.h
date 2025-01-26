@@ -3,11 +3,14 @@
 
 class ReplayGame: public Game
 {
-	//const std::vector<std::string>& stepsFileNames;
-	//const std::vector<std::string>& resultsFileNames;
+	std::vector<std::string> stepsFileNames;
+	std::vector<std::string> resultsFileNames;
 
 	Steps steps;
 	Results results;
+	// this is different from a simmilar variable in base class Game as there
+	// isnt necessarily a recording for every level
+	int currStepsFileId = 0;
 
 	Game::KeyInput getInputKeys() const override;
 	
@@ -18,7 +21,9 @@ class ReplayGame: public Game
 	}
 public:
 																					// games that are replayed are not recorded
-	ReplayGame(const std::vector<std::string>& _levelFileNames, int startLevelId) : Game(_levelFileNames, startLevelId, false) {};
+	ReplayGame(const std::vector<std::string>& _levelFileNames) : Game(_levelFileNames, currStepsFileId, false) {};
+	
+	bool start() override;
 	
 	//void resetLevel() override
 	//{

@@ -1,21 +1,16 @@
 #pragma once
 
-#include <filesystem>
-#include <regex>
-
 #include "Game.h"
 #include "Menu.h"
 
-// this class manages the big picture of the game
 class GameManager
 {	
 public:
 	enum GameMode {STANDARD, SAVE, LOAD};
 private:
+	// by default it is just a standard game (like Ex 2)
 	GameMode mode = STANDARD;
 	std::vector<std::string> levelFileNames;
-	// reads all the file names of the level file name template into a vector above  
-	void readLevelFileNames();
 
 public:
 	void setMode(GameMode newMode) 

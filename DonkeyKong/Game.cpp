@@ -1,11 +1,42 @@
 #include "Game.h"
 
+void Game::setCurrLevelByTag(const std::string& filename)
+{
+    std::string tag = Game::getLevelTag(filename);
+    std::string currTag;
+    
+    for (int i = 0; i < levelFileNames.size(); i++)
+    {
+        std::string currTag = getLevelTag(levelFileNames[i]);
+        if(currTag == tag)
+        {
+            currLevelId = i;
+            return;
+        }
+    }
+
+    //TODO: if we got here that means there is no level for that recording, throw exception or something
+}
+
+void Game::getPlayerConfirmation() const
+{
+    while (true)
+    {
+        if (_kbhit())
+        {
+            char key = _getch();
+            if (key == ENTER)
+                break;
+        }
+    }
+}
+
 void Game::update()
 {
     while (true)
     {
         KeyInput input = getInputKeys();
-        
+
         if (!input.notSet())
         {
             if (input.key1 == ESC || input.key2 == ESC)
@@ -25,30 +56,30 @@ void Game::update()
                         player->handleKeyboardInput(input.key2);
 
                     if (recorded)
-                        recSteps.addStep(iterationCounter, {input.key1, input.key2});
+                        recSteps.addStep(iterationCounter, { input.key1, input.key2 });
                 }
             }
         }
-        
+
         if (!isPaused)
         {
             iterationCounter++;
             // First check if we hit something
             checkPlayerHitEnemy();
-            
+
             // then update the player (move him)
             player->update();
 
             //check for barrel collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
             {
-                if(handleStrike())
+                if (handleStrike())
                     continue; // level was reset, continue the game loop
                 else
                     break; // going to menu
             }
 
-            if(ghostsManager)
+            if (ghostsManager)
                 ghostsManager->manageGhosts();
 
             barrelManager->manageBarrels();
@@ -66,7 +97,7 @@ void Game::update()
             }
 
             //win check
-            if(player->getPosition() == paulinePos)
+            if (player->getPosition() == paulinePos)
             {
                 levelWon();
                 break; // player reached pauline, exit loop 
@@ -79,26 +110,13 @@ void Game::update()
     }
 }
 
-void Game::getPlayerConfirmation() const
-{
-    while(true)
-    {
-        if (_kbhit())
-        {
-            char key = _getch();
-            if (key == ENTER)
-                break;
-        }
-    }
-}
-
 void Game::displayException(LevelFileException& e)
 {
     clearScreen();
-    std::cout << "Level number " << currLevel + 1 << ", filename: " << levelFileNames[currLevel] << " is invalid" << std::endl;
+    std::cout << "Level number " << currLevelId + 1 << ", filename: " << levelFileNames[currLevelId] << " is invalid" << std::endl;
     std::cout << e.what() << std::endl;
     // if the last level is invalid game over
-    if (currLevel == levelFileNames.size() - 1)
+    if (currLevelId == levelFileNames.size() - 1)
     {
         std::cout << "This was the last level, press ENTER to end game";
         getPlayerConfirmation();
@@ -221,7 +239,7 @@ void Game::moveToNextLevel()
     // reset iterationCounter
     //iterationCounter = 0;
 
-    currLevel++;
+    currLevelId++;
 }
 
 Board* Game::readLevelFromFile(const std::string& filename)
@@ -432,14 +450,14 @@ Game::KeyInput Game::getInputKeys() const
 
 void Game::saveSteps()
 {
-    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevel]);
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
     std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::STEPS_FILE_EXT;
     recSteps.saveSteps(filename);
 }
 
 void Game::saveResults()
 {
-    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevel]);
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
     std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::RESULTS_FILE_EXT;
     recResults.saveResults(filename);
 }
@@ -455,10 +473,10 @@ bool Game::start()
     }
 
     // iterate until we`ve read all files
-    while(currLevel < levelFileNames.size())
+    while(currLevelId < levelFileNames.size())
     {
-        std::string nextLevelFilename = levelFileNames[currLevel];
-        std::string nextLevelTag = Game::getLevelTag(nextLevelFilename);
+        std::string nextLevelFilename = levelFileNames[currLevelId];
+
         delete gameBoard;
         try        
         {
@@ -468,7 +486,7 @@ bool Game::start()
         {
             displayException(e);
             
-            if (currLevel == levelFileNames.size() - 1)
+            if (currLevelId == levelFileNames.size() - 1)
                 return true;
 
             moveToNextLevel();

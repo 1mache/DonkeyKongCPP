@@ -51,6 +51,12 @@ protected:
 		}
 	};
 
+	// sets the current level to be of the same tag like the filename passed to it
+	// see: ReplayGame.start() for use case
+	void setCurrLevelByTag(const std::string& filename);
+	// waits until user presses enter
+	void getPlayerConfirmation() const;
+
 private:
 	// will the game be recorded
 	const bool recorded;
@@ -69,7 +75,7 @@ private:
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;
 	// which level are we on (id)
-	int currLevel;
+	int currLevelId;
 	// counts iterations
 	size_t iterationCounter = 0;
 
@@ -86,8 +92,6 @@ private:
 
 	// game loop
 	void update();
-	// waits until user presses enter
-	void getPlayerConfirmation() const;
 
 	void displayException(LevelFileException& e);
 
@@ -130,7 +134,6 @@ private:
 		long seed = time(0);
 		if(recorded)
 			recSteps.setRandomSeed(seed);
-
 		srand(seed); // gets us a new seed for use in rand
 	}
 
@@ -139,7 +142,7 @@ private:
 
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId, bool _recorded) : 
-		levelFileNames(_levelFileNames), currLevel(startLevelId), recorded(_recorded) {};
+		levelFileNames(_levelFileNames), currLevelId(startLevelId), recorded(_recorded) {};
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete; 
 	virtual ~Game()
@@ -152,15 +155,15 @@ public:
 	
 	// utility function:
 	// for a level fileName "dkong_01.screen" returns the "01" part
-	static std::string getLevelTag(std::string levelFileName)
+	static std::string getLevelTag(const std::string& levelFileName) 
 	{
 		size_t prefixSize = std::strlen(Constants::FILENAME_PREFIX);
-		size_t extStartId = levelFileName.find(Constants::LEVEL_FILE_EXT);
+		size_t extStartId = levelFileName.find_first_of('.');
 
 		return levelFileName.substr(prefixSize, extStartId - prefixSize);
 	}
 
-	bool start();
+	virtual bool start();
 
 	virtual void resetLevel();
 
@@ -168,8 +171,8 @@ public:
 	{
 		return score;
 	}
-	int getCurrentLevel() const 
+	int getIterationCounter() const 
 	{
-		return currLevel;
+		return iterationCounter;
 	}
 };

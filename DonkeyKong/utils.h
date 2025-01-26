@@ -1,9 +1,13 @@
 #pragma once
 
+#include "Constants.h"
 #include "Point.h"
 #include <conio.h>
 #include <iostream>
 #include <windows.h>
+#include <vector>
+#include <filesystem>
+#include <regex>
 
 
 // modified gotoxy function from Amir's lesson. takes our point class instead of 
@@ -16,3 +20,5 @@ void ShowConsoleCursor(bool showFlag);
 void flushInputBuffer();
 // clears the console screen and places the cursor at (0,0)
 void clearScreen();
+// reads all the file names that are in the game format with the specified extension into the specified vector  
+void readFileNames(std::vector<std::string>& outVector, std::string extension);
