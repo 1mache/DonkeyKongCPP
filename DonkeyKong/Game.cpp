@@ -92,6 +92,7 @@ void Game::update()
                     if (input.key2 != Constants::KEY_NOT_SET)
                         player->handleKeyboardInput(input.key2);
 
+                    // if this is a recorded game save this step
                     if (recorded)
                         recSteps.addStep(iterationCounter, { input.key1, input.key2 });
                 }
@@ -141,6 +142,10 @@ void Game::update()
             }
 
             updateLegend();
+            
+            // break the loop if the iteration was invalid
+            if (!validateLastIteration())
+                break;
         }
 
         Sleep(Constants::GAME_REFRESH_RATE);
@@ -156,7 +161,7 @@ void Game::displayLevelException(LevelFileException& e)
     // if the last level is invalid game over
     if (currLevelId == levelFileNames.size() - 1)
     {
-        errorMsgStream << "This was the last level, press ENTER to end game";
+        errorMsgStream << "This was the last level, press ENTER to end game"; 
     }
     else
     {

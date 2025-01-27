@@ -77,9 +77,11 @@ protected:
 	virtual void levelWon();
 	// returns if succeeded to move to next level 
 	virtual void moveToNextLevel();
-	// game loop
-	virtual void update();
-
+	// this is irrelevant for regular game, where every iteration is valid
+	virtual bool validateLastIteration() 
+	{
+		return true;
+	}
 private:
 	// will the game be recorded
 	const bool recorded;
@@ -128,6 +130,9 @@ private:
 	void pauseGame();
 
 	void continueGame();
+
+	// game loop
+	void update();
 
 	//reads all the necessary info from level file and "builds" the board, returns the board if was successful 
 	Board* readLevelFromFile(const std::string& filename);

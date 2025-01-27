@@ -5,8 +5,14 @@ void ReplayGame::handleResultMismatch(std::pair<size_t, Results::ResultValue> ex
 	std::ostringstream errorMsgStream;
 	errorMsgStream << "Error: Results file doesnt match the steps file." << std::endl;
 
+	// if we expected something to happen on this iteration but nothing happened
+	if(recievedResult.second == Results::NO_RESULT)
+	{
+		errorMsgStream << "Nothing happened on iteration: " << recievedResult.first
+			<< " but based on results file the player " << Results::resultToStr(expectedResult) << std::endl;
+	}
 	// if there is a mismatch in the result kind
-	if (recievedResult.second != expectedResult.second)
+	else if (recievedResult.second != expectedResult.second)
 	{
 		// if there is no next result in the results file
 		if (expectedResult.second == Results::NO_RESULT)
@@ -29,6 +35,7 @@ void ReplayGame::handleResultMismatch(std::pair<size_t, Results::ResultValue> ex
 		errorMsgStream << std::endl << "This was the last level, Press ENTER to end the recording";
 	else
 		errorMsgStream << std::endl << "Press ENTER to move to next level";
+
 	handleError(errorMsgStream.str());
 }
 
@@ -99,6 +106,25 @@ void ReplayGame::moveToNextLevel()
 		// if we got here then we successfully moved to next level
 		loadRecordings();
 	}
+}
+
+bool ReplayGame::validateLastIteration()
+{
+	size_t iteration = getIterationCounter();
+	// this will only be true if nothing happened and there is a result that should
+	// happen on this iteration
+	if (results.hasResultOnIteration(iteration))
+	{
+		auto expectedResult = results.popResult();
+		std::pair<size_t, Results::ResultValue> noResult = { iteration, Results::NO_RESULT };
+		// tell the user and go to next level
+		handleResultMismatch(expectedResult, noResult);
+		moveToNextLevel();
+		
+		return false;
+	}
+
+	return true;
 }
 
 bool ReplayGame::start()

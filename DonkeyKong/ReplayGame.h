@@ -12,7 +12,7 @@ class ReplayGame: public Game
 	// isnt necessarily a recording for every level
 	int currSaveFileId = 0;
 
-	//what happens when results doesnt match to what happened in the recording
+	//what the player sees when results doesnt match to what happened in the recording
 	void handleResultMismatch(std::pair<size_t, Results::ResultValue> expectedResult, std::pair<size_t, Results::ResultValue> recievedResult);
 	// loads steps and results based on current save file id
 	void loadRecordings()
@@ -40,10 +40,14 @@ class ReplayGame: public Game
 	{
 		return currSaveFileId < stepsFileNames.size();
 	}
+	// checks if the something should have happened in the iteration based on results.
+	// happens every Game::update
+	bool validateLastIteration() override;
 
 public:
 																					// games that are replayed are not recorded
 	ReplayGame(const std::vector<std::string>& _levelFileNames) : Game(_levelFileNames, currSaveFileId, false) {};
 	
+	// sets up all the variables essential for playing the recordings before calling the base start
 	bool start() override;
 };
