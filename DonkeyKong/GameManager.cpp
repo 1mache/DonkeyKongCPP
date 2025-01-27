@@ -1,6 +1,17 @@
 #include "GameManager.h"
 
-void GameManager::launchGame()
+std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode)
+{
+	Game* game = nullptr;
+	if(mode == LOAD)
+		game = new ReplayGame(levelFileNames);
+	else
+		game = new Game(levelFileNames, startLevelId, mode == SAVE);
+
+	return std::unique_ptr<Game>(game);
+}
+
+void GameManager::launchGame(GameMode mode)
 {
 	// hide cursor
 	ShowConsoleCursor(false);
@@ -10,28 +21,41 @@ void GameManager::launchGame()
 	while (true)
 	{	
 		Menu menu(levelFileNames);
-
-		//returns true if the user chose the exit option in the menu
-		bool exitflag = menu.displayMainMenu();
-		if (exitflag)
+		if(mode != LOAD)
 		{
-			break; // player chose exit in menu, exit game
+			//returns true if the user chose the exit option in the menu
+			bool exitflag = menu.displayMainMenu();
+			startLevelId = menu.getChosenLevelId();
+
+			if (exitflag)
+			{
+				break; // player chose exit in menu, exit game
+			}
 		}
 
-		Game game(levelFileNames, menu.getChosenLevelId(), mode == SAVE);
+		std::unique_ptr<Game> game = createGameBasedOnMode(mode);
 
 		// returns true if player lost
-		bool gameOver = game.start();
+		bool gameOver = game->start();
 
-		if (gameOver)
+		if (mode == LOAD)
 		{
 			clearScreen();
-			menu.displayGameOver();
+			std::cout << "End of recording." << std::endl;
+			break;
 		}
 		else
 		{
-			clearScreen();
-			menu.displayWinScreen(game.getScore());
+			if (gameOver)
+			{
+				clearScreen();
+				menu.displayGameOver();
+			}
+			else
+			{
+				clearScreen();
+				menu.displayWinScreen(game->getScore());
+			}
 		}
 	}
 }

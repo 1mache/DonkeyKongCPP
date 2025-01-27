@@ -1,6 +1,37 @@
 #include "Results.h"
 
-Results Results::loadResults(const std::string& filename) 
+std::string Results::resultToStr(std::pair<size_t, ResultValue> result)
+{
+	std::ostringstream strStream;
+	switch (result.second)
+	{
+	case LOST_LIFE:
+		strStream << "Lost a life";
+		break;
+
+	case FINISHED:
+		strStream << "Finished the level";
+		break;
+
+	case DIED:
+		strStream << "Died";
+		break;
+
+	case NO_RESULT:
+		strStream << "No result";
+		break;
+	
+	default:
+		break;
+	}
+	
+	if(result.second != NO_RESULT)
+		strStream << " on iteration " << result.first;
+
+	return strStream.str();
+}
+
+Results Results::loadResults(const std::string& filename)
 {
 	std::ifstream results_file(filename);
 	if(!results_file.is_open()){}

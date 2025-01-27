@@ -56,16 +56,30 @@ protected:
 	// waits until user presses enter
 	void getPlayerConfirmation() const;
 	// prints the message to screen then waits until user presses ENTER 
-	void handleError(std::string errorMsg)
+	void handleError(std::string errorMsg) const
 	{
+		clearScreen();
 		std::cout << errorMsg;
 		getPlayerConfirmation();
+	}
+	void resetIterationCounter()
+	{
+		iterationCounter = 0;
+	}
+	// virtual function that tells us if the game has more levels to load
+	virtual bool hasMoreLevels() const
+	{
+		return currLevelId < levelFileNames.size();
 	}
 	// what happens when Mario gets hurt, returns false if he dies true otherwise
 	virtual bool handleStrike();
 	// what happens when Mario reaches Pauline
 	virtual void levelWon();
+	// returns if succeeded to move to next level 
 	virtual void moveToNextLevel();
+	// game loop
+	virtual void update();
+
 private:
 	// will the game be recorded
 	const bool recorded;
@@ -99,8 +113,6 @@ private:
 
 	bool isPaused = false;
 
-	// game loop
-	void update();
 
 	void displayLevelException(LevelFileException& e);
 

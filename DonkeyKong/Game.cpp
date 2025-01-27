@@ -227,17 +227,13 @@ void Game::continueGame()
 
 void Game::moveToNextLevel()
 {
+    resetIterationCounter();
     // clear the results and steps if we are recording, this is a new level
     if (recorded)
     {
         recSteps.clear();
         recResults.clear();
     }
-
-    //DEBUG: moved to resetLevel()
-    // reset iterationCounter
-    //iterationCounter = 0;
-
     currLevelId++;
 }
 
@@ -473,7 +469,7 @@ bool Game::start()
     }
 
     // iterate until we`ve read all files
-    while(currLevelId < levelFileNames.size())
+    while(hasMoreLevels())
     {
         std::string nextLevelFilename = levelFileNames[currLevelId];
 
@@ -509,8 +505,6 @@ bool Game::start()
 void Game::resetLevel()
 {
     clearScreen();
-    // DEBUG: maybe this wont work, if not place in moveToNextLevel
-    iterationCounter = 0;
 
     setRandSeed();
 
