@@ -2,9 +2,13 @@
 
 std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode)
 {
+	Constants::setLoadMode(false);
 	Game* game = nullptr;
-	if(mode == LOAD)
+	if (mode == LOAD)
+	{
 		game = new ReplayGame(levelFileNames);
+		Constants::setLoadMode(true);
+	}
 	else
 		game = new Game(levelFileNames, startLevelId, mode == SAVE);
 

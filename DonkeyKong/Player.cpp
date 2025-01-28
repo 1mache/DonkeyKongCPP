@@ -193,9 +193,9 @@ void Player::takeDamage() const
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {
         erase();
-        Sleep(Constants::GAME_REFRESH_RATE * 2);
+        Sleep(Constants::getRefreshRate() * 2);
         draw();
-        Sleep(Constants::GAME_REFRESH_RATE * 2);
+        Sleep(Constants::getRefreshRate() * 2);
     }
 }
 
@@ -224,7 +224,7 @@ void Player::hammerAnimation(Point destroyPos) const
         std::cout << HAMMER_ANIM_CHAR;
     }
 
-    Sleep(Constants::GAME_REFRESH_RATE);
+    Sleep(Constants::getRefreshRate());
     
     if (gameBoard->isPosInBounds(destroyPos))
     {

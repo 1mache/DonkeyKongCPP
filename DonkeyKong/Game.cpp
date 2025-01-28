@@ -148,7 +148,7 @@ void Game::update()
                 break;
         }
 
-        Sleep(Constants::GAME_REFRESH_RATE);
+        Sleep(Constants::getRefreshRate());
     }
 }
 
