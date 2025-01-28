@@ -155,7 +155,7 @@ private:
 		long seed = time(0);
 		if(recorded)
 			recSteps.setRandomSeed(seed);
-		srand(seed); // gets us a new seed for use in rand
+		srand(seed);
 	}
 
 	void saveSteps();

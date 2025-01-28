@@ -232,6 +232,7 @@ void Game::continueGame()
 
 void Game::moveToNextLevel()
 {
+    setRandSeed();
     resetIterationCounter();
     // clear the results and steps if we are recording, this is a new level
     if (recorded)
@@ -473,6 +474,7 @@ bool Game::start()
         return true;
     }
 
+    setRandSeed();
     // iterate until we`ve read all files
     while(hasMoreLevels())
     {
@@ -510,8 +512,6 @@ bool Game::start()
 void Game::resetLevel()
 {
     clearScreen();
-
-    setRandSeed();
 
     gameBoard->resetBoard();
     

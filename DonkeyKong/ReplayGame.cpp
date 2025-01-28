@@ -105,6 +105,8 @@ void ReplayGame::moveToNextLevel()
 
 		// if we got here then we successfully moved to next level
 		loadRecordings();
+
+		setRandSeed();
 	}
 }
 

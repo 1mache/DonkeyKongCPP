@@ -19,7 +19,8 @@ void GameManager::launchGame(GameMode mode)
 {
 	// hide cursor
 	ShowConsoleCursor(false);
-
+	// TODO: doesnt work from cmd
+	clearScreen();
 	readFileNames(levelFileNames, Constants::LEVEL_FILE_EXT);
 
 	while (true)
