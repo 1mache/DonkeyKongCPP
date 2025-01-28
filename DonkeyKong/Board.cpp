@@ -99,3 +99,17 @@ bool Board::isHammerEnemyAtPos(Point position) const
 
 	return false;
 }
+
+bool Board::isGhostAtPos(Point position) const
+{
+	return (getCharAtPos(position) == GHOST);
+	/*for (char ghost : GHOSTS)
+	{
+		if (getCharAtPos(position) == ghost)
+		{
+			return true;
+		}
+	}
+
+	return false;*/
+}

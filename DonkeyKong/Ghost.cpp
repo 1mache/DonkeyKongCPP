@@ -2,12 +2,21 @@
 
 bool Ghost::adjustDirection()
 {
+    bool changedDirection = false;
+
     if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
     {
-        changeDirection();
-        return true;
+        changeHorizontalDirection();
+        changedDirection = true;
     }
-    return false;
+
+    if (reachedAnotherGhost())
+    {
+        changeHorizontalDirection();
+        changedDirection = true;
+    }
+
+    return changedDirection;
 }
 
 bool Ghost::reachedEndOfFloor() const
@@ -32,5 +41,28 @@ void Ghost::moveGhost()
     }
 
     // place ghost on board in its new position
-    gameBoard->updateBoardWithChar(getPosition(), Board::GHOST);
+    gameBoard->updateBoardWithChar(getPosition(), ghostChar);
+}
+
+bool Ghost::reachedAnotherGhost() const
+{
+    return (gameBoard->isGhostAtPos(getPosition() + DIRECTIONS[currentMoveDirection]));
+    //// check if another ghost is next to this ghost: xx 
+    //Point checkPos = getPosition() + DIRECTIONS[currentMoveDirection];
+    //if (gameBoard->isGhostAtPos(checkPos))
+    //{
+    //    return true;
+    //}
+
+    //// check if another ghost is 2 chars next to this ghost but in its direction: -> x x <- 
+    //checkPos = checkPos + DIRECTIONS[currentMoveDirection];
+    //if (gameBoard->isGhostAtPos(checkPos))
+    //{
+    //    if (getDirection() + ghostsManager->findGhostByPosition(checkPos)->getDirection() == Constants::POINT_ZERO)
+    //    {
+    //        return true;
+    //    }
+    //}
+
+    //return false;
 }

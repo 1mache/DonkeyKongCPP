@@ -11,6 +11,7 @@ public:
 	static constexpr char BARREL = 'O';
 	static constexpr char EXPLOSION = '*';
 	static constexpr char GHOST = 'x';
+	static constexpr char CLIMBING_GHOST = 'X';
 	static constexpr char DONKEY_KONG = '&';
 	static constexpr char PAULINE = '$';
 	static constexpr char HAMMER = 'p';
@@ -31,7 +32,9 @@ private:
 	// things that kill mario
 	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST };
 
-	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST };
+	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST, CLIMBING_GHOST };
+
+	//static constexpr char GHOSTS[] = { GHOST, CLIMBING_GHOST };
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
@@ -43,6 +46,9 @@ private:
 	const std::vector<char> originalBoard;
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
+
+	Point playerPos = Constants::POS_NOT_SET;
+
 public:
 	Board(std::vector<char>&& _originalBoard): originalBoard(std::move(_originalBoard)) {};
 
@@ -80,9 +86,82 @@ public:
 		return getCharAtPos(position) == HAMMER;
 	}
 
-	bool isGhostAtPos(Point position) const
+	// check if the char at position is a type of ghost from GHOSTS[]
+	bool isGhostAtPos(Point position) const;
+
+	void setPlayerPos(Point pos)
 	{
-		return getCharAtPos(position) == GHOST;
+		playerPos = pos;
+	}
+
+	Point getPlayerPos()
+	{
+		return playerPos;
+	}
+
+	Point getWayUpInRow(Point pos)
+	{
+		int row = pos.getY();
+		int col = pos.getX();
+
+		// for left side from pos that is on continuous floor get closest way up (ladder)
+		while (isObstacleAtPos(Point(col, row).oneBelow()) && col > 0)
+		{
+			if (isLadderAtPos(Point(col, row)))
+			{
+				return Point(col, row);
+			}
+			--col;
+		}
+
+		col = pos.getX();
+
+		// for right side from pos that is on continuous floor get closest way up (ladder)
+		while (isObstacleAtPos(Point(col, row).oneBelow()) && col < Constants::SCREEN_WIDTH)
+		{
+			if (isLadderAtPos(Point(col, row)))
+			{
+				return Point(col, row);
+			}
+			++col;
+		}
+
+		//return Constants::POS_NOT_SET;
+		return getPlayerPos();
+	}
+
+	Point getWayDownInRow(Point pos)
+	{
+		int row = pos.getY();
+		int col = pos.getX();
+		Point checkPos = Point(col, row);
+
+		// for left side from pos get closest way down (ladder or hole in floor)
+		while (col > 0)
+		{
+			checkPos = Point(col, row);
+			if (!isObstacleAtPos(checkPos) || isLadderAtPos(checkPos.oneBelow().oneBelow()))
+			{
+				return checkPos;
+			}
+			--col;
+		}
+
+		col = pos.getX();
+
+		// for right side from pos get closest way down (ladder or hole in floor)
+		while (col < Constants::SCREEN_WIDTH)
+		{
+			checkPos = Point(col, row);
+			if (!isObstacleAtPos(checkPos) || isLadderAtPos(checkPos.oneBelow().oneBelow()))
+			{
+				return checkPos;
+			}
+			++col;
+		}
+
+		//return Constants::POS_NOT_SET;
+		return getPlayerPos();
 	}
 };
 
