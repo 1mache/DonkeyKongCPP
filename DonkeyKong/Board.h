@@ -57,13 +57,6 @@ public:
 	// resets the char at given position
 	void resetCharAtPos(Point position);
 
-	bool isPosInBounds(Point position) const 
-	{
-		int x = position.getX();
-		int y = position.getY();
-		return ((0 <= x && x < WIDTH) && (0 <= y && y < HEIGHT)); 
-	}
-
 	bool isObstacleAtPos(Point position) const;
 	
 	bool isHazardAtPos(Point position) const;

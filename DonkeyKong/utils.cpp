@@ -1,5 +1,12 @@
 #include "utils.h"
 
+bool isScreenPosInBounds(Point screenPosition)
+{
+    int x = screenPosition.getX();
+    int y = screenPosition.getY();
+    return ((0 <= x && x < Constants::SCREEN_WIDTH) && (0 <= y && y < Constants::SCREEN_HEIGHT));
+}
+
 void gotoScreenPos(Point screenPosition)
 {
     std::cout.flush();
@@ -7,6 +14,40 @@ void gotoScreenPos(Point screenPosition)
     coord.X = screenPosition.getX(); // Set the X coordinate 
     coord.Y = screenPosition.getY(); // Set the Y coordinate 
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // Move the cursor 
+}
+
+void drawSymbolOnScreen(char symbol, Point screenPosition)
+{
+    // dont draw if silent mode is on 
+    if (Constants::isSilentModeOn())
+        return;
+    
+    if(isScreenPosInBounds(screenPosition))
+    {
+        gotoScreenPos(screenPosition);
+        std::cout << symbol;
+    }
+}
+
+void drawLineOnScreen(const std::string& line, Point lineStartPosition)
+{
+    // dont draw if silent mode is on 
+    if (Constants::isSilentModeOn())
+        return;
+
+    Point lineEndPosition = lineStartPosition + Point(line.size() ,0);
+    // if the position of both start and end is in bounds priint the line
+    if (isScreenPosInBounds(lineStartPosition))
+    {
+        gotoScreenPos(lineStartPosition);
+        // if the end is not in bounds print only the part that is in bounds
+        if(!isScreenPosInBounds(lineEndPosition))
+        {
+            std::string slicedLine = line.substr(0, Constants::SCREEN_WIDTH - lineStartPosition.getX());
+            std::cout << slicedLine;
+        }
+        else std::cout << line;
+    }
 }
 
 void ShowConsoleCursor(bool showFlag) {

@@ -9,10 +9,15 @@
 #include <filesystem>
 #include <regex>
 
-
+//checks if given screen pos in bounds
+bool isScreenPosInBounds(Point screenPosition);
 // modified gotoxy function from Amir's lesson. takes our point class instead of 
 // the individual x and y
 void gotoScreenPos(Point screenPosition);
+// draws given char to the screen in given position
+void drawSymbolOnScreen(char symbol, Point screenPosition);
+// draws sequence of chars to the screen in given position
+void drawLineOnScreen(const std::string& line, Point lineStartPosition);
 // function from Amir's lesson that hides/ shows the curson on screen
 void ShowConsoleCursor(bool showFlag);
 // function used to clear the input buffer, the one that _getch takes from

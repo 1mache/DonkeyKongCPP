@@ -1,18 +1,5 @@
 #include "MovingObject.h"
 
-void MovingObject::draw(Point drawPosition, char c) const
-{
-    // dont draw if in silent mode
-    if (Constants::isSilentModeOn())
-        return;
-
-    if (gameBoard->isPosInBounds(drawPosition))
-    {
-        gotoScreenPos(drawPosition);
-        std::cout << c;
-    }
-}
-
 void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacles)
 {
     erase();
@@ -32,7 +19,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     // new X, same Y
     Point newXPosition = { newX , position.getY() };
     if (canMoveToPos(newXPosition) || 
-        (ignoreObstacles && gameBoard->isPosInBounds(newXPosition)))
+        (ignoreObstacles && isScreenPosInBounds(newXPosition)))
     {
         position = newXPosition;
     }
@@ -40,7 +27,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     // same X, new Y
     Point newYPosition = { position.getX(), newY };
     if (canMoveToPos(newYPosition) ||
-        (ignoreObstacles && gameBoard->isPosInBounds(newYPosition)))
+        (ignoreObstacles && isScreenPosInBounds(newYPosition)))
     {
         position = { position.getX(), newY };
     }
@@ -60,7 +47,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     char charAtPrevPosition = gameBoard->getCharAtPos(prevPosition);
     if (charAtPrevPosition != ' ')
         // and draw it where we stepped on it
-        draw(prevPosition ,charAtPrevPosition);
+        drawSymbolOnScreen(charAtPrevPosition, prevPosition);
 
     draw();
 }

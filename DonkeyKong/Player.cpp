@@ -213,29 +213,17 @@ void Player::hammerAnimation(Point destroyPos) const
 {
     // prints two ~ symbols in the direction Mario is facing,
     // if the positions are in bounds
-    if (gameBoard->isPosInBounds(destroyPos))
-    {
-        gotoScreenPos(destroyPos);
-        std::cout << HAMMER_ANIM_CHAR;
-    }
-    if (gameBoard->isPosInBounds(destroyPos + DIRECTIONS[hammerDir]))
-    {
-        gotoScreenPos(destroyPos + DIRECTIONS[hammerDir]);
-        std::cout << HAMMER_ANIM_CHAR;
-    }
+
+    //destroy pos +1 in the direction of the strike 
+    Point destroyPosPlusOne = destroyPos + DIRECTIONS[hammerDir];
+    drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPos);
+    drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPosPlusOne);
 
     Sleep(Constants::getRefreshRate());
     
-    if (gameBoard->isPosInBounds(destroyPos))
-    {
-        gotoScreenPos(destroyPos);
-        std::cout << gameBoard->getCharAtPos(destroyPos);
-    }
-    if (gameBoard->isPosInBounds(destroyPos + DIRECTIONS[hammerDir]))
-    {
-        gotoScreenPos(destroyPos + DIRECTIONS[hammerDir]);
-        std::cout << gameBoard->getCharAtPos(destroyPos + DIRECTIONS[hammerDir]);
-    }
+    // erases them (replaces them with what was there before)
+    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
+    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlusOne), destroyPosPlusOne);
 }
 
 Point Player::handleHammer()

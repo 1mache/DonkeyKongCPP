@@ -18,8 +18,6 @@ class MovingObject
     // counts how many lines we fell, 0 if not in free fall 
     int fallHeight = 0;
 
-    void draw(Point drawPosition, char c) const;
-    
     //pulls the object down one tile
     void gravity()
     {
@@ -44,12 +42,12 @@ public:
 
     void draw() const
     {
-        draw(position , spriteChar);
+        drawSymbolOnScreen(spriteChar , position);
     }
 
     void erase() const
     {
-        draw(position , Board::BLANK_SPACE);
+        drawSymbolOnScreen(Board::BLANK_SPACE, position);
     }
 
     Point getPosition() const
@@ -61,7 +59,7 @@ public:
     {
         //returns true if the position is in bounds and there is no obstacle 
         return (!(gameBoard->isObstacleAtPos(newPos)) 
-            && gameBoard->isPosInBounds(newPos)); 
+            && isScreenPosInBounds(newPos)); 
     }
 
     bool checkOnGround() const

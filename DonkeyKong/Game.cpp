@@ -175,9 +175,7 @@ void Game::drawHammer()
     // if the hammer exists on the level and player hasnt picked it up yet
     if (hammerPos != Constants::POS_NOT_SET && !player->isHoldingHammer())
     {
-        // draw the hammer
-        gotoScreenPos(hammerPos);
-        std::cout << Board::HAMMER;
+        drawSymbolOnScreen(Board::HAMMER, hammerPos);
         // add it to current board
         gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
     }
@@ -185,14 +183,17 @@ void Game::drawHammer()
 
 void Game::updateLegend() const
 {
-    gotoScreenPos(legendPos);
-    std::cout << "Score: " << score;
-    gotoScreenPos(legendPos.oneBelow());
-    std::cout << "Lives <3: " << lives;
+    std::ostringstream scoreMsg;
+    std::ostringstream livesMsg;
+    scoreMsg << "Score: " << score;
+    livesMsg << "Lives < 3: " << lives;
+    drawLineOnScreen(scoreMsg.str(), legendPos);
+    drawLineOnScreen(livesMsg.str(), legendPos.oneBelow());
+
+    // if player is holding hammer, draw a hammer symbol
     if(player->isHoldingHammer())
     {
-        gotoScreenPos(legendPos.oneBelow().oneBelow());
-        std::cout << Board::HAMMER;
+        drawSymbolOnScreen(Board::HAMMER, legendPos.oneBelow().oneBelow());
     }
 }
 
@@ -212,8 +213,7 @@ void Game::pauseGame()
     isPaused = true;
     Point pauseMessagePos = legendPos.oneBelow().oneBelow();
     // print pause message
-    gotoScreenPos(pauseMessagePos);
-    std::cout << PAUSE_MESSAGE;
+    drawLineOnScreen(PAUSE_MESSAGE, pauseMessagePos);
 }
 
 void Game::continueGame()
@@ -222,10 +222,9 @@ void Game::continueGame()
     //erase pause game message and restore what has been on the board 
     Point restorePos = legendPos.oneBelow().oneBelow();
 
-    for (int i = 0; i < strlen(PAUSE_MESSAGE); i++)
+    for (int i = 0; i < strlen(PAUSE_MESSAGE) && isScreenPosInBounds(restorePos); i++)
     {
-        gotoScreenPos(restorePos);
-        std::cout << gameBoard->getCharAtPos(restorePos);
+        drawSymbolOnScreen(gameBoard->getCharAtPos(restorePos), restorePos);
         restorePos = restorePos.oneRight();
     }
 }

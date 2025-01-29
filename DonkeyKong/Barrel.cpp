@@ -56,11 +56,10 @@ void Barrel::drawExplosionPhase()
                 (x == cornerTL.getX() || x == cornerBR.getX()))
             {
                 //only print the explosion at certain position if it is in bounds and there isnt an obstacle
-                if(gameBoard->isPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
+                if(isScreenPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
                 {
-                    gotoScreenPos(curCharPos);
                     gameBoard->updateBoardWithChar(curCharPos ,Board::EXPLOSION);
-                    std::cout << Board::EXPLOSION;
+                    drawSymbolOnScreen(Board::EXPLOSION, curCharPos);
                 }
             }
         }
@@ -87,11 +86,10 @@ void Barrel::eraseExplosion()
         {
             curCharPos = { x, y };
 
-            if (gameBoard->isPosInBounds(curCharPos))
+            if (isScreenPosInBounds(curCharPos))
             {
-                gotoScreenPos(curCharPos);
                 gameBoard->resetCharAtPos(curCharPos);
-                std::cout << gameBoard->getCharAtPos(curCharPos);
+                drawSymbolOnScreen(gameBoard->getCharAtPos(curCharPos), curCharPos);
             }
         }
     }
