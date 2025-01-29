@@ -100,16 +100,97 @@ bool Board::isHammerEnemyAtPos(Point position) const
 	return false;
 }
 
-bool Board::isGhostAtPos(Point position) const
+Point Board::getWayUpInRow(Point pos)
 {
-	return (getCharAtPos(position) == GHOST);
-	/*for (char ghost : GHOSTS)
+	int row = pos.getY();
+	int col = pos.getX();
+
+	bool continuousLeft = true;
+	bool continuousRight = true;
+
+	// search closest way up (ladder) from pos outwards that has shared floor to pos (continuous)
+	for (int offset = 0; ((col - offset >= 0) && continuousLeft)
+		|| ((col + offset < Constants::SCREEN_WIDTH) && continuousRight); ++offset)
 	{
-		if (getCharAtPos(position) == ghost)
+		// Check left side
+		if ((col - offset >= 0) && continuousLeft)
 		{
-			return true;
+			Point leftPos(col - offset, row);
+
+			// if the left floor is continuous
+			if (isObstacleAtPos(leftPos.oneBelow()))
+			{
+				if (isLadderAtPos(leftPos))
+				{
+					return leftPos;
+				}
+			}
+
+			// else, stop searching left half
+			else
+			{
+				continuousLeft = false;
+			}
+		}
+
+		// Check right side
+		if ((col + offset < Constants::SCREEN_WIDTH) && continuousRight)
+		{
+			Point rightPos(col + offset, row);
+
+			// if the right floor is continuous
+			if (isObstacleAtPos(rightPos.oneBelow()))
+			{
+				if (isLadderAtPos(rightPos))
+				{
+					return rightPos;
+				}
+			}
+
+			// else, stop searching right half
+			else
+			{
+				continuousRight = false;
+			}
 		}
 	}
 
-	return false;*/
+	// if way up not found
+	return Constants::POS_NOT_SET;
+}
+
+Point Board::getWayDownInRow(Point pos)
+{
+	int row = pos.getY();
+	int col = pos.getX();
+	Point checkPos = pos;
+
+	// search closest way up (ladder) from pos outwards that has shared floor to pos (continuous)
+	for (int offset = 0; (col - offset >= 0) || (col + offset < Constants::SCREEN_WIDTH); ++offset)
+	{
+		// Check left side
+		if (col - offset >= 0)
+		{
+			Point leftPos(col - offset, row);
+
+			if (!isObstacleAtPos(leftPos.oneBelow()) || isLadderAtPos(leftPos.oneBelow().oneBelow()))
+			{
+				return leftPos;
+			}
+		}
+
+		// Check right side
+		if (col + offset < Constants::SCREEN_WIDTH)
+		{
+			Point rightPos(col + offset, row);
+
+			if (!isObstacleAtPos(rightPos.oneBelow()) || isLadderAtPos(rightPos.oneBelow().oneBelow()))
+			{
+				return rightPos;
+			}
+		}
+	}
+
+	// if way down not found
+	return Constants::POS_NOT_SET;
 }

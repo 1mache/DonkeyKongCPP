@@ -4,25 +4,16 @@
 #include "MovingObject.h"
 #include "Constants.h"
 #include <cstdlib>
-//#include "GhostsManager.h"
-
-//class GhostsManager; // forward declaration
 
 class Ghost : public MovingObject
 {
-    /*enum MoveDirection { LEFT, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {-1, 0}, {1, 0} };*/
-
     // values for random direction change of 0.05 probability
     static constexpr int MAX_RANDOM_VAL = 100;
     static constexpr int DIR_CHANGE_CHANCE = 5;
 
     char ghostChar = Board::GHOST;
-    //Board* gameBoard = nullptr;
 
-    //GhostsManager* ghostsManager;
-
-    // sets ghosts direction based on environment (not including other ghosts) , if needed
+    // sets ghost's direction based on environment and other ghosts, if needed
     // returns whether this actually changed the direction
     bool adjustDirection();
 
@@ -32,20 +23,11 @@ class Ghost : public MovingObject
         return ((rand() % MAX_RANDOM_VAL) < DIR_CHANGE_CHANCE);
     }
 
-    bool reachedAnotherGhost() const;
-
-protected:
-    enum MoveDirection { UP, LEFT, DOWN, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
-
-    MoveDirection currentMoveDirection = MoveDirection::RIGHT;
-
-    Point getDirection() const
+    // return true if we reached another regular ghost in front of our movement direction
+    bool reachedAnotherGhost() const
     {
-        return DIRECTIONS[currentMoveDirection];
+        return (gameBoard->getCharAtPos(getPosition() + DIRECTIONS[currentMoveDirection]) == Board::GHOST);
     }
-
-    virtual void moveGhost();
 
     // check if ghost reached end of a floor
     bool reachedEndOfFloor() const;
@@ -58,14 +40,26 @@ protected:
 
     void changeHorizontalDirection()
     {
-        //// move direction has 2 values (index 0 or 1), and 1-direction gives the opposite value 
-        //currentMoveDirection = MoveDirection(1 - currentMoveDirection);
-
+        // LEFT and RIGHT are 2 values apart in MoveDirection (index 1, 3), and there are only 4 values in total.
+        // So the calculation below gives the opposite horizontal direction 
         if (currentMoveDirection == MoveDirection::RIGHT || currentMoveDirection == MoveDirection::LEFT)
         {
             currentMoveDirection = MoveDirection((currentMoveDirection + 2) % 4);
         }
     }
+
+    Point getDirection() const
+    {
+        return DIRECTIONS[currentMoveDirection];
+    }
+
+protected:
+    enum MoveDirection { UP, LEFT, DOWN, RIGHT };
+    static constexpr Point DIRECTIONS[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0} };
+
+    MoveDirection currentMoveDirection = MoveDirection::RIGHT;
+
+    virtual void moveGhost();
 
 public:
     Ghost(Board* _gameBoard, Point _startPos, char _ghostChar) :
@@ -75,4 +69,6 @@ public:
     {
         moveGhost();
     }
+
+    virtual ~Ghost() {}
 };

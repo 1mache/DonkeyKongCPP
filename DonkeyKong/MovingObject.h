@@ -4,13 +4,9 @@
 #include "Board.h"
 #include "Point.h"
 #include "utils.h"
-#include <windows.h>
 
 class MovingObject
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    WORD color = (rand() % 8) + 1;
-
     Point position;
     // char that represents the object on screen
     char spriteChar;
@@ -22,7 +18,6 @@ class MovingObject
     {
         if(gameBoard->isPosInBounds(drawPosition))
         {
-            SetConsoleTextAttribute(hConsole, color);
             gotoScreenPos(drawPosition);
             std::cout << c;
         }

@@ -7,25 +7,18 @@
 
 class ClimbingGhost : public Ghost
 {
-    /*enum MoveDirection { UP, LEFT, DOWN, RIGHT };
-    static constexpr Point DIRECTIONS[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0} };*/
-
-    enum Modes { SCAN, LEFT, DOWN, RIGHT };
-
     char ghostChar = Board::CLIMBING_GHOST;
 
-    //Board* gameBoard = nullptr;
-
-    // tells us if were climbing a ladder right now 
+    // tells us if we're climbing a ladder right now 
     bool midClimb = false;
 
+    // max frames delay for climbing ghost movement (too hard to avoid without it)
     static constexpr int MOVE_DELAY = 1;
 
+    // current delay frame counter
     int delay = MOVE_DELAY;
 
     Point follow = getPosition();
-
-    bool updatedFollow = false;
 
     bool canClimbUp(Point position) const
     {
@@ -96,22 +89,30 @@ class ClimbingGhost : public Ghost
         int playerY = player.getY();
         int ghostY = getPosition().getY();
 
-        // player is above ghost
-        if (playerY < ghostY)
-        {
-            follow = gameBoard->getWayUpInRow(getPosition());
-        }
+        Point temp;
 
-        // player is below ghost
-        else if (playerY > ghostY)
+        // set new follow pos only if ghost is on floor
+        if (checkOnGround())
         {
-            follow = gameBoard->getWayDownInRow(getPosition());
-        }
+            // player is above ghost
+            if (playerY < ghostY)
+            {
+                temp = gameBoard->getWayUpInRow(getPosition());
+                follow = (temp != Constants::POS_NOT_SET ? temp : follow);
+            }
 
-        // player is in same row as ghost
-        else
-        {
-            follow = player;
+            // player is below ghost
+            else if (playerY > ghostY)
+            {
+                temp = gameBoard->getWayDownInRow(getPosition());
+                follow = (temp != Constants::POS_NOT_SET ? temp : follow);
+            }
+
+            // player is in same row as ghost
+            else
+            {
+                follow = player;
+            }
         }
     }
 
@@ -122,42 +123,40 @@ class ClimbingGhost : public Ghost
 
         if (delay == 0)
         {
-
             setFollowPos();
 
-            /*Point dirVector = follow - getPosition();
-            int dirY = dirVector.getY();
-            int dirX = dirVector.getX();*/
-
-            if (getPosition() == follow)
+            // if ghost reached ladder or hole
+            if (getPosition().getX() == follow.getX())
             {
+                //int followY = follow.getY();
                 int playerY = gameBoard->getPlayerPos().getY();
                 int ghostY = getPosition().getY();
 
+                // if player is above ghost and ghost is on ladder or mid climb up
                 if ((playerY < ghostY) && (canClimbUp(getPosition())))
                 {
                     climbUp();
                 }
 
+                // if player is below ghost and ghost is on ladder or mid climb down
                 else if ((playerY > ghostY) && (canClimbDown(getPosition())))
                 {
                     climbDown();
                 }
 
-                // fallback
-                /*else
+                // player is in same row as ghost
+                else
                 {
-                    currentMoveDirection = MoveDirection::LEFT;
-                    move(DIRECTIONS[currentMoveDirection], true);
-                }*/
+                    move(Constants::POINT_ZERO, true);
+                }
             }
 
+            // else continue moving horizontaly to follow pos
             else
             {
                 Point dirVector = follow - getPosition();
 
                 currentMoveDirection = (dirVector.getX() > 0) ? MoveDirection::RIGHT : MoveDirection::LEFT;
-
                 move(DIRECTIONS[currentMoveDirection], true);
             }
 
@@ -175,6 +174,8 @@ class ClimbingGhost : public Ghost
 
 public:
 
-    ClimbingGhost(Board* _gameBoard, Point _startPos) :
-        Ghost(_gameBoard, _startPos, Board::CLIMBING_GHOST)  {}
+    ClimbingGhost(Board* _gameBoard, Point _startPos, char _ghostChar) :
+        Ghost(_gameBoard, _startPos, _ghostChar), ghostChar(_ghostChar)  {}
+
+    virtual ~ClimbingGhost() {}
 };

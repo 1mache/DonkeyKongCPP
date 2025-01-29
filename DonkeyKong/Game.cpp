@@ -382,7 +382,8 @@ void Game::checkPlayerHitEnemy()
             barrelManager->destroyBarrelAtPos(destroyPos);
         }
         // if its a ghost
-        if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST)
+        if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST 
+            || gameBoard->getCharAtPos(destroyPos) == Board::CLIMBING_GHOST)
         {
             ghostsManager->destroyGhostAtPos(destroyPos);
         }

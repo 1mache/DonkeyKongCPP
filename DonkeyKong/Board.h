@@ -30,14 +30,13 @@ private:
 	// objects that mario cannot pass through
 	static constexpr char OBSTACLES[] = { '>', '<', DEFAULT_FLOOR, 'W', SCREEN_BORDER };
 	// things that kill mario
-	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST };
+	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST, CLIMBING_GHOST };
 
 	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST, CLIMBING_GHOST };
 
-	//static constexpr char GHOSTS[] = { GHOST, CLIMBING_GHOST };
-
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 	
@@ -60,6 +59,7 @@ public:
 	
 	// puts the given char at given position on current board
 	void updateBoardWithChar(Point position, char newChar);
+
 	// resets the char at given position
 	void resetCharAtPos(Point position);
 
@@ -86,9 +86,6 @@ public:
 		return getCharAtPos(position) == HAMMER;
 	}
 
-	// check if the char at position is a type of ghost from GHOSTS[]
-	bool isGhostAtPos(Point position) const;
-
 	void setPlayerPos(Point pos)
 	{
 		playerPos = pos;
@@ -99,69 +96,8 @@ public:
 		return playerPos;
 	}
 
-	Point getWayUpInRow(Point pos)
-	{
-		int row = pos.getY();
-		int col = pos.getX();
+	Point getWayUpInRow(Point pos);
 
-		// for left side from pos that is on continuous floor get closest way up (ladder)
-		while (isObstacleAtPos(Point(col, row).oneBelow()) && col > 0)
-		{
-			if (isLadderAtPos(Point(col, row)))
-			{
-				return Point(col, row);
-			}
-			--col;
-		}
-
-		col = pos.getX();
-
-		// for right side from pos that is on continuous floor get closest way up (ladder)
-		while (isObstacleAtPos(Point(col, row).oneBelow()) && col < Constants::SCREEN_WIDTH)
-		{
-			if (isLadderAtPos(Point(col, row)))
-			{
-				return Point(col, row);
-			}
-			++col;
-		}
-
-		//return Constants::POS_NOT_SET;
-		return getPlayerPos();
-	}
-
-	Point getWayDownInRow(Point pos)
-	{
-		int row = pos.getY();
-		int col = pos.getX();
-		Point checkPos = Point(col, row);
-
-		// for left side from pos get closest way down (ladder or hole in floor)
-		while (col > 0)
-		{
-			checkPos = Point(col, row);
-			if (!isObstacleAtPos(checkPos) || isLadderAtPos(checkPos.oneBelow().oneBelow()))
-			{
-				return checkPos;
-			}
-			--col;
-		}
-
-		col = pos.getX();
-
-		// for right side from pos get closest way down (ladder or hole in floor)
-		while (col < Constants::SCREEN_WIDTH)
-		{
-			checkPos = Point(col, row);
-			if (!isObstacleAtPos(checkPos) || isLadderAtPos(checkPos.oneBelow().oneBelow()))
-			{
-				return checkPos;
-			}
-			++col;
-		}
-
-		//return Constants::POS_NOT_SET;
-		return getPlayerPos();
-	}
+	Point getWayDownInRow(Point pos);
 };
 

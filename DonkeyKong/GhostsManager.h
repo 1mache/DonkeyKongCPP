@@ -9,8 +9,6 @@
 #include "Board.h"
 #include <cstdlib>
 
-//class Ghost; // forward declaration
-
 class GhostsManager
 {
     Board* gameBoard = nullptr;
@@ -25,15 +23,12 @@ class GhostsManager
 public:
     GhostsManager(Board* _gameBoard) : gameBoard(_gameBoard) {}
 
-    // finds ghost that is at a given position
-    //Ghost* findGhostByPosition(Point position);
-
-    // moves all of the ghosts and hadles them meeting one another
+    // moves all of the ghosts
     void manageGhosts();
 
     // deletes ghost in the given position (if there is a ghost there)
     void destroyGhostAtPos(Point destroyPos);
 
-    // spawns all the ghosts given their start positions
+    // spawns all the ghosts given their start position and type (regular or climbing)
     void resetGhosts(const std::vector<std::pair<Point, char>>& startPositions);
 };
