@@ -52,6 +52,7 @@ void Player::movePlayer()
         // stop the player and dont apply gravity
         gravity = false;
         move(DIRECTIONS[STAY], gravity);
+        gameBoard->setPlayerPos(getPosition());
         return;
     }
 
@@ -61,11 +62,13 @@ void Player::movePlayer()
         if (canClimbUp(position))
         {
             climbUp();
+            gameBoard->setPlayerPos(getPosition());
             return;
         }
         else
         {
             jump();
+            gameBoard->setPlayerPos(getPosition());
             return;
         }
     }
@@ -75,6 +78,7 @@ void Player::movePlayer()
         if (canClimbDown(position))
         {
             climbDown();
+            gameBoard->setPlayerPos(getPosition());
             return;
         }
         else 
@@ -86,6 +90,7 @@ void Player::movePlayer()
     
     // if we got here we just move the player horizontaly
     move(DIRECTIONS[horizontalState], gravity);
+    gameBoard->setPlayerPos(getPosition());
 }
 
 void Player::jump()

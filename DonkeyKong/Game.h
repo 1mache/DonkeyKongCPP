@@ -95,7 +95,7 @@ private:
 	Point legendPos = Constants::POS_NOT_SET;
 	Point hammerPos = Constants::POS_NOT_SET;
 
-	std::vector<Point> ghostsStartPositions;
+	std::vector<std::pair<Point, char>> ghostsStartPositions;
 	
 	// reference to a vector of file names
 	const std::vector<std::string>& levelFileNames;

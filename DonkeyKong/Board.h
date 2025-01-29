@@ -11,6 +11,7 @@ public:
 	static constexpr char BARREL = 'O';
 	static constexpr char EXPLOSION = '*';
 	static constexpr char GHOST = 'x';
+	static constexpr char CLIMBING_GHOST = 'X';
 	static constexpr char DONKEY_KONG = '&';
 	static constexpr char PAULINE = '$';
 	static constexpr char HAMMER = 'p';
@@ -29,12 +30,13 @@ private:
 	// objects that mario cannot pass through
 	static constexpr char OBSTACLES[] = { '>', '<', DEFAULT_FLOOR, 'W', SCREEN_BORDER };
 	// things that kill mario
-	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST };
+	static constexpr char HAZARDS[] = { BARREL, EXPLOSION, GHOST, CLIMBING_GHOST };
 
-	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST };
+	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST, CLIMBING_GHOST };
 
 	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
 	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
 	
@@ -43,6 +45,9 @@ private:
 	const std::vector<char> originalBoard;
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
+
+	Point playerPos = Constants::POS_NOT_SET;
+
 public:
 	Board(std::vector<char>&& _originalBoard): originalBoard(std::move(_originalBoard)) {};
 
@@ -54,6 +59,7 @@ public:
 	
 	// puts the given char at given position on current board
 	void updateBoardWithChar(Point position, char newChar);
+
 	// resets the char at given position
 	void resetCharAtPos(Point position);
 
@@ -73,9 +79,18 @@ public:
 		return getCharAtPos(position) == HAMMER;
 	}
 
-	bool isGhostAtPos(Point position) const
+	void setPlayerPos(Point pos)
 	{
-		return getCharAtPos(position) == GHOST;
+		playerPos = pos;
 	}
+
+	Point getPlayerPos()
+	{
+		return playerPos;
+	}
+
+	Point getWayUpInRow(Point pos);
+
+	Point getWayDownInRow(Point pos);
 };
 

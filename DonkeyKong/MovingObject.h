@@ -1,19 +1,15 @@
 #pragma once
 
 #include <iostream>
-
 #include "Board.h"
 #include "Point.h"
 #include "utils.h"
-#include <windows.h>
 
 class MovingObject
 {
     Point position;
     // char that represents the object on screen
     char spriteChar;
-    
-    Board* gameBoard = nullptr;
 
     // counts how many lines we fell, 0 if not in free fall 
     int fallHeight = 0;
@@ -31,6 +27,7 @@ protected:
     // moves the object and draws it in the new position,
     // you can choose whether to apply gravity or not,
     // the function can ignore obstacles, doesnt do it by default 
+    Board* gameBoard = nullptr;
     void move(Point moveDirection, bool useGravity, bool ignoreObstacles = false);
 
 public:

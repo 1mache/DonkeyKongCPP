@@ -359,7 +359,12 @@ bool Game::setEntityPositionByChar(char c, Point position)
         break;
     
     case Board::GHOST:
-        ghostsStartPositions.push_back(position);
+        ghostsStartPositions.push_back({ position, Board::GHOST });
+        isAddedToBoard = false;
+        break;
+
+    case Board::CLIMBING_GHOST:
+        ghostsStartPositions.push_back({ position, Board::CLIMBING_GHOST });
         isAddedToBoard = false;
         break;
 
@@ -426,7 +431,8 @@ void Game::checkPlayerHitEnemy()
             barrelManager->destroyBarrelAtPos(destroyPos);
         }
         // if its a ghost
-        if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST)
+        if (gameBoard->getCharAtPos(destroyPos) == Board::GHOST 
+            || gameBoard->getCharAtPos(destroyPos) == Board::CLIMBING_GHOST)
         {
             ghostsManager->destroyGhostAtPos(destroyPos);
         }

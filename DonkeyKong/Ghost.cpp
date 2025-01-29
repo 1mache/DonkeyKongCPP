@@ -2,12 +2,23 @@
 
 bool Ghost::adjustDirection()
 {
+    bool changedDirection = false;
+
+    // first handle direction change caused by environment (or random)
     if (reachedEndOfFloor() || reachedWall() || shouldRandomDirectionChange())
     {
-        changeDirection();
-        return true;
+        changeHorizontalDirection();
+        changedDirection = true;
     }
-    return false;
+
+    // then handle direction change caused by other regular ghosts
+    if (reachedAnotherGhost())
+    {
+        changeHorizontalDirection();
+        changedDirection = true;
+    }
+
+    return changedDirection;
 }
 
 bool Ghost::reachedEndOfFloor() const
@@ -18,6 +29,14 @@ bool Ghost::reachedEndOfFloor() const
     positionToCheck = (getPosition() + getDirection()).oneBelow();
 
     return(canMoveToPos(positionToCheck));
+}
+
+void Ghost::changeHorizontalDirection()
+{
+    if (currentMoveDirection == MoveDirection::RIGHT)
+        currentMoveDirection = MoveDirection::LEFT;
+    else if (currentMoveDirection == MoveDirection::LEFT)
+        currentMoveDirection = MoveDirection::RIGHT;
 }
 
 void Ghost::moveGhost()
@@ -32,5 +51,5 @@ void Ghost::moveGhost()
     }
 
     // place ghost on board in its new position
-    gameBoard->updateBoardWithChar(getPosition(), Board::GHOST);
+    gameBoard->updateBoardWithChar(getPosition(), ghostChar);
 }
