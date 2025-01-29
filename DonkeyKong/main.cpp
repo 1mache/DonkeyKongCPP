@@ -9,8 +9,11 @@ int main(int argc, char* argv[])
 	}
 	else if(argc > 1 && std::string(argv[1]) == "-load")
 	{
-
-		gameManager.launchGame(GameManager::GameMode::LOAD);
+		if (argc > 2 && std::string(argv[2]) == "-silent")
+			gameManager.launchGame(GameManager::GameMode::LOAD, true);
+		else
+			gameManager.launchGame(GameManager::GameMode::LOAD);
+			
 	}
 	else
 		gameManager.launchGame(GameManager::GameMode::STANDARD);

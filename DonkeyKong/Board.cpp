@@ -14,6 +14,10 @@ void Board::resetBoard() {
 }
 
 void Board::print() const {
+	// dont print the board in silent mode
+	if (Constants::isSilentModeOn())
+		return;
+	
 	for (int i = 0; i < HEIGHT-1; i++) {
 		std::cout << currentBoard[i] << '\n';
 		//animation frame dalay

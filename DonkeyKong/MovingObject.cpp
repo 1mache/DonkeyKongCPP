@@ -1,5 +1,18 @@
 #include "MovingObject.h"
 
+void MovingObject::draw(Point drawPosition, char c) const
+{
+    // dont draw if in silent mode
+    if (Constants::isSilentModeOn())
+        return;
+
+    if (gameBoard->isPosInBounds(drawPosition))
+    {
+        gotoScreenPos(drawPosition);
+        std::cout << c;
+    }
+}
+
 void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacles)
 {
     erase();

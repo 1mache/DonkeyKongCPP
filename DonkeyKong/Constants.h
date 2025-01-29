@@ -39,7 +39,7 @@ public:
 		isInLoadMode = enabled;
 	}
 
-	static bool silentModeOn()
+	static bool isSilentModeOn()
 	{
 		return isInSilentMode;
 	}

@@ -15,12 +15,14 @@ std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode)
 	return std::unique_ptr<Game>(game);
 }
 
-void GameManager::launchGame(GameMode mode)
+void GameManager::launchGame(GameMode mode, bool isSilent)
 {
 	// hide cursor
 	ShowConsoleCursor(false);
 	// TODO: doesnt work from cmd
 	clearScreen();
+	Constants::setSilentMode(isSilent);
+
 	readFileNames(levelFileNames, Constants::LEVEL_FILE_EXT);
 
 	while (true)

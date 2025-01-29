@@ -19,5 +19,5 @@ public:
 	
 	//function has a loop that can only be broken by selecting EXIT in the menu, 
 	// it allows to return to the menu after gameOver/win
-	void launchGame(GameMode mode);
+	void launchGame(GameMode mode, bool isSilent = false);
 };
