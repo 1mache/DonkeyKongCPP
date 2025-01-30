@@ -11,7 +11,7 @@ public:
 	static constexpr char BARREL = 'O';
 	static constexpr char EXPLOSION = '*';
 	static constexpr char GHOST = 'x';
-	static constexpr char CLIMBING_GHOST = 'C';
+	static constexpr char CLIMBING_GHOST = '%';
 	static constexpr char FILE_CLIMBING_GHOST = 'X';
 	static constexpr char DONKEY_KONG = '&';
 	static constexpr char PAULINE = '$';

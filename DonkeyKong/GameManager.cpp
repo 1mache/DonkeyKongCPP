@@ -65,4 +65,7 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 			}
 		}
 	}
+
+	// show cursor again in the end(in case we`re running from cmd)
+	ShowConsoleCursor(true);
 }

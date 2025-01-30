@@ -3,7 +3,7 @@
 void ReplayGame::handleResultMismatch(std::pair<size_t, Results::ResultValue> expectedResult, std::pair<size_t, Results::ResultValue> recievedResult)
 {
 	std::ostringstream errorMsgStream;
-	errorMsgStream << "Error: Results file doesnt match the steps file." << std::endl;
+	errorMsgStream << "Error: Results file doesnt match the steps file: "<< stepsFileNames[currSaveFileId] << std::endl;
 
 	// if we expected something to happen on this iteration but nothing happened
 	if(recievedResult.second == Results::NO_RESULT)
