@@ -363,7 +363,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
         isAddedToBoard = false;
         break;
 
-    case Board::CLIMBING_GHOST:
+    case Board::FILE_CLIMBING_GHOST:
         ghostsStartPositions.push_back({ position, Board::CLIMBING_GHOST });
         isAddedToBoard = false;
         break;
