@@ -8,14 +8,15 @@ Climbing ghost behavior:
 - You cannot jump over Climbing ghosts, because they walk towards you. The only way to deal with them is the Hammer or running away.
 - If both Mario and a Climbing ghost are on opposing ladders, the ghost will stay on the ladder until you reach the floor. 
 - To allow following behavior, regular ghosts don`t collide with Climbing ghosts. 
+- The Climbing ghost`s char in the game is '%' while in file it`s still 'X'
 
 Features:
-
+- The load mode of the Game gets all the recording files and tries to play them in lexicograpghical orded, if for some reason there is no 
+  .screen file for one of the recordings, the game will display an error. 
 
 Bonuses:
 -   Climbing ghosts following behavior.
 ============<Exercise 3>============
-
 ============<Exercise 2>============
 
 Level file validation:
