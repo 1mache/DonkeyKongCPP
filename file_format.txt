@@ -1,0 +1,10 @@
+Steps files:
+1. Level seed for srand
+2. Number of steps on level
+3. All the steps: iteration id and 2 inputs
+*Note: if there were no second input in the iteration, the second key will be ascii value 0. (may be invisble in Notepad app)
+
+Results files: 
+1. Number of results 
+2. All the results: iteration id and result type. 
+Result type is an Enum in code but there you`ll see it`s int representation in the file. 
