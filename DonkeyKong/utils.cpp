@@ -4,7 +4,7 @@ bool isScreenPosInBounds(Point screenPosition)
 {
     int x = screenPosition.getX();
     int y = screenPosition.getY();
-    return ((0 <= x && x < Constants::SCREEN_WIDTH) && (0 <= y && y < Constants::SCREEN_HEIGHT));
+    return ((0 <= x && x < GameOptions::SCREEN_WIDTH) && (0 <= y && y < GameOptions::SCREEN_HEIGHT));
 }
 
 void gotoScreenPos(Point screenPosition)
@@ -19,7 +19,7 @@ void gotoScreenPos(Point screenPosition)
 void drawSymbolOnScreen(char symbol, Point screenPosition)
 {
     // dont draw if silent mode is on 
-    if (Constants::isSilentModeOn())
+    if (GameOptions::isSilentModeOn())
         return;
     
     if(isScreenPosInBounds(screenPosition))
@@ -32,7 +32,7 @@ void drawSymbolOnScreen(char symbol, Point screenPosition)
 void drawLineOnScreen(const std::string& line, Point lineStartPosition)
 {
     // dont draw if silent mode is on 
-    if (Constants::isSilentModeOn())
+    if (GameOptions::isSilentModeOn())
         return;
 
     Point lineEndPosition = lineStartPosition + Point(line.size() ,0);
@@ -43,7 +43,7 @@ void drawLineOnScreen(const std::string& line, Point lineStartPosition)
         // if the end is not in bounds print only the part that is in bounds
         if(!isScreenPosInBounds(lineEndPosition))
         {
-            std::string slicedLine = line.substr(0, Constants::SCREEN_WIDTH - lineStartPosition.getX());
+            std::string slicedLine = line.substr(0, GameOptions::SCREEN_WIDTH - lineStartPosition.getX());
             std::cout << slicedLine;
         }
         else std::cout << line;
@@ -78,7 +78,7 @@ void readFileNames(std::vector<std::string>& outVector, std::string extension)
 
     // string defining the template that we use to find level files. regular expression that means any 
     // sequence of eng alphabet letters and digits after dkong_ that ends with .screen
-    std::string levelFileNameTemplate = std::string(Constants::FILENAME_PREFIX) + ".+\\" + extension;
+    std::string levelFileNameTemplate = std::string(GameOptions::FILENAME_PREFIX) + ".+\\" + extension;
 
     std::regex pattern(levelFileNameTemplate);
 

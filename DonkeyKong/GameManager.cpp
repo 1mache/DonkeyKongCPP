@@ -2,12 +2,12 @@
 
 std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode)
 {
-	Constants::setLoadMode(false);
+	GameOptions::setLoadMode(false);
 	Game* game = nullptr;
 	if (mode == LOAD)
 	{
 		game = new ReplayGame(levelFileNames);
-		Constants::setLoadMode(true);
+		GameOptions::setLoadMode(true);
 	}
 	else
 		game = new Game(levelFileNames, startLevelId, mode == SAVE);
@@ -21,9 +21,9 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 	ShowConsoleCursor(false);
 	// TODO: doesnt work from cmd
 	clearScreen();
-	Constants::setSilentMode(isSilent);
+	GameOptions::setSilentMode(isSilent);
 
-	readFileNames(levelFileNames, Constants::LEVEL_FILE_EXT);
+	readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT);
 
 	while (true)
 	{	

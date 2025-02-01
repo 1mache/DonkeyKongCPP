@@ -5,7 +5,7 @@
 
 #include "Point.h"
 #include "MovingObject.h"
-#include "Constants.h"
+#include "GameOptions.h"
 #include "Barrel.h"
 #include "Board.h"
 

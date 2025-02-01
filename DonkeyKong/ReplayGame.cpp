@@ -132,8 +132,8 @@ bool ReplayGame::validateLastIteration()
 bool ReplayGame::start()
 {
 	// get all the results and steps fileNames
-	readFileNames(stepsFileNames, Constants::STEPS_FILE_EXT);
-	readFileNames(resultsFileNames, Constants::RESULTS_FILE_EXT);
+	readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT);
+	readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT);
 	loadRecordings();
 
 	std::ostringstream errorMsgStream;

@@ -60,7 +60,7 @@
     <ClCompile Include="ReplayGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Constants.cpp">
+    <ClCompile Include="GameOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClimbingGhost.cpp">
@@ -89,7 +89,7 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Constants.h">
+    <ClInclude Include="GameOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Barrel.h">

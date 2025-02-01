@@ -15,7 +15,7 @@ void Board::resetBoard() {
 
 void Board::print() const {
 	// dont print the board in silent mode
-	if (Constants::isSilentModeOn())
+	if (GameOptions::isSilentModeOn())
 		return;
 	
 	for (int i = 0; i < HEIGHT-1; i++) {
@@ -114,7 +114,7 @@ Point Board::getWayUpInRow(Point pos)
 
 	// search closest way up (ladder) from pos outwards that has shared floor to pos (continuous)
 	for (int offset = 0; ((col - offset >= 0) && continuousLeft)
-		|| ((col + offset < Constants::SCREEN_WIDTH) && continuousRight); ++offset)
+		|| ((col + offset < GameOptions::SCREEN_WIDTH) && continuousRight); ++offset)
 	{
 		// Check left side
 		if ((col - offset >= 0) && continuousLeft)
@@ -138,7 +138,7 @@ Point Board::getWayUpInRow(Point pos)
 		}
 
 		// Check right side
-		if ((col + offset < Constants::SCREEN_WIDTH) && continuousRight)
+		if ((col + offset < GameOptions::SCREEN_WIDTH) && continuousRight)
 		{
 			Point rightPos(col + offset, row);
 
@@ -160,7 +160,7 @@ Point Board::getWayUpInRow(Point pos)
 	}
 
 	// if way up not found
-	return Constants::POS_NOT_SET;
+	return GameOptions::POS_NOT_SET;
 }
 
 Point Board::getWayDownInRow(Point pos)
@@ -170,7 +170,7 @@ Point Board::getWayDownInRow(Point pos)
 	Point checkPos = pos;
 
 	// search closest way up (ladder) from pos outwards that has shared floor to pos (continuous)
-	for (int offset = 0; (col - offset >= 0) || (col + offset < Constants::SCREEN_WIDTH); ++offset)
+	for (int offset = 0; (col - offset >= 0) || (col + offset < GameOptions::SCREEN_WIDTH); ++offset)
 	{
 		// Check left side
 		if (col - offset >= 0)
@@ -184,7 +184,7 @@ Point Board::getWayDownInRow(Point pos)
 		}
 
 		// Check right side
-		if (col + offset < Constants::SCREEN_WIDTH)
+		if (col + offset < GameOptions::SCREEN_WIDTH)
 		{
 			Point rightPos(col + offset, row);
 
@@ -196,5 +196,5 @@ Point Board::getWayDownInRow(Point pos)
 	}
 
 	// if way down not found
-	return Constants::POS_NOT_SET;
+	return GameOptions::POS_NOT_SET;
 }

@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "MovingObject.h"
-#include "Constants.h"
+#include "GameOptions.h"
 
 class Barrel : public MovingObject
 {

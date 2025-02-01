@@ -1,10 +1,10 @@
-#include "Constants.h"
+#include "GameOptions.h"
 
 // static member definitions
-bool Constants::isInSilentMode = false;
-bool Constants::isInLoadMode = false;
+bool GameOptions::isInSilentMode = false;
+bool GameOptions::isInLoadMode = false;
 
-int Constants::getRefreshRate()
+int GameOptions::getRefreshRate()
 {
 	if (isInSilentMode) 
 		return 0;

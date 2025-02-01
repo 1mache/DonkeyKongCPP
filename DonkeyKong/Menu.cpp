@@ -151,7 +151,7 @@ void Menu::update()
 		//draw arrow if were on a screen that has arrow main screen 
 		drawArrow();
 
-		Sleep(Constants::getRefreshRate());
+		Sleep(GameOptions::getRefreshRate());
 	}
 }
 

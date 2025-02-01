@@ -4,7 +4,7 @@
 #include <windows.h>
 #include <vector>
 #include "Point.h"
-#include "Constants.h"
+#include "GameOptions.h"
 
 class Board {
 public:
@@ -22,7 +22,7 @@ public:
 	// function that translates 2D position to an index in originalBoard
 	static int posToIndex(Point point)
 	{
-		return (point.getY()* Constants::SCREEN_WIDTH) + point.getX();
+		return (point.getY()* GameOptions::SCREEN_WIDTH) + point.getX();
 	}
 
 private:
@@ -35,8 +35,8 @@ private:
 
 	static constexpr char HAMMER_ENEMIES[] = { BARREL, GHOST, CLIMBING_GHOST };
 
-	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
-	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+	static constexpr int WIDTH = GameOptions::SCREEN_WIDTH;
+	static constexpr int HEIGHT = GameOptions::SCREEN_HEIGHT;
 
 	// how much delay there is in printing animation
 	static constexpr int PRINT_DELAY = 20;
@@ -47,7 +47,7 @@ private:
 
 	char currentBoard[HEIGHT][WIDTH + 1] = {}; // +1 for null terminator
 
-	Point playerPos = Constants::POS_NOT_SET;
+	Point playerPos = GameOptions::POS_NOT_SET;
 
 public:
 	Board(std::vector<char>&& _originalBoard): originalBoard(std::move(_originalBoard)) {};

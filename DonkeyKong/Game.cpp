@@ -89,7 +89,7 @@ void Game::update()
                 {
                     player->handleKeyboardInput(input.key1);
 
-                    if (input.key2 != Constants::KEY_NOT_SET)
+                    if (input.key2 != GameOptions::KEY_NOT_SET)
                         player->handleKeyboardInput(input.key2);
 
                     // if this is a recorded game save this step
@@ -148,7 +148,7 @@ void Game::update()
                 break;
         }
 
-        Sleep(Constants::getRefreshRate());
+        Sleep(GameOptions::getRefreshRate());
     }
 }
 
@@ -173,7 +173,7 @@ void Game::displayLevelException(LevelFileException& e)
 void Game::drawHammer()
 {
     // if the hammer exists on the level and player hasnt picked it up yet
-    if (hammerPos != Constants::POS_NOT_SET && !player->isHoldingHammer())
+    if (hammerPos != GameOptions::POS_NOT_SET && !player->isHoldingHammer())
     {
         drawSymbolOnScreen(Board::HAMMER, hammerPos);
         // add it to current board
@@ -246,7 +246,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
 {
     resetEntitiesPositions();
 
-    int screenHeight = Constants::SCREEN_HEIGHT, screenWidth = Constants::SCREEN_WIDTH;
+    int screenHeight = GameOptions::SCREEN_HEIGHT, screenWidth = GameOptions::SCREEN_WIDTH;
     // create a vector that represents the board, see Board::posToIndex on how we access its elements
     std::vector<char> map(screenHeight * screenWidth);
 
@@ -317,11 +317,11 @@ Board* Game::readLevelFromFile(const std::string& filename)
 
 void Game::resetEntitiesPositions()
 {
-    marioStartPos = Constants::POS_NOT_SET;
-    donkeyKongPos = Constants::POS_NOT_SET;
-    paulinePos = Constants::POS_NOT_SET;
-    legendPos = Constants::POS_NOT_SET;
-    hammerPos = Constants::POS_NOT_SET;
+    marioStartPos = GameOptions::POS_NOT_SET;
+    donkeyKongPos = GameOptions::POS_NOT_SET;
+    paulinePos = GameOptions::POS_NOT_SET;
+    legendPos = GameOptions::POS_NOT_SET;
+    hammerPos = GameOptions::POS_NOT_SET;
     ghostsStartPositions.clear();
 }
 
@@ -332,28 +332,28 @@ bool Game::setEntityPositionByChar(char c, Point position)
     switch (c)
     {
     case MARIO_SPRITE:
-        if (marioStartPos == Constants::POS_NOT_SET)
+        if (marioStartPos == GameOptions::POS_NOT_SET)
             marioStartPos = position;
         // if this function returned false:
         isAddedToBoard = false; // we dont want to have the mario char on board
         break;
 
     case Board::DONKEY_KONG:
-        if (donkeyKongPos == Constants::POS_NOT_SET)
+        if (donkeyKongPos == GameOptions::POS_NOT_SET)
             donkeyKongPos = position;
         else
             isAddedToBoard = false;
         break;
 
     case Board::PAULINE:
-        if (paulinePos == Constants::POS_NOT_SET)
+        if (paulinePos == GameOptions::POS_NOT_SET)
             paulinePos = position;
         else
             isAddedToBoard = false;
         break;
 
     case LEGEND_CHAR:
-        if (legendPos == Constants::POS_NOT_SET)
+        if (legendPos == GameOptions::POS_NOT_SET)
             legendPos = position;
         isAddedToBoard = false;
         break;
@@ -369,7 +369,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
         break;
 
     case Board::HAMMER:
-        if (hammerPos == Constants::POS_NOT_SET)
+        if (hammerPos == GameOptions::POS_NOT_SET)
             hammerPos = position;
         isAddedToBoard = false;
         break;
@@ -393,22 +393,22 @@ void Game::discardRestOfLine(std::ifstream& levelFile)
 
 bool Game::isEntityMissing(std::string& outEntityMissing)
 {
-    if (marioStartPos == Constants::POS_NOT_SET)
+    if (marioStartPos == GameOptions::POS_NOT_SET)
     {
         outEntityMissing = "Mario";
         return true;
     }
-    if (donkeyKongPos == Constants::POS_NOT_SET)
+    if (donkeyKongPos == GameOptions::POS_NOT_SET)
     {
         outEntityMissing = "Donkey Kong";
         return true;
     }
-    if (paulinePos == Constants::POS_NOT_SET)
+    if (paulinePos == GameOptions::POS_NOT_SET)
     {
         outEntityMissing = "Pauline";
         return true;
     }
-    if (legendPos == Constants::POS_NOT_SET)
+    if (legendPos == GameOptions::POS_NOT_SET)
     {
         outEntityMissing = "Legend";
         return true;
@@ -423,7 +423,7 @@ void Game::checkPlayerHitEnemy()
     // get the position that the player wants to destroy
     Point destroyPos = player->handleHammer();
 
-    if (destroyPos != Constants::POS_NOT_SET)
+    if (destroyPos != GameOptions::POS_NOT_SET)
     {
         // if its a barrel
         if (gameBoard->getCharAtPos(destroyPos) == Board::BARREL)
@@ -457,14 +457,14 @@ Game::KeyInput Game::getInputKeys()
 void Game::saveSteps()
 {
     std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::STEPS_FILE_EXT;
+    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::STEPS_FILE_EXT;
     recSteps.saveSteps(filename);
 }
 
 void Game::saveResults()
 {
     std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(Constants::FILENAME_PREFIX) + currLevelTag + Constants::RESULTS_FILE_EXT;
+    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::RESULTS_FILE_EXT;
     recResults.saveResults(filename);
 }
 
@@ -520,7 +520,7 @@ void Game::resetLevel()
 
     gameBoard->resetBoard();
     
-    if(hammerPos != Constants::POS_NOT_SET)
+    if(hammerPos != GameOptions::POS_NOT_SET)
     {
         gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
     }

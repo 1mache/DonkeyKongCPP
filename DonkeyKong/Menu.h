@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "Point.h"
-#include "Constants.h"
+#include "GameOptions.h"
 #include "utils.h"
 
 class Menu
@@ -23,8 +23,8 @@ class Menu
 		}
 	};
 
-	static constexpr int WIDTH = Constants::SCREEN_WIDTH;
-	static constexpr int HEIGHT = Constants::SCREEN_HEIGHT;
+	static constexpr int WIDTH = GameOptions::SCREEN_WIDTH;
+	static constexpr int HEIGHT = GameOptions::SCREEN_HEIGHT;
 	static constexpr char ARROW = '>';
 	static constexpr int START_ARROW_ID = 0;
 	static constexpr int LINE_PRINT_DELAY = 30;

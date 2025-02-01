@@ -22,7 +22,7 @@
     <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="GameOptions.cpp" />
     <ClCompile Include="ClimbingGhost.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -42,7 +42,7 @@
     <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="ClimbingGhost.h" />
-    <ClInclude Include="Constants.h" />
+    <ClInclude Include="GameOptions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Ghost.h" />

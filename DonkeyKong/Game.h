@@ -12,7 +12,7 @@
 #include "Barrel.h"
 #include "BarrelManager.h"
 #include "GhostsManager.h"
-#include "Constants.h"
+#include "GameOptions.h"
 #include "LevelFileException.h"
 #include "Steps.h"
 #include "Results.h"
@@ -34,14 +34,14 @@ private:
 protected:
 	struct KeyInput
 	{
-		char key1 = Constants::KEY_NOT_SET, key2 = Constants::KEY_NOT_SET;
+		char key1 = GameOptions::KEY_NOT_SET, key2 = GameOptions::KEY_NOT_SET;
 		
 		KeyInput() = default;
 		KeyInput(const std::pair<char, char>& pair): key1(pair.first), key2(pair.second){};
 		
 		bool notSet()
 		{
-			return key1 == Constants::KEY_NOT_SET && key2 == Constants::KEY_NOT_SET;
+			return key1 == GameOptions::KEY_NOT_SET && key2 == GameOptions::KEY_NOT_SET;
 		}
 
 		std::pair<char, char> toPair()
@@ -89,11 +89,11 @@ private:
 	Results recResults;
 
 	//will be set when we read from file
-	Point marioStartPos = Constants::POS_NOT_SET;
-	Point donkeyKongPos = Constants::POS_NOT_SET;
-	Point paulinePos = Constants::POS_NOT_SET;
-	Point legendPos = Constants::POS_NOT_SET;
-	Point hammerPos = Constants::POS_NOT_SET;
+	Point marioStartPos = GameOptions::POS_NOT_SET;
+	Point donkeyKongPos = GameOptions::POS_NOT_SET;
+	Point paulinePos = GameOptions::POS_NOT_SET;
+	Point legendPos = GameOptions::POS_NOT_SET;
+	Point hammerPos = GameOptions::POS_NOT_SET;
 
 	std::vector<std::pair<Point, char>> ghostsStartPositions;
 	
@@ -178,7 +178,7 @@ public:
 	// for a level fileName "dkong_01.screen" returns the "01" part
 	static std::string getLevelTag(const std::string& levelFileName) 
 	{
-		size_t prefixSize = std::strlen(Constants::FILENAME_PREFIX);
+		size_t prefixSize = std::strlen(GameOptions::FILENAME_PREFIX);
 		size_t extStartId = levelFileName.find_first_of('.');
 
 		return levelFileName.substr(prefixSize, extStartId - prefixSize);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Constants.h"
+#include "GameOptions.h"
 #include "Point.h"
 #include <conio.h>
 #include <iostream>

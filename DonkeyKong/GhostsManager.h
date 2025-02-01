@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "MovingObject.h"
-#include "Constants.h"
+#include "GameOptions.h"
 #include <vector>
 #include "Ghost.h"
 #include "ClimbingGhost.h"

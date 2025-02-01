@@ -78,14 +78,14 @@ void ClimbingGhost::setFollowPos()
         if (playerY < ghostY)
         {
             temp = gameBoard->getWayUpInRow(getPosition());
-            follow = (temp != Constants::POS_NOT_SET ? temp : follow);
+            follow = (temp != GameOptions::POS_NOT_SET ? temp : follow);
         }
 
         // player is below ghost
         else if (playerY > ghostY)
         {
             temp = gameBoard->getWayDownInRow(getPosition());
-            follow = (temp != Constants::POS_NOT_SET ? temp : follow);
+            follow = (temp != GameOptions::POS_NOT_SET ? temp : follow);
         }
 
         // player is in same row as ghost
@@ -127,7 +127,7 @@ void ClimbingGhost::moveGhost()
             // player is in same row as ghost
             else
             {
-                move(Constants::POINT_ZERO, true);
+                move(GameOptions::POINT_ZERO, true);
             }
         }
 

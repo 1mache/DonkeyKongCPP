@@ -2,7 +2,7 @@
 
 #include "Point.h"
 
-class Constants
+class GameOptions
 {
 	//constants that a bunch of classes need
 private:
@@ -10,9 +10,9 @@ private:
 	static bool isInSilentMode;
 	static bool isInLoadMode;
 
-	Constants() = default;
-	Constants(Constants& other) = delete;
-	void operator=(const Constants& other) = delete;
+	GameOptions() = default;
+	GameOptions(GameOptions& other) = delete;
+	void operator=(const GameOptions& other) = delete;
 
 public:
 	static constexpr int SCREEN_WIDTH = 80;

@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "Ghost.h"
-#include "Constants.h"
+#include "GameOptions.h"
 #include <cstdlib>
 
 class ClimbingGhost : public Ghost

@@ -198,9 +198,9 @@ void Player::takeDamage() const
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {
         erase();
-        Sleep(Constants::getRefreshRate() * 2);
+        Sleep(GameOptions::getRefreshRate() * 2);
         draw();
-        Sleep(Constants::getRefreshRate() * 2);
+        Sleep(GameOptions::getRefreshRate() * 2);
     }
 }
 
@@ -224,7 +224,7 @@ void Player::hammerAnimation(Point destroyPos) const
     drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPos);
     drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPosPlusOne);
 
-    Sleep(Constants::getRefreshRate());
+    Sleep(GameOptions::getRefreshRate());
     
     // erases them (replaces them with what was there before)
     drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
@@ -251,8 +251,8 @@ Point Player::handleHammer()
         }
         
         // if we didnt hit an enemy that can be destroyed by hammer, return position not set
-        return Constants::POS_NOT_SET;
+        return GameOptions::POS_NOT_SET;
     }
 
-    return Constants::POS_NOT_SET;
+    return GameOptions::POS_NOT_SET;
 }
