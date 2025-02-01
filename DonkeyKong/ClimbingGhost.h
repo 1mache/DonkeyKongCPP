@@ -20,7 +20,7 @@ class ClimbingGhost : public Ghost
 
     // position for climbing ghost to follow 
     Point follow = getPosition();
-
+    
     bool canClimbUp(Point position) const;
 
     bool canClimbDown(Point position) const;

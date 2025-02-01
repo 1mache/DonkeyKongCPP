@@ -78,6 +78,7 @@ void ClimbingGhost::setFollowPos()
         if (playerY < ghostY)
         {
             temp = gameBoard->getWayUpInRow(getPosition());
+            // follow doesnt change if there is no way up
             follow = (temp != GameOptions::POS_NOT_SET ? temp : follow);
         }
 
@@ -85,6 +86,7 @@ void ClimbingGhost::setFollowPos()
         else if (playerY > ghostY)
         {
             temp = gameBoard->getWayDownInRow(getPosition());
+            // follow doesnt change if there is no way down
             follow = (temp != GameOptions::POS_NOT_SET ? temp : follow);
         }
 
@@ -108,7 +110,6 @@ void ClimbingGhost::moveGhost()
         // if ghost reached ladder or hole
         if (getPosition().getX() == follow.getX())
         {
-            //int followY = follow.getY();
             int playerY = gameBoard->getPlayerPos().getY();
             int ghostY = getPosition().getY();
 
