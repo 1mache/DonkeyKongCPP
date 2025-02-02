@@ -31,10 +31,10 @@ class ClimbingGhost : public Ghost
 
     void setFollowPos();
 
-    void moveGhost() override;
-
 public:
 
     ClimbingGhost(Board* _gameBoard, Point _startPos, char _ghostChar) :
         Ghost(_gameBoard, _startPos, _ghostChar), ghostChar(_ghostChar)  {}
+
+    void update() override;
 };

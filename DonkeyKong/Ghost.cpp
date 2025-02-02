@@ -39,13 +39,13 @@ void Ghost::changeHorizontalDirection()
         currentMoveDirection = MoveDirection::RIGHT;
 }
 
-void Ghost::moveGhost()
+void Ghost::update()
 {
     // remove ghost from board in its previous position
     gameBoard->resetCharAtPos(getPosition());
 
     // if we changed direction this turn, don't move
-    if(!adjustDirection())
+    if (!adjustDirection())
     {
         move(DIRECTIONS[currentMoveDirection], false);
     }

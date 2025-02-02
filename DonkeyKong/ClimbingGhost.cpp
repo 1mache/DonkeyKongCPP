@@ -98,7 +98,7 @@ void ClimbingGhost::setFollowPos()
     }
 }
 
-void ClimbingGhost::moveGhost()
+void ClimbingGhost::update()
 {
     // remove ghost from board in its previous position
     gameBoard->resetCharAtPos(getPosition());
@@ -143,11 +143,8 @@ void ClimbingGhost::moveGhost()
 
         delay = MOVE_DELAY;
     }
-
     else
-    {
         --delay;
-    }
 
     // place ghost on board in its new position
     gameBoard->updateBoardWithChar(getPosition(), ghostChar);

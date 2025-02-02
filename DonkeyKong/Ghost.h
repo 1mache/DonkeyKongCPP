@@ -52,17 +52,12 @@ protected:
 
     MoveDirection currentMoveDirection = MoveDirection::RIGHT;
 
-    virtual void moveGhost();
-
 public:
     Ghost(Board* _gameBoard, Point _startPos, char _ghostChar) :
         MovingObject(_gameBoard, _ghostChar, _startPos), ghostChar(_ghostChar) {}
 
     virtual ~Ghost() {}
 
-    void update() override
-    {
-        moveGhost();
-    }
+    void update() override;
 
 };
