@@ -5,6 +5,7 @@ Dmytro Kreicherek: 338062755
 ============<Exercise 3>============
 Climbing ghost behavior:
 - Climbing ghosts follow Mario (sophisticated algorithm), we don`t follow him directly, but find the closest path to him (if there is a path).
+- To make it a little less challenging we made it so the Climbing ghosts move every other frame, slower than the rest of the objects.
 - You cannot jump over Climbing ghosts, because they walk towards you. The only way to deal with them is the Hammer or running away.
 - If both Mario and a Climbing ghost are on opposing ladders, the ghost will stay on the ladder until you reach the floor. 
 - To allow following behavior, regular ghosts don`t collide with Climbing ghosts. 
@@ -13,6 +14,8 @@ Climbing ghost behavior:
 Features:
 - The load mode of the Game gets all the recording files and tries to play them in lexicograpghical orded, if for some reason there is no 
   .screen file for one of the recordings, the game will display an error. 
+- Now that there is an iteration counter, we updated the score logic to reward the player for finishing the level quicker.
+  If it took the player more than 1000 iterations to finish the level he is not rewarded. 
 
 Bonuses:
 -   Climbing ghosts following behavior.
