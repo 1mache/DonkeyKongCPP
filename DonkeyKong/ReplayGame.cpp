@@ -80,7 +80,7 @@ void ReplayGame::levelWon()
 	if (result != expectedResult)
 		handleResultMismatch(expectedResult, result);
 	
-	addToScore(PRINCESS_SCORE_AMOUNT);
+	addWinScoreReward();
 	moveToNextLevel();
 }
 

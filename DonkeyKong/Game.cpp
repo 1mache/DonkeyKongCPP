@@ -64,7 +64,7 @@ void Game::levelWon()
         saveResults();
     }
 
-    score += PRINCESS_SCORE_AMOUNT;
+    addWinScoreReward();
     moveToNextLevel();
 }
 

@@ -28,10 +28,10 @@ private:
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr int MAX_LIVES = 3;
+	static constexpr int ENEMY_SCORE_AMOUNT = 50;
+	static constexpr int MAX_PRINCESS_SCORE_AMOUNT = 1000;
 
 protected:
-	static constexpr int ENEMY_SCORE_AMOUNT = 25;
-	static constexpr int PRINCESS_SCORE_AMOUNT = 100;
 
 	struct KeyInput
 	{
@@ -67,9 +67,11 @@ protected:
 	{
 		iterationCounter = 0;
 	}
-	void addToScore(int amount)
+	void addWinScoreReward()
 	{
-		score += amount;
+		// adds to score based on how many iterations it took us to finish the level
+		if(MAX_PRINCESS_SCORE_AMOUNT > iterationCounter)
+			score += (MAX_PRINCESS_SCORE_AMOUNT - iterationCounter);
 	}
 	// virtual function that tells us if the game has more levels to load
 	virtual bool hasMoreLevels() const
