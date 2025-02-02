@@ -94,7 +94,7 @@ void Game::update()
 
                     // if this is a recorded game save this step
                     if (recorded)
-                        recSteps.addStep(iterationCounter, { input.key1, input.key2 });
+                        recSteps.addStep(iterationCounter, input.toPair());
                 }
             }
         }
