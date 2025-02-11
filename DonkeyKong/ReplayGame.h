@@ -47,7 +47,6 @@ class ReplayGame: public Game
 public:
 																					// games that are replayed are not recorded
 	ReplayGame(const std::vector<std::string>& _levelFileNames) : Game(_levelFileNames, currSaveFileId, false) {};
-	
 	// sets up all the variables essential for playing the recordings before calling the base start
 	bool start() override;
 };

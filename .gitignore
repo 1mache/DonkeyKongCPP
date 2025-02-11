@@ -1,6 +1,5 @@
 .vs
 # Visual Studio build artifacts
-*.exe
 *.obj
 *.pdb
 *.ilk
