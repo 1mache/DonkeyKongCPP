@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <fstream>
+#include "LevelFileException.h"
 
 class Steps
 {

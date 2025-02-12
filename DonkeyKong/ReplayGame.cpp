@@ -39,6 +39,20 @@ void ReplayGame::handleResultMismatch(std::pair<size_t, Results::ResultValue> ex
 	handleError(errorMsgStream.str());
 }
 
+void ReplayGame::tryLoadRecordings()
+{
+	try
+	{ 
+		steps = Steps::loadSteps(stepsFileNames[currSaveFileId]);
+		results = Results::loadResults(resultsFileNames[currSaveFileId]);
+	}
+	catch (LevelFileException& e)
+	{
+		handleError(e.what());
+		moveToNextLevel();
+	}
+}
+
 Game::KeyInput ReplayGame::getInputKeys()
 {
 	// empty input with both keys not set
@@ -105,7 +119,7 @@ void ReplayGame::moveToNextLevel()
 		}
 
 		// if we got here then we successfully moved to next level
-		loadRecordings();
+		tryLoadRecordings();
 
 		setRandSeed();
 	}
@@ -135,7 +149,8 @@ bool ReplayGame::start()
 	// get all the results and steps fileNames
 	readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT);
 	readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT);
-	loadRecordings();
+
+	tryLoadRecordings();
 
 	std::ostringstream errorMsgStream;
 	if (stepsFileNames.size() == 0)

@@ -15,11 +15,7 @@ class ReplayGame: public Game
 	//what the player sees when results doesnt match to what happened in the recording
 	void handleResultMismatch(std::pair<size_t, Results::ResultValue> expectedResult, std::pair<size_t, Results::ResultValue> recievedResult);
 	// loads steps and results based on current save file id
-	void loadRecordings()
-	{
-		steps = Steps::loadSteps(stepsFileNames[currSaveFileId]);
-		results = Results::loadResults(resultsFileNames[currSaveFileId]);
-	}
+	void tryLoadRecordings();
 
 	Game::KeyInput getInputKeys() override;
 	

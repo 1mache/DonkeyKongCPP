@@ -19,7 +19,6 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 {
 	// hide cursor
 	ShowConsoleCursor(false);
-	// TODO: doesnt work from cmd
 	clearScreen();
 	GameOptions::setSilentMode(isSilent);
 

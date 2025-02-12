@@ -90,10 +90,6 @@ protected:
 		return true;
 	}
 private:
-	// will the game be recorded
-	const bool recorded;
-	Steps recSteps;
-	Results recResults;
 
 	//will be set when we read from file
 	Point marioStartPos = GameOptions::POS_NOT_SET;
@@ -121,10 +117,19 @@ private:
 	int score = 0;
 
 	bool isPaused = false;
-
+	
+	// =-------------------=[Replay related members]=-------------------=
+	// will the game be recorded
+	const bool recorded;
+	Steps recSteps;
+	Results recResults;
+	// saves steps and results, handles the exceptions that can be thrown in the functions
+	void saveSteps();
+	void saveResults();
+	void saveRecordings();
+	// =----------------------------------------------------------------=
 
 	void displayLevelException(LevelFileException& e);
-
 	// draws the hammer in hammerPos
 	void drawHammer();
 
@@ -164,9 +169,6 @@ private:
 			recSteps.setRandomSeed(seed);
 		srand(seed);
 	}
-
-	void saveSteps();
-	void saveResults();
 
 public:
 	Game(const std::vector<std::string>& _levelFileNames, int startLevelId, bool _recorded) : 

@@ -4,8 +4,8 @@ Steps Steps::loadSteps(const std::string& filename)
 {
 	Steps steps;
 	std::ifstream steps_file(filename);
-	if(!steps_file.is_open()){}
-		//TODO: throw exception
+	if(!steps_file.is_open())
+		throw LevelFileException("Error: couldn`t open file" + filename);
 
 	steps_file >> steps.randomSeed;
 	size_t size;
@@ -25,8 +25,9 @@ Steps Steps::loadSteps(const std::string& filename)
 void Steps::saveSteps(const std::string& filename) const 
 {
 	std::ofstream steps_file(filename);
-	if (!steps_file.is_open()){}
-		//TODO: throw exception
+	if (!steps_file.is_open())
+		throw LevelFileException("Error: couldn`t open file" + filename);
+
 
 	steps_file << randomSeed << '\n' << steps.size();
 	for (const auto& stepPair : steps) {

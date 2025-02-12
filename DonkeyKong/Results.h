@@ -2,6 +2,7 @@
 #include <list>
 #include <fstream>
 #include <sstream>
+#include "LevelFileException.h"
 
 class Results
 {

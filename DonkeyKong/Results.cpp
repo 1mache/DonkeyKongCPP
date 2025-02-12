@@ -34,8 +34,9 @@ std::string Results::resultToStr(std::pair<size_t, ResultValue> result)
 Results Results::loadResults(const std::string& filename)
 {
 	std::ifstream results_file(filename);
-	if(!results_file.is_open()){}
-		// TODO: do something here
+	if(!results_file.is_open())
+		throw LevelFileException("Error: couldn`t open file" + filename);
+
 	Results results;
 	size_t size;
 	results_file >> size;
@@ -55,7 +56,7 @@ void Results::saveResults(const std::string& filename) const
 {
 	std::ofstream results_file(filename);
 	if (!results_file.is_open()) {}
-		// TODO: do something here
+		throw LevelFileException("Error: couldn`t open file" + filename);
 
 	results_file << results.size();
 	for (const auto& result : results) 

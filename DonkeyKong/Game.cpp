@@ -40,8 +40,7 @@ bool Game::handleStrike()
         if (recorded)
         {
             recResults.addResult(iterationCounter, Results::DIED);
-            saveSteps();
-            saveResults();
+            saveRecordings();
         }
         return false;
     }
@@ -60,8 +59,7 @@ void Game::levelWon()
     if (recorded)
     {
         recResults.addResult(iterationCounter, Results::FINISHED);
-        saveSteps();
-        saveResults();
+        saveRecordings();
     }
 
     addWinScoreReward();
@@ -149,6 +147,33 @@ void Game::update()
         }
 
         Sleep(GameOptions::getRefreshRate());
+    }
+}
+
+void Game::saveSteps()
+{
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
+    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::STEPS_FILE_EXT;
+    recSteps.saveSteps(filename);
+}
+
+void Game::saveResults()
+{
+    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
+    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::RESULTS_FILE_EXT;
+    recResults.saveResults(filename);
+}
+
+void Game::saveRecordings()
+{
+    try
+    {
+        saveSteps();
+        saveResults();
+    }
+    catch (LevelFileException& e)
+    {
+        handleError(std::string(e.what()) + "\nCouldn`t save recording files");
     }
 }
 
@@ -452,20 +477,6 @@ Game::KeyInput Game::getInputKeys()
         input.key2 = _getch();
 
     return input;
-}
-
-void Game::saveSteps()
-{
-    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::STEPS_FILE_EXT;
-    recSteps.saveSteps(filename);
-}
-
-void Game::saveResults()
-{
-    std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::RESULTS_FILE_EXT;
-    recResults.saveResults(filename);
 }
 
 bool Game::start()
