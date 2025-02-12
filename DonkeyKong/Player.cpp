@@ -4,22 +4,20 @@ void Player::stateByKey(char key)
 {
     for (size_t i = 0; i < NUM_KEYS; i++) {
         if (key == KEYS[i]) {
-            MoveState state = (MoveState)i;
+            MoveState state = static_cast<MoveState>(i);
             
             //set the current state acordingly if were not mid jump 
             if(!midJump)
             {
                 curState = state;
             }
-            //update the horizontal state if needed
+            //update the horizontal state and hammerDir if needed
             if ((state != DOWN) && (state != UP))
             {
                 horizontalState = state;
 
                 if (state != STAY)
-                {
                     hammerDir = state;
-                }
             }
             
             return;
@@ -216,19 +214,24 @@ void Player::checkHammerPickup()
 
 void Player::hammerAnimation(Point destroyPos) const
 {
-    // prints two ~ symbols in the direction Mario is facing,
-    // if the positions are in bounds
-
-    //destroy pos +1 in the direction of the strike 
-    Point destroyPosPlusOne = destroyPos + DIRECTIONS[hammerDir];
-    drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPos);
-    drawSymbolOnScreen(HAMMER_ANIM_CHAR, destroyPosPlusOne);
-
-    Sleep(GameOptions::getRefreshRate());
+    // prints either p or q in the direction Mario is facing,
+    // based on hammerDir
+    char hammerChar = (hammerDir == LEFT) ? HAMMER_ANIM_CHARS[0] : HAMMER_ANIM_CHARS[1];
+    char armChar = HAMMER_ANIM_CHARS[2];
+    Point destroyPosPlus = destroyPos + DIRECTIONS[hammerDir];
     
-    // erases them (replaces them with what was there before)
+    // looks like @p or q@
+    drawSymbolOnScreen(hammerChar, destroyPos);
+    Sleep(GameOptions::getRefreshRate()/2);
+    // looks like @~p or q~@
+    drawSymbolOnScreen(armChar, destroyPos);
+    drawSymbolOnScreen(hammerChar, destroyPosPlus);
+    
+    Sleep(GameOptions::getRefreshRate()/2);
+    // erases both hammer and "arm"
     drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
-    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlusOne), destroyPosPlusOne);
+    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlus), destroyPosPlus);
+
 }
 
 Point Player::handleHammer()
