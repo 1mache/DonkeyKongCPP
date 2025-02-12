@@ -159,6 +159,7 @@ private:
 	bool isEntityMissing(std::string& outEntityMissing);
 	// checks if player hit something that can be killed with a hammer and if so destroys it
 	void checkPlayerHitEnemy();
+	void hitScoreAnimation(Point position);
 	// virtual function that gets 2 keys of input
 	virtual KeyInput getInputKeys();
 	// virtual function that sets the random seed either by time or from file 

@@ -247,11 +247,8 @@ void Game::continueGame()
     //erase pause game message and restore what has been on the board 
     Point restorePos = legendPos.oneBelow().oneBelow();
 
-    for (int i = 0; i < strlen(PAUSE_MESSAGE) && isScreenPosInBounds(restorePos); i++)
-    {
-        drawSymbolOnScreen(gameBoard->getCharAtPos(restorePos), restorePos);
-        restorePos = restorePos.oneRight();
-    }
+    auto eraseLine = std::string(strlen(PAUSE_MESSAGE), Board::BLANK_SPACE);
+    drawLineOnScreen(eraseLine, restorePos);
 }
 
 void Game::moveToNextLevel()
@@ -462,7 +459,21 @@ void Game::checkPlayerHitEnemy()
             ghostsManager->destroyGhostAtPos(destroyPos);
         }
 
+        hitScoreAnimation(destroyPos.oneAbove());
         score += ENEMY_SCORE_AMOUNT;
+    }
+}
+
+void Game::hitScoreAnimation(Point position)
+{
+    std::string msg = "+" + std::to_string(ENEMY_SCORE_AMOUNT);
+    drawLineOnScreen(msg, position);
+    Sleep(GameOptions::getRefreshRate());
+    // erase the line we just drew
+    for (size_t i = 0; i < msg.size(); i++)
+    {
+        drawSymbolOnScreen(gameBoard->getCharAtPos(position), position);
+        position = position.oneRight();
     }
 }
 
