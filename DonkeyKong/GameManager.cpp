@@ -1,16 +1,16 @@
 #include "GameManager.h"
 
-std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode)
+std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode, bool isSilent)
 {
-	GameOptions::setLoadMode(false);
 	Game* game = nullptr;
 	if (mode == LOAD)
-	{
 		game = new ReplayGame(levelFileNames);
-		GameOptions::setLoadMode(true);
-	}
 	else
 		game = new Game(levelFileNames, startLevelId, mode == SAVE);
+
+	// we can do this from here because we`re a friend
+	GameOptions::isInLoadMode = (mode == LOAD);
+	GameOptions::isInSilentMode = isSilent;
 
 	return std::unique_ptr<Game>(game);
 }
@@ -20,7 +20,6 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 	// hide cursor
 	ShowConsoleCursor(false);
 	clearScreen();
-	GameOptions::setSilentMode(isSilent);
 
 	readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT, GameOptions::LEVELS_PATH);
 
@@ -39,7 +38,7 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 			}
 		}
 
-		std::unique_ptr<Game> game = createGameBasedOnMode(mode);
+		std::unique_ptr<Game> game = createGameBasedOnMode(mode, isSilent);
 
 		// returns true if player lost
 		bool gameOver = game->start();

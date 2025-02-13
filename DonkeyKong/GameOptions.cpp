@@ -1,8 +1,12 @@
 #include "GameOptions.h"
 
-// static member definitions
-bool GameOptions::isInSilentMode = false;
 bool GameOptions::isInLoadMode = false;
+bool GameOptions::isInSilentMode = false;
+
+bool GameOptions::isSilentModeOn()
+{
+	return isInSilentMode;
+}
 
 int GameOptions::getRefreshRate()
 {

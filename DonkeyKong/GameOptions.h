@@ -7,13 +7,12 @@ class GameOptions
 	//constants that a bunch of classes need
 private:
 	static constexpr int GAME_REFRESH_RATE = 75;
-	static bool isInSilentMode;
 	static bool isInLoadMode;
+	static bool isInSilentMode;
 
-	GameOptions() = default;
-	GameOptions(GameOptions& other) = delete;
+	GameOptions() = delete;
+	GameOptions(GameOptions& other) = delete; 
 	void operator=(const GameOptions& other) = delete;
-
 public:
 	static constexpr int SCREEN_WIDTH = 80;
 	static constexpr int SCREEN_HEIGHT = 25;
@@ -31,22 +30,11 @@ public:
 	static constexpr const char* STEPS_FILE_EXT = ".steps";
 	static constexpr const char* RESULTS_FILE_EXT = ".result";
 
-
-	static void setSilentMode(bool enabled)
-	{
-		isInSilentMode = enabled;
-	}
-
-	static void setLoadMode(bool enabled)
-	{
-		isInLoadMode = enabled;
-	}
-
-	static bool isSilentModeOn()
-	{
-		return isInSilentMode;
-	}
+	static bool isSilentModeOn();
 
 	// we wants no sleeps while in test mode and half the sleep in load mode
 	static int getRefreshRate();
+
+	// only this class can change us
+	friend class GameManager;
 };
