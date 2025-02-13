@@ -68,7 +68,7 @@ void flushInputBuffer()
     }
 }
 
-void readFileNames(std::vector<std::string>& outVector, std::string extension)
+void readFileNames(std::vector<std::string>& outVector,std::string extension, std::string pathOffset)
 {
     // the dir iteration code was taken from here:
     // https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c
@@ -83,13 +83,13 @@ void readFileNames(std::vector<std::string>& outVector, std::string extension)
     std::regex pattern(levelFileNameTemplate);
 
     namespace fs = std::filesystem;
-    std::string path = fs::current_path().string();
+    fs::path path = fs::current_path() / pathOffset;
 
     for (const auto& entry : fs::directory_iterator(path))
     {
         std::string filename = entry.path().filename().string();
         //if filename matches the pattern
         if (std::regex_match(filename, pattern))
-            outVector.push_back(filename); // push it to the vector
+            outVector.push_back(pathOffset + filename); // push it to the vector
     }
 }

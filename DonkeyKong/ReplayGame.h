@@ -15,7 +15,7 @@ class ReplayGame: public Game
 	//what the player sees when results doesnt match to what happened in the recording
 	void handleResultMismatch(std::pair<size_t, Results::ResultValue> expectedResult, std::pair<size_t, Results::ResultValue> recievedResult);
 	// loads steps and results based on current save file id
-	void tryLoadRecordings();
+	bool tryLoadRecordings();
 
 	Game::KeyInput getInputKeys() override;
 	
@@ -30,7 +30,7 @@ class ReplayGame: public Game
 	//in addition to base class implementation, checks if there is a matching event in results file
 	void levelWon() override;
 	// moves to the next recorded level
-	void moveToNextLevel() override;
+	bool moveToNextLevel() override;
 	// in this implementation the check is based on recording files instead of level files
 	bool hasMoreLevels() const override
 	{

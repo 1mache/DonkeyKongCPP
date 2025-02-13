@@ -21,6 +21,9 @@ public:
 	static constexpr Point POINT_ZERO = { 0 , 0 };
 	static constexpr char KEY_NOT_SET = 0;
 
+	//paths of files
+	static constexpr const char* RECORDING_PATH = "recordings\\";
+	static constexpr const char* LEVELS_PATH = "levels\\";
 	// prefix of our filenames
 	static constexpr const char* FILENAME_PREFIX = "dkong_";
 	// extensions of filenames used by the game

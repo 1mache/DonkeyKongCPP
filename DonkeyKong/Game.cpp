@@ -211,7 +211,7 @@ void Game::updateLegend() const
     std::ostringstream scoreMsg;
     std::ostringstream livesMsg;
     scoreMsg << "Score: " << score;
-    livesMsg << "Lives < 3: " << lives;
+    livesMsg << "Lives <3: " << lives;
     drawLineOnScreen(scoreMsg.str(), legendPos);
     drawLineOnScreen(livesMsg.str(), legendPos.oneBelow());
 
@@ -251,7 +251,7 @@ void Game::continueGame()
     drawLineOnScreen(eraseLine, restorePos);
 }
 
-void Game::moveToNextLevel()
+bool Game::moveToNextLevel()
 {
     setRandSeed();
     resetIterationCounter();
@@ -262,6 +262,8 @@ void Game::moveToNextLevel()
         recResults.clear();
     }
     currLevelId++;
+
+    return currLevelId < levelFileNames.size();
 }
 
 Board* Game::readLevelFromFile(const std::string& filename)
@@ -495,8 +497,8 @@ bool Game::start()
     if(levelFileNames.size() == 0)
     {
         std::ostringstream errorMsgStream;
-        errorMsgStream << "No levels for the game to load, check: " << getWorkingDirectoryStr() << " for level files" << std::endl
-                        << "Press ENTER to go back to main menu";
+        errorMsgStream << "No levels for the game to load, check: " << getWorkingDirectoryStr() + GameOptions::LEVELS_PATH 
+            << " for level files" << std::endl << "Press ENTER to go back to main menu";
         handleError(errorMsgStream.str());
         return true;
     }

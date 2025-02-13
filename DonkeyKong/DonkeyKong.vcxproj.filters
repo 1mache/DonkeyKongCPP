@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Levels">
+      <UniqueIdentifier>{c1fae032-10f8-4455-b71e-e707da592612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\RecordingFiles">
+      <UniqueIdentifier>{442fe21a-1758-4d2b-9a47-9c7eda8ee089}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -124,14 +130,32 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="dkong_01.screen">
-      <Filter>Resource Files</Filter>
+    <None Include="levels\dkong_01.screen">
+      <Filter>Resource Files\Levels</Filter>
     </None>
-    <None Include="dkong_02.screen">
-      <Filter>Resource Files</Filter>
+    <None Include="levels\dkong_02.screen">
+      <Filter>Resource Files\Levels</Filter>
     </None>
-    <None Include="dkong_03.screen">
-      <Filter>Resource Files</Filter>
+    <None Include="levels\dkong_03.screen">
+      <Filter>Resource Files\Levels</Filter>
+    </None>
+    <None Include="recordings\dkong_01.result">
+      <Filter>Resource Files\RecordingFiles</Filter>
+    </None>
+    <None Include="recordings\dkong_01.steps">
+      <Filter>Resource Files\RecordingFiles</Filter>
+    </None>
+    <None Include="recordings\dkong_02.result">
+      <Filter>Resource Files\RecordingFiles</Filter>
+    </None>
+    <None Include="recordings\dkong_02.steps">
+      <Filter>Resource Files\RecordingFiles</Filter>
+    </None>
+    <None Include="recordings\dkong_03.result">
+      <Filter>Resource Files\RecordingFiles</Filter>
+    </None>
+    <None Include="recordings\dkong_03.steps">
+      <Filter>Resource Files\RecordingFiles</Filter>
     </None>
   </ItemGroup>
 </Project>

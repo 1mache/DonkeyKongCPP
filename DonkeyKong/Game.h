@@ -83,7 +83,7 @@ protected:
 	// what happens when Mario reaches Pauline
 	virtual void levelWon();
 	// returns if succeeded to move to next level 
-	virtual void moveToNextLevel();
+	virtual bool moveToNextLevel();
 	// this is irrelevant for regular game, where every iteration is valid
 	virtual bool validateLastIteration() 
 	{
@@ -188,7 +188,7 @@ public:
 	// for a level fileName "dkong_01.screen" returns the "01" part
 	static std::string getLevelTag(const std::string& levelFileName) 
 	{
-		size_t prefixSize = std::strlen(GameOptions::FILENAME_PREFIX);
+		size_t prefixSize = levelFileName.find_first_of('_');
 		size_t extStartId = levelFileName.find_first_of('.');
 
 		return levelFileName.substr(prefixSize, extStartId - prefixSize);

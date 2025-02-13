@@ -22,7 +22,7 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 	clearScreen();
 	GameOptions::setSilentMode(isSilent);
 
-	readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT);
+	readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT, GameOptions::LEVELS_PATH);
 
 	while (true)
 	{	

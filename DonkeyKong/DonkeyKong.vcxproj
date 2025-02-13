@@ -58,9 +58,15 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dkong_01.screen" />
-    <None Include="dkong_02.screen" />
-    <None Include="dkong_03.screen" />
+    <None Include="levels\dkong_01.screen" />
+    <None Include="levels\dkong_02.screen" />
+    <None Include="levels\dkong_03.screen" />
+    <None Include="recordings\dkong_01.result" />
+    <None Include="recordings\dkong_01.steps" />
+    <None Include="recordings\dkong_02.result" />
+    <None Include="recordings\dkong_02.steps" />
+    <None Include="recordings\dkong_03.result" />
+    <None Include="recordings\dkong_03.steps" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

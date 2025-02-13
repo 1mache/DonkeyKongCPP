@@ -39,7 +39,7 @@ void ReplayGame::handleResultMismatch(std::pair<size_t, Results::ResultValue> ex
 	handleError(errorMsgStream.str());
 }
 
-void ReplayGame::tryLoadRecordings()
+bool ReplayGame::tryLoadRecordings()
 {
 	try
 	{ 
@@ -49,8 +49,9 @@ void ReplayGame::tryLoadRecordings()
 	catch (LevelFileException& e)
 	{
 		handleError(e.what());
-		moveToNextLevel();
+		return moveToNextLevel();
 	}
+	return true;
 }
 
 Game::KeyInput ReplayGame::getInputKeys()
@@ -98,7 +99,7 @@ void ReplayGame::levelWon()
 	moveToNextLevel();
 }
 
-void ReplayGame::moveToNextLevel()
+bool ReplayGame::moveToNextLevel()
 {
 	currSaveFileId++;
 	resetIterationCounter();
@@ -115,14 +116,17 @@ void ReplayGame::moveToNextLevel()
 				<< " not found. Check the working directory:" << std::endl << getWorkingDirectoryStr() << std::endl;
 			handleError(errorMsgStream.str() + "Press ENTER to move to continue the recording");
 			// try to move to next level, if there is no next level this will return false
-			moveToNextLevel();
+			return moveToNextLevel();
 		}
 
-		// if we got here then we successfully moved to next level
-		tryLoadRecordings();
+		if(!tryLoadRecordings()) 
+			return false;
 
+		// if we got here then we successfully moved to next level
 		setRandSeed();
+		return true;
 	}
+	return false;
 }
 
 bool ReplayGame::validateLastIteration()
@@ -147,15 +151,18 @@ bool ReplayGame::validateLastIteration()
 bool ReplayGame::start()
 {
 	// get all the results and steps fileNames
-	readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT);
-	readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT);
-
-	tryLoadRecordings();
+	readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT, GameOptions::RECORDING_PATH);
+	readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT, GameOptions::RECORDING_PATH);
 
 	std::ostringstream errorMsgStream;
-	if (stepsFileNames.size() == 0)
+	if(!tryLoadRecordings())
+	{
+		errorMsgStream << "Couldn`t load any recording files" << std::endl;
+	}
+
+	else if (stepsFileNames.size() == 0)
 		errorMsgStream << "No \".steps\" files found to load. Check the working diretory:" << std::endl
-		<< getWorkingDirectoryStr();
+		<< getWorkingDirectoryStr() + GameOptions::RECORDING_PATH;
 
 	else if (stepsFileNames.size() != resultsFileNames.size())
 		errorMsgStream << "Error: The number of \".steps\" files and \".results\" files are not matching." << std::endl;

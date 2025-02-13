@@ -30,7 +30,7 @@ inline void clearScreen()
     system("cls");
 }
 // reads all the file names that are in the game format with the specified extension into the specified vector  
-void readFileNames(std::vector<std::string>& outVector, std::string extension);
+void readFileNames(std::vector<std::string>& outVector, std::string extension, std::string pathOffset = "");
 // returns the working directory path as a string
 inline std::string getWorkingDirectoryStr()
 {
