@@ -227,13 +227,12 @@ class Menu
 
 	void drawChar(char ch, Point position) const
 	{
-		gotoScreenPos(position);
-		std::cout << ch;
+		DK_utils::drawSymbolOnScreen(ch, position);
 	}
 
 	void eraseChar(Point position) const
 	{
-		drawChar(' ', position);
+		DK_utils::drawSymbolOnScreen(' ', position);
 	}
 
 	void drawArrow();

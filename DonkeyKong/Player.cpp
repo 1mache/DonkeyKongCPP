@@ -221,16 +221,16 @@ void Player::hammerAnimation(Point destroyPos) const
     Point destroyPosPlus = destroyPos + DIRECTIONS[hammerDir];
     
     // looks like @p or q@
-    drawSymbolOnScreen(hammerChar, destroyPos);
+    DK_utils::drawSymbolOnScreen(hammerChar, destroyPos);
     Sleep(GameOptions::getRefreshRate()/2);
     // looks like @~p or q~@
-    drawSymbolOnScreen(armChar, destroyPos);
-    drawSymbolOnScreen(hammerChar, destroyPosPlus);
+    DK_utils::drawSymbolOnScreen(armChar, destroyPos);
+    DK_utils::drawSymbolOnScreen(hammerChar, destroyPosPlus);
     
     Sleep(GameOptions::getRefreshRate()/2);
     // erases both hammer and "arm"
-    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
-    drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlus), destroyPosPlus);
+    DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
+    DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlus), destroyPosPlus);
 
 }
 

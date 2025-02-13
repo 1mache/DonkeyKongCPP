@@ -53,7 +53,7 @@ void Menu::print(const char* const screen[HEIGHT], int lineSleep) const
 	
 	// during this animation we dont register input but it is still 
 	//  saved in the buffer that khbit uses, this function cleans the buffer after the animation
-	flushInputBuffer();
+	DK_utils::flushInputBuffer();
 }
 
 void Menu::setLevelOptionPositions()
@@ -89,7 +89,7 @@ void Menu::printMainOptions() const
 {
 	for(const MenuOption& option: MAINMENU_OPTIONS)
 	{
-		gotoScreenPos(option.screenPosition);
+		DK_utils::gotoScreenPos(option.screenPosition);
 		int textLen = strlen(option.text);
 		std::cout << " (" << option.hotkey << ')';
 
@@ -102,14 +102,14 @@ void Menu::printMainOptions() const
 
 	// during this animation we dont register input but it is still 
 	// saved in the buffer that khbit uses, this function cleans the buffer after the animation
-	flushInputBuffer();
+	DK_utils::flushInputBuffer();
 }
 
 void Menu::printLevelOptions() const
 {
 	for (const auto& option : levelOptions)
 	{
-		gotoScreenPos(option.screenPosition);
+		DK_utils::gotoScreenPos(option.screenPosition);
 		std::cout << " (" << option.hotkey << ')';
 		std::cout << option.text;
 	}
@@ -162,7 +162,7 @@ bool Menu::selectOption()
 	//if were on the control screen there is always a single option
 	if (currentScreenId == CONTROL_SCREEN_ID)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		gotoMainScreen();
 		// control screen doesnt break the input loop
 		return false;
@@ -173,13 +173,13 @@ bool Menu::selectOption()
 		// back option
 		if(arrowId == currNumOfOptions-1)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			gotoMainScreen();
 			return false;
 		}
 		else
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			chosenLevelId = arrowId + (scrollValue * MAX_LEVELS_ON_SCREEN);
 			// we chose level so the menu closes
 			return true;
@@ -188,29 +188,29 @@ bool Menu::selectOption()
 
 	if (currentScreenId == GAMEOVER_SCREEN_ID || currentScreenId == WIN_SCREEN_ID)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		// game over and win screen do break the input loop, one cycle of the game ensded
 		return true;
 	}
 	//if were on the main screen there is a bunch of options and the arrow tells us what we selected
 	if (MAINMENU_OPTIONS[arrowId] == CONTROLS_OPTION)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		gotoControlScreen();
 	}
 	else if (MAINMENU_OPTIONS[arrowId] == LEVELS_OPTION)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		gotoLevelsScreen();
 	}
 	else if (MAINMENU_OPTIONS[arrowId] == START_GAME_OPTION)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		closeMenu = true;
 	}
 	else if (MAINMENU_OPTIONS[arrowId] == EXIT_OPTION)
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		exitFlag = true;
 		closeMenu = true;
 	}
@@ -231,22 +231,22 @@ bool Menu::selectOption(char key)
 	{
 		if (key == CONTROLS_OPTION.hotkey)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			gotoControlScreen();
 		}
 		else if (key == LEVELS_OPTION.hotkey)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			gotoLevelsScreen();
 		}
 		else if (key == START_GAME_OPTION.hotkey)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			closeMenu = true;
 		}
 		else if (key == EXIT_OPTION.hotkey)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			exitFlag = true;
 			closeMenu = true;
 		}
@@ -256,7 +256,7 @@ bool Menu::selectOption(char key)
 	{
 		if (key == EXIT_OPTION.hotkey)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			gotoMainScreen();
 			return closeMenu;
 		}
@@ -266,7 +266,7 @@ bool Menu::selectOption(char key)
 		{
 			if(option.hotkey == key)
 			{
-				clearScreen();
+				DK_utils::clearScreen();
 				// number representation of our hotkey ( hotkey is a digit )
 				int hotkeyNum = key - '0';
 				chosenLevelId = hotkeyNum + (scrollValue * MAX_LEVELS_ON_SCREEN);
@@ -285,7 +285,7 @@ void Menu::tryScroll(char key)
 	if(key == KEYS[SCROLL] && maxScrolls > 1)
 	{
 		scrollValue = (scrollValue + 1) % maxScrolls;
-		clearScreen();
+		DK_utils::clearScreen();
 		levelOptions.clear();
 
 		// launch the screen again, this time the next set of options will be shown
@@ -314,7 +314,7 @@ void Menu::gotoLevelsScreen()
 	// if there are levels that didnt fit in one screen display hint on how to scroll 
 	if(maxScrolls > 1)
 	{
-		gotoScreenPos(SCROLL_HINT_POS);
+		DK_utils::gotoScreenPos(SCROLL_HINT_POS);
 		std::cout << SCROLL_HINT_MESSAGE;
 	}
 
@@ -335,7 +335,7 @@ void Menu::displayWinScreen(int finalScore)
 {
 	gotoWinScreen();
 
-	gotoScreenPos(WIN_SCORE_POS);
+	DK_utils::gotoScreenPos(WIN_SCORE_POS);
 	std::cout << "Score: " << finalScore;
 
 	update();

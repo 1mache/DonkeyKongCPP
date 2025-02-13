@@ -18,10 +18,10 @@ std::unique_ptr<Game> GameManager::createGameBasedOnMode(GameMode mode, bool isS
 void GameManager::launchGame(GameMode mode, bool isSilent)
 {
 	// hide cursor
-	ShowConsoleCursor(false);
-	clearScreen();
+	DK_utils::ShowConsoleCursor(false);
+	DK_utils::clearScreen();
 
-	readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT, GameOptions::LEVELS_PATH);
+	DK_utils::readFileNames(levelFileNames, GameOptions::LEVEL_FILE_EXT, GameOptions::LEVELS_PATH);
 
 	while (true)
 	{	
@@ -45,7 +45,7 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 
 		if (mode == LOAD)
 		{
-			clearScreen();
+			DK_utils::clearScreen();
 			std::cout << "End of recording." << std::endl;
 			break;
 		}
@@ -53,17 +53,17 @@ void GameManager::launchGame(GameMode mode, bool isSilent)
 		{
 			if (gameOver)
 			{
-				clearScreen();
+				DK_utils::clearScreen();
 				menu.displayGameOver();
 			}
 			else
 			{
-				clearScreen();
+				DK_utils::clearScreen();
 				menu.displayWinScreen(game->getScore());
 			}
 		}
 	}
 
 	// show cursor again in the end(in case we`re running from cmd)
-	ShowConsoleCursor(true);
+	DK_utils::ShowConsoleCursor(true);
 }

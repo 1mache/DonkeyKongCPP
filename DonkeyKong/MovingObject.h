@@ -39,12 +39,12 @@ public:
 
     void draw() const
     {
-        drawSymbolOnScreen(spriteChar , position);
+        DK_utils::drawSymbolOnScreen(spriteChar , position);
     }
 
     void erase() const
     {
-        drawSymbolOnScreen(Board::BLANK_SPACE, position);
+        DK_utils::drawSymbolOnScreen(Board::BLANK_SPACE, position);
     }
 
     Point getPosition() const
@@ -56,7 +56,7 @@ public:
     {
         //returns true if the position is in bounds and there is no obstacle 
         return (!(gameBoard->isObstacleAtPos(newPos)) 
-            && isScreenPosInBounds(newPos)); 
+            && DK_utils::isScreenPosInBounds(newPos));
     }
 
     bool checkOnGround() const

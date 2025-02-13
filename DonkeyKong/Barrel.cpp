@@ -56,10 +56,10 @@ void Barrel::drawExplosionPhase()
                 (x == cornerTL.getX() || x == cornerBR.getX()))
             {
                 //only print the explosion at certain position if it is in bounds and there isnt an obstacle
-                if(isScreenPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
+                if(DK_utils::isScreenPosInBounds(curCharPos) && !gameBoard->isObstacleAtPos(curCharPos))
                 {
                     gameBoard->updateBoardWithChar(curCharPos ,Board::EXPLOSION);
-                    drawSymbolOnScreen(Board::EXPLOSION, curCharPos);
+                    DK_utils::drawSymbolOnScreen(Board::EXPLOSION, curCharPos);
                 }
             }
         }
@@ -86,10 +86,10 @@ void Barrel::eraseExplosion()
         {
             curCharPos = { x, y };
 
-            if (isScreenPosInBounds(curCharPos))
+            if (DK_utils::isScreenPosInBounds(curCharPos))
             {
                 gameBoard->resetCharAtPos(curCharPos);
-                drawSymbolOnScreen(gameBoard->getCharAtPos(curCharPos), curCharPos);
+                DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(curCharPos), curCharPos);
             }
         }
     }

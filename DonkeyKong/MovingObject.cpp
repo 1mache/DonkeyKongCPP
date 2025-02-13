@@ -19,7 +19,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     // new X, same Y
     Point newXPosition = { newX , position.getY() };
     if (canMoveToPos(newXPosition) || 
-        (ignoreObstacles && isScreenPosInBounds(newXPosition)))
+        (ignoreObstacles && DK_utils::isScreenPosInBounds(newXPosition)))
     {
         position = newXPosition;
     }
@@ -27,7 +27,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     // same X, new Y
     Point newYPosition = { position.getX(), newY };
     if (canMoveToPos(newYPosition) ||
-        (ignoreObstacles && isScreenPosInBounds(newYPosition)))
+        (ignoreObstacles && DK_utils::isScreenPosInBounds(newYPosition)))
     {
         position = { position.getX(), newY };
     }
@@ -47,7 +47,7 @@ void MovingObject::move(Point moveDirection, bool useGravity, bool ignoreObstacl
     char charAtPrevPosition = gameBoard->getCharAtPos(prevPosition);
     if (charAtPrevPosition != ' ')
         // and draw it where we stepped on it
-        drawSymbolOnScreen(charAtPrevPosition, prevPosition);
+        DK_utils::drawSymbolOnScreen(charAtPrevPosition, prevPosition);
 
     draw();
 }

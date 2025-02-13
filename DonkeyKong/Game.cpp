@@ -179,7 +179,7 @@ void Game::saveRecordings()
 
 void Game::displayLevelException(LevelFileException& e)
 {
-    clearScreen();
+    DK_utils::clearScreen();
     std::ostringstream errorMsgStream;
     errorMsgStream << "Level number " << currLevelId + 1 << ", filename: " << levelFileNames[currLevelId] << " is invalid" << std::endl;
     errorMsgStream << e.what() << std::endl;
@@ -200,7 +200,7 @@ void Game::drawHammer()
     // if the hammer exists on the level and player hasnt picked it up yet
     if (hammerPos != GameOptions::POS_NOT_SET && !player->isHoldingHammer())
     {
-        drawSymbolOnScreen(Board::HAMMER, hammerPos);
+        DK_utils::drawSymbolOnScreen(Board::HAMMER, hammerPos);
         // add it to current board
         gameBoard->updateBoardWithChar(hammerPos, Board::HAMMER);
     }
@@ -212,13 +212,13 @@ void Game::updateLegend() const
     std::ostringstream livesMsg;
     scoreMsg << "Score: " << score;
     livesMsg << "Lives <3: " << lives;
-    drawLineOnScreen(scoreMsg.str(), legendPos);
-    drawLineOnScreen(livesMsg.str(), legendPos.oneBelow());
+    DK_utils::drawLineOnScreen(scoreMsg.str(), legendPos);
+    DK_utils::drawLineOnScreen(livesMsg.str(), legendPos.oneBelow());
 
     // if player is holding hammer, draw a hammer symbol
     if(player->isHoldingHammer())
     {
-        drawSymbolOnScreen(Board::HAMMER, legendPos.oneBelow().oneBelow());
+        DK_utils::drawSymbolOnScreen(Board::HAMMER, legendPos.oneBelow().oneBelow());
     }
 }
 
@@ -238,7 +238,7 @@ void Game::pauseGame()
     isPaused = true;
     Point pauseMessagePos = legendPos.oneBelow().oneBelow();
     // print pause message
-    drawLineOnScreen(PAUSE_MESSAGE, pauseMessagePos);
+    DK_utils::drawLineOnScreen(PAUSE_MESSAGE, pauseMessagePos);
 }
 
 void Game::continueGame()
@@ -248,7 +248,7 @@ void Game::continueGame()
     Point restorePos = legendPos.oneBelow().oneBelow();
 
     auto eraseLine = std::string(strlen(PAUSE_MESSAGE), Board::BLANK_SPACE);
-    drawLineOnScreen(eraseLine, restorePos);
+    DK_utils::drawLineOnScreen(eraseLine, restorePos);
 }
 
 bool Game::moveToNextLevel()
@@ -469,12 +469,12 @@ void Game::checkPlayerHitEnemy()
 void Game::hitScoreAnimation(Point position)
 {
     std::string msg = "+" + std::to_string(ENEMY_SCORE_AMOUNT);
-    drawLineOnScreen(msg, position);
+    DK_utils::drawLineOnScreen(msg, position);
     Sleep(GameOptions::getRefreshRate());
     // erase the line we just drew
     for (size_t i = 0; i < msg.size(); i++)
     {
-        drawSymbolOnScreen(gameBoard->getCharAtPos(position), position);
+        DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(position), position);
         position = position.oneRight();
     }
 }
@@ -497,7 +497,7 @@ bool Game::start()
     if(levelFileNames.size() == 0)
     {
         std::ostringstream errorMsgStream;
-        errorMsgStream << "No levels for the game to load, check: " << getWorkingDirectoryStr() + GameOptions::LEVELS_PATH 
+        errorMsgStream << "No levels for the game to load, check: " << DK_utils::getWorkingDirectoryStr() + GameOptions::LEVELS_PATH
             << " for level files" << std::endl << "Press ENTER to go back to main menu";
         handleError(errorMsgStream.str());
         return true;
@@ -540,7 +540,7 @@ bool Game::start()
 
 void Game::resetLevel()
 {
-    clearScreen();
+    DK_utils::clearScreen();
 
     gameBoard->resetBoard();
     
@@ -552,7 +552,7 @@ void Game::resetLevel()
     gameBoard->print();
 
     //need to clear input buffer after animation  
-    flushInputBuffer();
+    DK_utils::flushInputBuffer();
 
     // reset player and barrel manager
     delete player;

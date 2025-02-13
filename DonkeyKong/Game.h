@@ -59,7 +59,7 @@ protected:
 	// prints the message to screen then waits until user presses ENTER 
 	void handleError(std::string errorMsg) const
 	{
-		clearScreen();
+		DK_utils::clearScreen();
 		std::cout << errorMsg;
 		getPlayerConfirmation();
 	}

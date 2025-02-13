@@ -113,13 +113,13 @@ bool ReplayGame::moveToNextLevel()
 		{
 			std::ostringstream errorMsgStream;
 			errorMsgStream << "Error: \".screen\" file for the tag: " << nextLevelTag
-				<< " not found. Check the working directory:" << std::endl << getWorkingDirectoryStr() << std::endl;
+				<< " not found. Check the working directory:" << std::endl << DK_utils::getWorkingDirectoryStr() << std::endl;
 			handleError(errorMsgStream.str() + "Press ENTER to move to continue the recording");
 			// try to move to next level, if there is no next level this will return false
 			return moveToNextLevel();
 		}
 
-		if(!tryLoadRecordings()) 
+		if(!tryLoadRecordings())
 			return false;
 
 		// if we got here then we successfully moved to next level
@@ -151,8 +151,8 @@ bool ReplayGame::validateLastIteration()
 bool ReplayGame::start()
 {
 	// get all the results and steps fileNames
-	readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT, GameOptions::RECORDING_PATH);
-	readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT, GameOptions::RECORDING_PATH);
+	DK_utils::readFileNames(stepsFileNames, GameOptions::STEPS_FILE_EXT, GameOptions::RECORDING_PATH);
+	DK_utils::readFileNames(resultsFileNames, GameOptions::RESULTS_FILE_EXT, GameOptions::RECORDING_PATH);
 
 	std::ostringstream errorMsgStream;
 	if(!tryLoadRecordings())
@@ -162,7 +162,7 @@ bool ReplayGame::start()
 
 	else if (stepsFileNames.size() == 0)
 		errorMsgStream << "No \".steps\" files found to load. Check the working diretory:" << std::endl
-		<< getWorkingDirectoryStr() + GameOptions::RECORDING_PATH;
+		<< DK_utils::getWorkingDirectoryStr() + GameOptions::RECORDING_PATH;
 
 	else if (stepsFileNames.size() != resultsFileNames.size())
 		errorMsgStream << "Error: The number of \".steps\" files and \".results\" files are not matching." << std::endl;
@@ -176,7 +176,7 @@ bool ReplayGame::start()
 		if (!trySetCurrLevelByTag(firstLevelTag))
 		{
 			errorMsgStream << "Error: \".screen\" file for the tag: " << firstLevelTag
-				<< " not found. Check the working directory:" << std::endl << getWorkingDirectoryStr() << std::endl;
+				<< " not found. Check the working directory:" << std::endl << DK_utils::getWorkingDirectoryStr() << std::endl;
 
 			// tell the player
 			handleError(errorMsgStream.str() + "Press ENTER to continue");
