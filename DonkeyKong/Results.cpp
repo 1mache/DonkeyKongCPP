@@ -54,8 +54,9 @@ Results Results::loadResults(const std::string& filename)
 
 void Results::saveResults(const std::string& filename) const 
 {
+	// TODO: go to the directory we want to save in
 	std::ofstream results_file(filename);
-	if (!results_file.is_open()) {}
+	if (!results_file.is_open())
 		throw LevelFileException("Error: couldn`t open file" + filename);
 
 	results_file << results.size();

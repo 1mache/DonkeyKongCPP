@@ -153,14 +153,15 @@ void Game::update()
 void Game::saveSteps()
 {
     std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::STEPS_FILE_EXT;
+    // building the full filename
+    std::string filename = std::string(GameOptions::RECORDING_PATH) + GameOptions::FILENAME_PREFIX + currLevelTag + GameOptions::STEPS_FILE_EXT;
     recSteps.saveSteps(filename);
 }
 
 void Game::saveResults()
 {
     std::string currLevelTag = Game::getLevelTag(levelFileNames[currLevelId]);
-    std::string filename = std::string(GameOptions::FILENAME_PREFIX) + currLevelTag + GameOptions::RESULTS_FILE_EXT;
+    std::string filename = std::string(GameOptions::RECORDING_PATH) + GameOptions::FILENAME_PREFIX + currLevelTag + GameOptions::RESULTS_FILE_EXT;
     recResults.saveResults(filename);
 }
 
