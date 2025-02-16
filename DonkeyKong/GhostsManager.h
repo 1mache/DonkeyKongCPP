@@ -18,7 +18,7 @@ class GhostsManager
     void spawnGhost(Point pos, char ghostChar);
 
     // deletes ghost at given index from vector, board and screen
-    void deleteGhost(int index);
+    void deleteGhost(size_t index);
 
 public:
     GhostsManager(Board* _gameBoard) : gameBoard(_gameBoard) {}

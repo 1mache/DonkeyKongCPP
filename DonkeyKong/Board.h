@@ -8,6 +8,8 @@
 
 class Board {
 public:
+	static constexpr char MARIO_SPRITE = '@';
+	static constexpr char LEGEND_CHAR = 'L';
 	static constexpr char BARREL = 'O';
 	static constexpr char EXPLOSION = '*';
 	static constexpr char GHOST = 'x';

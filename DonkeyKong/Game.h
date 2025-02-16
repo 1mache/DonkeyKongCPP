@@ -22,8 +22,6 @@ class Game
 private:
 	static constexpr int ESC = 27;
 	static constexpr char ENTER = '\r';
-	static constexpr char MARIO_SPRITE = '@';
-	static constexpr char LEGEND_CHAR = 'L';
 
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";

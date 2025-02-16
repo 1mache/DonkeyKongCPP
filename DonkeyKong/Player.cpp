@@ -27,7 +27,7 @@ void Player::stateByKey(char key)
 
 void Player::handleKeyboardInput(char key)
 {
-    char lowerKey = std::tolower(key);
+    char lowerKey = static_cast<char>(std::tolower(key));
 
     if (lowerKey == HAMMER_KEY)
     {
@@ -41,7 +41,7 @@ void Player::handleKeyboardInput(char key)
 
 void Player::movePlayer()
 {
-    Point position = getPosition();
+    Point currPosition = getPosition();
 
     bool gravity = true;
 
@@ -57,7 +57,7 @@ void Player::movePlayer()
     // if the state is up we can either climb or jump 
     if (curState == UP)
     {   
-        if (canClimbUp(position))
+        if (canClimbUp(currPosition))
         {
             climbUp();
             gameBoard->setPlayerPos(getPosition());
@@ -73,7 +73,7 @@ void Player::movePlayer()
      
     if (curState == DOWN)
     {
-        if (canClimbDown(position))
+        if (canClimbDown(currPosition))
         {
             climbDown();
             gameBoard->setPlayerPos(getPosition());

@@ -18,7 +18,7 @@ void GhostsManager::spawnGhost(Point pos, char ghostChar)
     gameBoard->updateBoardWithChar(pos, ghostChar);
 }
 
-void GhostsManager::deleteGhost(int index)
+void GhostsManager::deleteGhost(size_t index)
 {
     gameBoard->resetCharAtPos(ghostsVector[index]->getPosition());
     // erases it from the screen

@@ -356,7 +356,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
     bool isAddedToBoard = true;
     switch (c)
     {
-    case MARIO_SPRITE:
+    case Board::MARIO_SPRITE:
         if (marioStartPos == GameOptions::POS_NOT_SET)
             marioStartPos = position;
         // if this function returned false:
@@ -377,7 +377,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
             isAddedToBoard = false;
         break;
 
-    case LEGEND_CHAR:
+    case Board::LEGEND_CHAR:
         if (legendPos == GameOptions::POS_NOT_SET)
             legendPos = position;
         isAddedToBoard = false;
@@ -559,7 +559,7 @@ void Game::resetLevel()
 
     // reset player and barrel manager
     delete player;
-    player = new Player(gameBoard, MARIO_SPRITE, marioStartPos);
+    player = new Player(gameBoard, Board::MARIO_SPRITE, marioStartPos);
     delete barrelManager;
     barrelManager = new BarrelManager(gameBoard, donkeyKongPos);
     
