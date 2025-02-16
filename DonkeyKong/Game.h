@@ -25,7 +25,6 @@ private:
 
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
-	static constexpr int MAX_LIVES = 3;
 	static constexpr size_t ENEMY_SCORE_AMOUNT = 50;
 	static constexpr size_t MAX_PRINCESS_SCORE_AMOUNT = 1000;
 
@@ -111,7 +110,6 @@ private:
 	GhostsManager* ghostsManager = nullptr;
 	BarrelManager* barrelManager = nullptr;
 
-	int lives = MAX_LIVES;
 	size_t score = 0;
 
 	bool isPaused = false;

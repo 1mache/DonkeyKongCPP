@@ -190,8 +190,14 @@ void Player::climbDown()
     }
 }
 
-void Player::takeDamage() const
+void Player::takeDamage()
 {
+    lives--;
+    if(lives == 0)
+        // push death event to event queue
+    else 
+        // push hit event to enent queue
+
     //little animation 
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {

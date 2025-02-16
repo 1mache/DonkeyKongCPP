@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "MovingObject.h"
 #include "GameOptions.h"
+#include "EventQueue.h"
 
 class Player : public MovingObject
 {
@@ -15,8 +16,9 @@ class Player : public MovingObject
     enum HammerAnimation {hLEFT = 0, ARM, hRIGHT};
     static constexpr char HAMMER_ANIM_CHARS[]  = { 'q', '~', 'p'};
 
-    static constexpr int MAX_FALL_HEIGHT = 5;
+    static constexpr int MAX_LIVES = 3;
     static constexpr int JUMP_HEIGHT = 2;
+    static constexpr int MAX_FALL_HEIGHT = 5;
     static constexpr int DEATH_ANIMATION_FRAMES = 5;
 
     Board* gameBoard = nullptr;
@@ -26,6 +28,8 @@ class Player : public MovingObject
     MoveState horizontalState = STAY;
 
     MoveState hammerDir = RIGHT;
+
+    int lives = MAX_LIVES;
 
     // tells if player has hammer
     bool hasHammer = false;
@@ -100,7 +104,7 @@ public:
     }
 
     // actions when loses life
-    void takeDamage() const;
+    void takeDamage();
     
     bool isHoldingHammer() const
     {
