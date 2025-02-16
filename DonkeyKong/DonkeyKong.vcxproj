@@ -22,7 +22,6 @@
     <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="BarrelManager.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="GameOptions.cpp" />
     <ClCompile Include="ClimbingGhost.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -43,8 +42,6 @@
     <ClInclude Include="BarrelManager.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="ClimbingGhost.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="GameOptions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
@@ -54,7 +51,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerEvent.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="ReplayGame.h" />
     <ClInclude Include="Results.h" />

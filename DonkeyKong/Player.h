@@ -3,10 +3,6 @@
 #include "Point.h"
 #include "MovingObject.h"
 #include "GameOptions.h"
-#include "EventQueue.h"
-#include "PlayerEvent.h"
-
-extern EventQueue g_eventQueue;
 
 class Player : public MovingObject
 {
@@ -19,7 +15,6 @@ class Player : public MovingObject
     enum HammerAnimation {hLEFT = 0, ARM, hRIGHT};
     static constexpr char HAMMER_ANIM_CHARS[]  = { 'q', '~', 'p'};
 
-    static constexpr int MAX_LIVES = 3;
     static constexpr int JUMP_HEIGHT = 2;
     static constexpr int MAX_FALL_HEIGHT = 5;
     static constexpr int DEATH_ANIMATION_FRAMES = 5;
@@ -31,8 +26,6 @@ class Player : public MovingObject
     MoveState horizontalState = STAY;
 
     MoveState hammerDir = RIGHT;
-
-    int lives = MAX_LIVES;
 
     // tells if player has hammer
     bool hasHammer = false;
@@ -94,21 +87,16 @@ public:
 
     void handleKeyboardInput(char key);
 
-    bool checkFallDamage()
+    bool checkFallDamage() const
     {
-        bool isHit = (checkOnGround() && (getFallHeight() >= MAX_FALL_HEIGHT)); // did we fall more than MAX_FALL_HEIGHT tiles
-        if (isHit)
-            takeDamage();
-        return isHit;
+        // did we fall more than MAX_FALL_HEIGHT tiles
+        return checkOnGround() && (getFallHeight() >= MAX_FALL_HEIGHT);
     }
 
     // checks collision with hazard objects 
-    bool checkCollision()
+    bool checkCollision() const
     {
-        bool isHit = gameBoard->isHazardAtPos(getPosition());
-        if (isHit)
-            takeDamage();
-        return isHit;
+        return gameBoard->isHazardAtPos(getPosition());
     }
 
     // actions when loses life

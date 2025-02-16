@@ -192,12 +192,6 @@ void Player::climbDown()
 
 void Player::takeDamage()
 {
-    lives--;
-    if (lives == 0)
-        g_eventQueue.push(PlayerEvent(PlayerEvent::PlayerEventType::DIED));
-    else
-        g_eventQueue.push(PlayerEvent(PlayerEvent::PlayerEventType::LOST_A_LIFE));
-
     //little animation 
     for (size_t i = 0; i < DEATH_ANIMATION_FRAMES; i++)
     {

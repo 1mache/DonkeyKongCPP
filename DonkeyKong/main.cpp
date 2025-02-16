@@ -1,7 +1,4 @@
 #include "GameManager.h"
-#include "EventQueue.h"
-
-EventQueue g_eventQueue; // global instance used by gameObjects
 
 int main(int argc, char* argv[]) 
 {

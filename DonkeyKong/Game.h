@@ -7,8 +7,6 @@
 
 #include "Board.h"
 #include "Player.h"
-#include "Event.h"
-#include "PlayerEvent.h"
 #include "Point.h"
 #include "Menu.h"
 #include "Barrel.h"
@@ -25,6 +23,7 @@ private:
 	static constexpr int ESC = 27;
 	static constexpr char ENTER = '\r';
 
+	static constexpr int MAX_LIVES = 3;
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr size_t ENEMY_SCORE_AMOUNT = 50;
@@ -78,7 +77,7 @@ protected:
 		return currLevelId < levelFileNames.size();
 	}
 	// what happens when Mario gets hurt, returns false if he dies true otherwise
-	virtual bool handleStrike(const PlayerEvent* event);
+	virtual bool handleStrike();
 	// what happens when Mario reaches Pauline
 	virtual void levelWon();
 	// returns if succeeded to move to next level 
@@ -111,7 +110,8 @@ private:
 
 	GhostsManager* ghostsManager = nullptr;
 	BarrelManager* barrelManager = nullptr;
-
+	
+	int lives = MAX_LIVES;
 	size_t score = 0;
 
 	bool isPaused = false;
