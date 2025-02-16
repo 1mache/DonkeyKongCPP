@@ -12,7 +12,8 @@ class Player : public MovingObject
     static constexpr size_t NUM_KEYS = sizeof(KEYS) / sizeof(KEYS[0]);
     
     static constexpr char HAMMER_KEY = 'p';
-    static constexpr char HAMMER_ANIM_CHARS[]  = { 'q', 'p', '~'};
+    enum HammerAnimation {hLEFT = 0, ARM, hRIGHT};
+    static constexpr char HAMMER_ANIM_CHARS[]  = { 'q', '~', 'p'};
 
     static constexpr int MAX_FALL_HEIGHT = 5;
     static constexpr int JUMP_HEIGHT = 2;

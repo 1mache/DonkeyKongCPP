@@ -216,18 +216,16 @@ void Player::hammerAnimation(Point destroyPos) const
 {
     // prints either p or q in the direction Mario is facing,
     // based on hammerDir
-    char hammerChar = (hammerDir == LEFT) ? HAMMER_ANIM_CHARS[0] : HAMMER_ANIM_CHARS[1];
-    char armChar = HAMMER_ANIM_CHARS[2];
+    const char hammerChar = (hammerDir == LEFT) ? HAMMER_ANIM_CHARS[HammerAnimation::hLEFT] : HAMMER_ANIM_CHARS[HammerAnimation::hRIGHT];
+    const char armChar = HAMMER_ANIM_CHARS[HammerAnimation::ARM];
     Point destroyPosPlus = destroyPos + DIRECTIONS[hammerDir];
     
-    // looks like @p or q@
-    DK_utils::drawSymbolOnScreen(hammerChar, destroyPos);
-    Sleep(GameOptions::getRefreshRate()/2);
     // looks like @~p or q~@
     DK_utils::drawSymbolOnScreen(armChar, destroyPos);
     DK_utils::drawSymbolOnScreen(hammerChar, destroyPosPlus);
-    
-    Sleep(GameOptions::getRefreshRate()/2);
+
+    Sleep(GameOptions::getRefreshRate());
+   
     // erases both hammer and "arm"
     DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPos), destroyPos);
     DK_utils::drawSymbolOnScreen(gameBoard->getCharAtPos(destroyPosPlus), destroyPosPlus);
