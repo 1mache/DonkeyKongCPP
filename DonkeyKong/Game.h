@@ -28,8 +28,8 @@ private:
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
 	static constexpr int MAX_LIVES = 3;
-	static constexpr int ENEMY_SCORE_AMOUNT = 50;
-	static constexpr int MAX_PRINCESS_SCORE_AMOUNT = 1000;
+	static constexpr size_t ENEMY_SCORE_AMOUNT = 50;
+	static constexpr size_t MAX_PRINCESS_SCORE_AMOUNT = 1000;
 
 protected:
 
@@ -114,7 +114,7 @@ private:
 	BarrelManager* barrelManager = nullptr;
 
 	int lives = MAX_LIVES;
-	int score = 0;
+	size_t score = 0;
 
 	bool isPaused = false;
 	
@@ -165,7 +165,7 @@ private:
 	// virtual function that sets the random seed either by time or from file 
 	virtual void setRandSeed()
 	{
-		long seed = time(0);
+		long seed = static_cast<long>(time(0));
 		if(recorded)
 			recSteps.setRandomSeed(seed);
 		srand(seed);
@@ -198,7 +198,7 @@ public:
 
 	virtual void resetLevel();
 
-	int getScore() const
+	size_t getScore() const
 	{
 		return score;
 	}

@@ -6,7 +6,7 @@ bool Game::trySetCurrLevelByTag(const std::string& tag)
     
     for (int i = 0; i < levelFileNames.size(); i++)
     {
-        std::string currTag = getLevelTag(levelFileNames[i]);
+        currTag = getLevelTag(levelFileNames[i]);
         if(currTag == tag)
         {
             currLevelId = i;
@@ -23,7 +23,7 @@ void Game::getPlayerConfirmation() const
     {
         if (_kbhit())
         {
-            char key = _getch();
+            char key = static_cast<char>(_getch());
             if (key == ENTER)
                 break;
         }
@@ -296,7 +296,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
                 map[Board::posToIndex(pos)] = Board::BLANK_SPACE;
             }
 
-            char c = levelFile.get();
+            char c = static_cast<char>(levelFile.get());
             if (c == EOF)
             {
                 fileEnded = true;
@@ -409,7 +409,7 @@ bool Game::setEntityPositionByChar(char c, Point position)
 void Game::discardRestOfLine(std::ifstream& levelFile)
 {
     // if we have more than 80 chars in one of the lines in a file we want to discard them 
-    char discard = levelFile.get();
+    int discard = levelFile.get();
     while (discard != '\n' && !levelFile.eof())
     {
         discard = levelFile.get();
@@ -485,10 +485,12 @@ Game::KeyInput Game::getInputKeys()
     KeyInput input;
 
     if (_kbhit())
-        input.key1 = _getch();
-
-    if (_kbhit())
-        input.key2 = _getch();
+    {
+        input.key1 = static_cast<char>(_getch());
+        
+        if (_kbhit())
+            input.key2 = static_cast<char>(_getch());
+    }
 
     return input;
 }

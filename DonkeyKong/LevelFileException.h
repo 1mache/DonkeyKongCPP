@@ -2,7 +2,7 @@
 #include <exception>
 #include <string>
 
-class LevelFileException : std::exception
+class LevelFileException : public std::exception
 {
 	std::string message;
 public:

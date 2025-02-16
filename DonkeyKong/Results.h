@@ -7,7 +7,7 @@
 class Results
 {
 public:
-	static constexpr size_t NO_ITERATION = -1;
+	static constexpr size_t NO_ITERATION = 0;
 	enum ResultValue { LOST_LIFE, FINISHED, DIED, NO_RESULT };
 
 	// utility function, translates result pair into a string

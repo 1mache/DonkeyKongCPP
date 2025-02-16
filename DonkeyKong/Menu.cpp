@@ -331,7 +331,7 @@ bool Menu::displayMainMenu()
 	return exitFlag;
 }
 
-void Menu::displayWinScreen(int finalScore)
+void Menu::displayWinScreen(size_t finalScore)
 {
 	gotoWinScreen();
 

@@ -210,8 +210,6 @@ class Menu
 	int arrowId = START_ARROW_ID;
 	// how many options we currently have on screen
 	int currNumOfOptions = NUM_OF_MAIN_OPTIONS;
-	// if there are too many levels to show at once we show them in groups of 9
-	int scrollValue = 0;
 
 	// tells us if we selected the exit option
 	bool exitFlag = false;
@@ -223,7 +221,9 @@ class Menu
 	// all the options to choose from on the levels screen
 	std::vector<MenuOption> levelOptions;
 	// amount of times we can scroll before we get to the first 9 levels again
-	const int maxScrolls;
+	const size_t maxScrolls;
+	// if there are too many levels to show at once we show them in groups of 9
+	size_t scrollValue = 0;
 
 	void drawChar(char ch, Point position) const
 	{
@@ -300,7 +300,7 @@ public:
 		update();
 	}
 
-	void displayWinScreen(int finalScore);
+	void displayWinScreen(size_t finalScore);
 
 	int getChosenLevelId() const
 	{

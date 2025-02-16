@@ -95,8 +95,7 @@ public:
     // checks collision with hazard objects 
     bool checkCollision() const
     {
-        Point position = getPosition();
-        return gameBoard->isHazardAtPos(position);
+        return gameBoard->isHazardAtPos(getPosition());
     }
 
     // actions when loses life

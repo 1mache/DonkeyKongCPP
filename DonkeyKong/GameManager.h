@@ -9,7 +9,7 @@ class GameManager
 public:
 	enum GameMode {STANDARD, SAVE, LOAD};
 private:
-	// by default it is just a standard game (like Ex 2)
+	// by default it is just a standard game
 	GameMode mode = STANDARD;
 	std::vector<std::string> levelFileNames;
 	int startLevelId = 0;
