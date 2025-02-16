@@ -4,6 +4,9 @@
 #include "MovingObject.h"
 #include "GameOptions.h"
 #include "EventQueue.h"
+#include "PlayerEvent.h"
+
+extern EventQueue g_eventQueue;
 
 class Player : public MovingObject
 {
@@ -91,16 +94,21 @@ public:
 
     void handleKeyboardInput(char key);
 
-    bool checkFallDamage() const
+    bool checkFallDamage()
     {
-        //return true if we just fell more than MAX_FALL_HEIGHT tiles
-        return (checkOnGround() && (getFallHeight() >= MAX_FALL_HEIGHT));
+        bool isHit = (checkOnGround() && (getFallHeight() >= MAX_FALL_HEIGHT)); // did we fall more than MAX_FALL_HEIGHT tiles
+        if (isHit)
+            takeDamage();
+        return isHit;
     }
 
     // checks collision with hazard objects 
-    bool checkCollision() const
+    bool checkCollision()
     {
-        return gameBoard->isHazardAtPos(getPosition());
+        bool isHit = gameBoard->isHazardAtPos(getPosition());
+        if (isHit)
+            takeDamage();
+        return isHit;
     }
 
     // actions when loses life

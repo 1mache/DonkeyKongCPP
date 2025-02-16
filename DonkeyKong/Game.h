@@ -7,6 +7,8 @@
 
 #include "Board.h"
 #include "Player.h"
+#include "Event.h"
+#include "PlayerEvent.h"
 #include "Point.h"
 #include "Menu.h"
 #include "Barrel.h"
@@ -76,7 +78,7 @@ protected:
 		return currLevelId < levelFileNames.size();
 	}
 	// what happens when Mario gets hurt, returns false if he dies true otherwise
-	virtual bool handleStrike();
+	virtual bool handleStrike(const PlayerEvent* event);
 	// what happens when Mario reaches Pauline
 	virtual void levelWon();
 	// returns if succeeded to move to next level 

@@ -4,5 +4,5 @@ class Event
 {
 public:
 	virtual ~Event() = default;
-	virtual int getType() = 0;
+	virtual int getType() const = 0;
 };

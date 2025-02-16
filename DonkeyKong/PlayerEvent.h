@@ -8,7 +8,7 @@ public:
 
 	PlayerEvent(PlayerEventType _type = PlayerEventType::NOTHING) : type(_type) {}
 
-	int getType() override
+	int getType() const override
 	{
 		return static_cast<int>(type);
 	}

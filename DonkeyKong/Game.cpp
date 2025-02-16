@@ -30,12 +30,19 @@ void Game::getPlayerConfirmation() const
     }
 }
 
-bool Game::handleStrike()
+bool Game::handleStrike(const PlayerEvent* event)
 {
-    player->takeDamage();
-    lives--;
+    // if the event passed is not a player event (technically should never happen)
+    if(event == nullptr)
+    {
+        return true; // does nothing
+    }
 
-    if (lives == 0)
+    using eventType = PlayerEvent::PlayerEventType; //to shorten the name a little :) 
+  
+    eventType type = static_cast<eventType>(event->getType()); // convert from int to Enum
+
+    if (type == eventType::DIED)
     {
         if (recorded)
         {
@@ -44,7 +51,7 @@ bool Game::handleStrike()
         }
         return false;
     }
-    else
+    else if (type == eventType::LOST_A_LIFE)
     {
         if (recorded)
             recResults.addResult(iterationCounter, Results::LOST_LIFE);
@@ -52,6 +59,9 @@ bool Game::handleStrike()
         resetLevel();
         return true;
     }
+
+    // if the above werent triggered contunue the loop
+    return true;
 }
 
 void Game::levelWon()
@@ -68,6 +78,8 @@ void Game::levelWon()
 
 void Game::update()
 {
+    Event* latestEvent = nullptr;
+
     while (true)
     {
         KeyInput input = getInputKeys();
@@ -101,16 +113,17 @@ void Game::update()
         {
             iterationCounter++;
             // First check if we hit something
-            checkPlayerHitEnemy();
+            checkPlayerHitEnemy(); //TODO:EVENT 
 
             // then update the player (move him)
             player->update();
 
-            //check for barrel collisions and fall damage
+            //check for collisions and fall damage
             if (player->checkCollision() || player->checkFallDamage())
             {
-                if (handleStrike())
-                    continue; // level was reset, continue the game loop
+                latestEvent = g_eventQueue.pop().get();
+                if (handleStrike(dynamic_cast<PlayerEvent*>(latestEvent))) //should never get nullptr here but there is a check inside
+                    continue; // continue the game loop, possibly game was reset
                 else
                     break; // going to menu
             }
@@ -125,15 +138,15 @@ void Game::update()
             //check again for barrel collisions - after barrels moved
             if (player->checkCollision())
             {
-                if (handleStrike())
+                latestEvent = g_eventQueue.pop().get();
+                if (handleStrike(dynamic_cast<PlayerEvent*>(latestEvent)))
                     continue; // level was reset, continue the game loop
                 else
-
                     break; // going to menu
             }
 
             //win check
-            if (player->getPosition() == paulinePos)
+            if (player->getPosition() == paulinePos) //TODO:EVENT
             {
                 levelWon();
                 break; // player reached pauline, exit loop 

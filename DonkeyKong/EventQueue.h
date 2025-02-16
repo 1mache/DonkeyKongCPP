@@ -9,26 +9,26 @@ class EventQueue
 	std::queue<std::unique_ptr<Event>> queue;
 public:
 
-	template<typename ActualEventType>
-	void push(ActualEventType event)
+	template<typename ActualEvent> // one of the derived classes
+	void push(ActualEvent event)
 	{
 		// push the event to the queue while initializing it with its correct type
-		queue.push(std::make_unique<ActualEventType>(event));
+		queue.push(std::make_unique<ActualEvent>(event));
 	}
 
-	template<typename ActualEventType>
-	std::unique_ptr<ActualEventType> front() const
+	template<typename ActualEvent> // one of the derived classes 
+	std::unique_ptr<ActualEvent> front() const
 	{
 		if (queue.empty())
 			return nullptr;
 		
 		// try to cast the front into the desired type
-		auto* casted = dynamic_cast<ActualEventType>(queue.front().get());
+		auto* casted = dynamic_cast<ActualEvent*>(queue.front().get());
 		if (casted == nullptr)
 			return nullptr; // failed to cast
 
 		// create new unique ptr out of casted's content 
-		return std::make_unique<ActualEventType>(*casted);
+		return std::make_unique<ActualEvent>(*casted);
 	}
 
 	std::unique_ptr<Event> pop() 
