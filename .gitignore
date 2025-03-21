@@ -9,3 +9,6 @@
 DonkeyKong/x64/
 DonkeyKong/DonkeyKong/
 DonkeyKong/DonkeyKong.vcxproj.user
+
+# premake will build into this dir
+/bin
