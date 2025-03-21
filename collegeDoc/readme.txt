@@ -1,6 +1,6 @@
 Submitters:
-Ben Liberman: 322465600
-Dmytro Kreicherek: 338062755
+Ben Liberman
+Dmytro Kreicherek
 
 ============<Exercise 3>============
 Climbing ghost behavior:
