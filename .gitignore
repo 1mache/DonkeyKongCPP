@@ -7,6 +7,7 @@
 *.log
 *.tlog/
 DonkeyKong/x64/
+DonkeyKong/obj/
 DonkeyKong/DonkeyKong/
 DonkeyKong/DonkeyKong.vcxproj.user
 

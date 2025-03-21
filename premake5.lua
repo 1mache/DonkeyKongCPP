@@ -6,9 +6,13 @@ workspace "DonkeyKongConsole"
 project "DonkeyKong"
 	kind "ConsoleApp"
 	language "C++"
-	files{
+	cppdialect "C++20"
+
+	files {
 		"DonkeyKong/**.h",
-		"DonkeyKong/**.cpp"
+		"DonkeyKong/**.cpp",
+		"levels/**",
+		"recordings/**"
 	}
 
 	-- Set up filters in Visual Studio:
@@ -26,8 +30,8 @@ project "DonkeyKong"
 
 	filter ("configurations:Debug")
 		defines{"DEBUG"}
-		targetdir "/bin/debug"
+		targetdir "bin/debug"
 
 	filter ("configurations:Release")
 		optimize "On"
-		targetdir "/bin/release"
+		targetdir "bin/release"
