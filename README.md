@@ -1,5 +1,5 @@
 
-# Donkey Kong in Console
+# Donkey Kong Console Game
 
 
 ![Menu](https://github.com/1mache/DonkeyKongCPP/blob/main/screenshots/menu.png)
@@ -14,7 +14,7 @@ This project was done for our "Object Oriented Programming in C++" course in col
 ## Acknowledgements
 
  - [Premake5](https://github.com/premake/premake-core)\
-We put the premake exe file for windows in premake/ for convenience. [Here](https://premake.github.io/download) you can download premake for other OS.
+We put the premake exe file for windows in **premake/** for convenience. [Here](https://premake.github.io/download) you can download premake for other OS.
 
 ## Rules and gameplay
 - The goal of the game is to reach the princess while dodging various enemies.
