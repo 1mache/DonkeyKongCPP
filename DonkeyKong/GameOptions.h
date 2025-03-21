@@ -6,7 +6,7 @@ class GameOptions
 {
 	//constants that a bunch of classes need
 private:
-	static constexpr int GAME_REFRESH_RATE = 75;
+	static constexpr int GAME_REFRESH_RATE = 70;
 	static bool isInLoadMode;
 	static bool isInSilentMode;
 
