@@ -13,7 +13,7 @@ This project was done for our "Object Oriented Programming in C++" course in col
 - [@BenLiberman](https://github.com/Ben-GitCode)
 ## Acknowledgements
 
- - [Premake5](https://github.com/premake/premake-core)
+ - [Premake5](https://github.com/premake/premake-core)\
 We put the premake exe file for windows in premake/ for convenience. [Here](https://premake.github.io/download) you can download premake for other OS.
 
 ## Rules and gameplay
