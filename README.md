@@ -56,6 +56,4 @@ This was tested on Windows, but in theory you should be able to build the projec
 
 The game is intended to run in an **80x25** console which may not be the default size of your console. If your console window is bigger, you can still play just fine, but if its smaller the game is unplayable. You can change the window dimensions in the console settings.
 
-If the game is too fast/slow for you you can change the\
-`GAME_REFRESH_RATE`\
-variable in GameOptions.h .  
+If the game is too fast/slow for you you can change the `GAME_REFRESH_RATE` variable in GameOptions.h .
