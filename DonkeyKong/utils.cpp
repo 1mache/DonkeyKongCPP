@@ -85,7 +85,7 @@ namespace DK_utils
         std::regex pattern(levelFileNameTemplate);
 
         namespace fs = std::filesystem;
-        fs::path path = fs::current_path() / pathOffset;
+        fs::path path = getExePath() / pathOffset;
 
         for (const auto& entry : fs::directory_iterator(path))
         {

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "LevelFileException.h"
+#include "utils.h"
 
 class Results
 {

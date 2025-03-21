@@ -275,7 +275,7 @@ Board* Game::readLevelFromFile(const std::string& filename)
     // create a vector that represents the board, see Board::posToIndex on how we access its elements
     std::vector<char> map(screenHeight * screenWidth);
 
-    std::ifstream levelFile(filename);
+    std::ifstream levelFile(DK_utils::getExePath() / filename);
 
     if(!levelFile.is_open())
     {

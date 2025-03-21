@@ -3,7 +3,7 @@
 Steps Steps::loadSteps(const std::string& filename) 
 {
 	Steps steps;
-	std::ifstream steps_file(filename);
+	std::ifstream steps_file(DK_utils::getExePath() / filename);
 	if(!steps_file.is_open())
 		throw LevelFileException("Error: couldn`t open file" + filename);
 
@@ -24,7 +24,7 @@ Steps Steps::loadSteps(const std::string& filename)
 
 void Steps::saveSteps(const std::string& filename) const 
 {
-	std::ofstream steps_file(filename);
+	std::ofstream steps_file(DK_utils::getExePath() / filename);
 	if (!steps_file.is_open())
 		throw LevelFileException("Error: couldn`t open file" + filename);
 

@@ -33,7 +33,7 @@ std::string Results::resultToStr(std::pair<size_t, ResultValue> result)
 
 Results Results::loadResults(const std::string& filename)
 {
-	std::ifstream results_file(filename);
+	std::ifstream results_file(DK_utils::getExePath() / filename);
 	if(!results_file.is_open())
 		throw LevelFileException("Error: couldn`t open file" + filename);
 
@@ -54,7 +54,7 @@ Results Results::loadResults(const std::string& filename)
 
 void Results::saveResults(const std::string& filename) const 
 {
-	std::ofstream results_file(filename);
+	std::ofstream results_file(DK_utils::getExePath() / filename);
 	if (!results_file.is_open())
 		throw LevelFileException("Error: couldn`t open file" + filename);
 

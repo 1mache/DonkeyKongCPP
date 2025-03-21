@@ -31,6 +31,11 @@ namespace DK_utils
         // command that tells cmd to clear the screen
         system("cls");
     }
+    // gets the path to dir where the executable sits 
+    inline std::filesystem::path getExePath()
+    { 
+        return std::filesystem::path(__argv[0]).parent_path();
+    }
     // reads all the file names that are in the game format with the specified extension into the specified vector  
     void readFileNames(std::vector<std::string>& outVector, std::string extension, std::string pathOffset = "");
     // returns the working directory path as a string

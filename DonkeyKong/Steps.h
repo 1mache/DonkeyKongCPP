@@ -2,6 +2,7 @@
 #include <list>
 #include <fstream>
 #include "LevelFileException.h"
+#include "utils.h"
 
 class Steps
 {
