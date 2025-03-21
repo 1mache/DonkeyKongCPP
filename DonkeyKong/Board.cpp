@@ -19,11 +19,14 @@ void Board::print() const {
 		return;
 	
 	for (int i = 0; i < HEIGHT-1; i++) {
-		std::cout << currentBoard[i] << '\n';
+		DK_utils::drawLineOnScreen(currentBoard[i], {0,i});
 		//animation frame dalay
 		Sleep(PRINT_DELAY);
 	}
-	std::cout << currentBoard[HEIGHT - 1];
+	DK_utils::drawLineOnScreen(currentBoard[HEIGHT-1], { 0, HEIGHT-1});
+
+	//need to clear input buffer after this "animation" 
+	DK_utils::flushInputBuffer();
 }
 
 char Board::getCharAtPos(Point position) const

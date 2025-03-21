@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <vector>
 #include "Point.h"
+#include "utils.h"
 #include "GameOptions.h"
 
 class Board {
