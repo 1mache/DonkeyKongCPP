@@ -6,9 +6,16 @@ project "DonkeyKong"
 	language "C++"
 	location "DonkeyKong/"
 	files{
-		"*.h",
-		"*.cpp"
+		"DonkeyKong/**.h",
+		"DonkeyKong/**.cpp"
 	}
+
+	-- Set up filters in Visual Studio:
+    vpaths {
+        ["Header Files"] = { "DonkeyKong/**.h" },
+        ["Source Files"] = { "DonkeyKong/**.cpp" }
+		["Resource Files"] = { "levels/**", "recordings/**" }
+    }
 
 	-- Copy the entire "levels", "recordings" directories into the targetdir after each build
 	postbuildcommands {
