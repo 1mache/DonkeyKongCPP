@@ -9,7 +9,7 @@ class Ghost : public MovingObject
 {
     // values for random direction change of 0.05 probability
     static constexpr int MAX_RANDOM_VAL = 100;
-    static constexpr int DIR_CHANGE_CHANCE = 5;
+    static constexpr int DIR_CHANGE_CHANCE = 2;
 
     char ghostChar = Board::GHOST;
 
