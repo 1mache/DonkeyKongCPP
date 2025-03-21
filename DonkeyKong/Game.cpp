@@ -480,6 +480,21 @@ void Game::hitScoreAnimation(Point position)
     }
 }
 
+void Game::paulineAnimation()
+{
+    auto messagePos = paulinePos + Point(1, 0);
+    int screamTimes = 3;
+    for (size_t i = 0; i < screamTimes; i++)
+    {
+        DK_utils::drawLineOnScreen(PRINCESS_MESSAGE, messagePos);
+        Sleep(GameOptions::getRefreshRate() * 2);
+
+        auto eraseLine = std::string(strlen(PRINCESS_MESSAGE), Board::BLANK_SPACE);
+        DK_utils::drawLineOnScreen(eraseLine, messagePos);
+        Sleep(GameOptions::getRefreshRate() * 2);
+    }
+}
+
 Game::KeyInput Game::getInputKeys()
 {
     KeyInput input;
@@ -554,8 +569,7 @@ void Game::resetLevel()
 
     gameBoard->print();
 
-    //need to clear input buffer after animation  
-    DK_utils::flushInputBuffer();
+    paulineAnimation();
 
     // reset player and barrel manager
     delete player;

@@ -26,6 +26,7 @@ private:
 	static constexpr int MAX_LIVES = 3;
 	static constexpr Point LIVES_COUNTER_POS = { 74, 3 };
 	static constexpr const char* PAUSE_MESSAGE = "Game Paused";
+	static constexpr const char* PRINCESS_MESSAGE = "~ (SAVE ME!)";
 	static constexpr size_t ENEMY_SCORE_AMOUNT = 50;
 	static constexpr size_t MAX_PRINCESS_SCORE_AMOUNT = 1000;
 
@@ -157,7 +158,10 @@ private:
 	bool isEntityMissing(std::string& outEntityMissing);
 	// checks if player hit something that can be killed with a hammer and if so destroys it
 	void checkPlayerHitEnemy();
+	// print animation when hitting enemy
 	void hitScoreAnimation(Point position);
+	// pauline screams "SAVE ME"
+	void paulineAnimation();
 	// virtual function that gets 2 keys of input
 	virtual KeyInput getInputKeys();
 	// virtual function that sets the random seed either by time or from file 
