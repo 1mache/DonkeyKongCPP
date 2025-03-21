@@ -24,9 +24,6 @@ void Board::print() const {
 		Sleep(PRINT_DELAY);
 	}
 	DK_utils::drawLineOnScreen(currentBoard[HEIGHT-1], { 0, HEIGHT-1});
-
-	//need to clear input buffer after this "animation" 
-	DK_utils::flushInputBuffer();
 }
 
 char Board::getCharAtPos(Point position) const

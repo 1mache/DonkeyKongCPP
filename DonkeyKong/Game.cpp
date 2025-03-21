@@ -571,6 +571,9 @@ void Game::resetLevel()
 
     paulineAnimation();
 
+    //need to clear input buffer after animations 
+    DK_utils::flushInputBuffer();
+
     // reset player and barrel manager
     delete player;
     player = new Player(gameBoard, Board::MARIO_SPRITE, marioStartPos);
