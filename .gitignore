@@ -10,5 +10,11 @@ DonkeyKong/x64/
 DonkeyKong/DonkeyKong/
 DonkeyKong/DonkeyKong.vcxproj.user
 
+# Visual Studio solution and project files (we use premake now) 
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
 # premake will build into this dir
 /bin

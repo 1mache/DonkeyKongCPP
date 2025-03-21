@@ -1,10 +1,11 @@
 workspace "DonkeyKongConsole"
 	configurations { "Debug", "Release" }
+	platforms { "Win64" }  --only been tested on that
+	location "DonkeyKong/" -- where the project files will sit
 
 project "DonkeyKong"
 	kind "ConsoleApp"
 	language "C++"
-	location "DonkeyKong/"
 	files{
 		"DonkeyKong/**.h",
 		"DonkeyKong/**.cpp"
@@ -13,7 +14,7 @@ project "DonkeyKong"
 	-- Set up filters in Visual Studio:
     vpaths {
         ["Header Files"] = { "DonkeyKong/**.h" },
-        ["Source Files"] = { "DonkeyKong/**.cpp" }
+        ["Source Files"] = { "DonkeyKong/**.cpp" },
 		["Resource Files"] = { "levels/**", "recordings/**" }
     }
 
