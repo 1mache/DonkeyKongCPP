@@ -19,13 +19,16 @@ project "DonkeyKong"
     vpaths {
         ["Header Files"] = { "DonkeyKong/**.h" },
         ["Source Files"] = { "DonkeyKong/**.cpp" },
-		["Resource Files"] = { "levels/**", "recordings/**" }
+		["Resource Files/Levels"] = { "levels/**"},
+		["Resource Files/Recordings"] = { "recordings/**"}
     }
 
 	-- Copy the entire "levels", "recordings" directories into the targetdir after each build
 	postbuildcommands {
-        "{COPYDIR} levels %{cfg.targetdir}/levels",
-        "{COPYDIR} recordings %{cfg.targetdir}/recordings",
+		"{MKDIR} %{cfg.targetdir}/levels",
+    	"{MKDIR} %{cfg.targetdir}/recordings",
+        "{COPYDIR} ../levels %{cfg.targetdir}/levels",
+        "{COPYDIR} ../recordings %{cfg.targetdir}/recordings"
     }
 
 	filter ("configurations:Debug")
