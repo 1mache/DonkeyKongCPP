@@ -1,6 +1,6 @@
 workspace "DonkeyKongConsole"
 	configurations { "Debug", "Release" }
-	platforms { "Win64" }  --only been tested on that
+	platforms { "Win32" ,"Win64" } 
 	location "DonkeyKong/" -- where the project files will sit
 
 project "DonkeyKong"
